@@ -1,0 +1,109 @@
+﻿@model InstaAlbum.Models.tblBranch
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <script>
+        function fnInsertRecord() {
+
+            var txtBranchName = document.getElementById("txtBranchName");
+            var txtAddress = document.getElementById("txtAddress");
+
+            if (txtBranchName.value == null || txtBranchName.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter branch name', { timeOut: 1000, fadeOut: 1000 });
+                return;
+            }
+            if (txtAddress.value == null || txtAddress.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter address', { timeOut: 1000, fadeOut: 1000 });
+                return;
+            }
+            
+            var objBranchDetails = {
+                BranchName: txtBranchName.value,
+                Address: txtAddress.value}
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(objBranchDetails),
+                url: '/Branch/CreateBranch',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        }
+
+    </script>
+    <div class="bg-dark bg-dots m-b-30">
+        <div class="container">
+            <div class="row p-b-60 p-t-60">
+
+                <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                    <div class="m-b-10">
+                        <div class="avatar avatar-lg ">
+                            <h1 class="mdi mdi-account-group"></h1>
+                        </div>
+                    </div>
+                    <h3>Branch Details</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="pull-up">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-8 mx-auto  mt-2">
+                    <div class="card py-3 m-b-30">
+                        <div class="card-body">
+
+                            <h3 class="">Branch Info</h3>
+
+                            <div class="card-body ">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputText">Branch Name:</label>
+                                        <input type="text" required id="txtBranchName" placeholder="Enter Branch Name" class="form-control" />
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Address:</label>
+                                        <textarea required id="txtAddress" placeholder="Enter Address" class="form-control" rows="5" />
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" onclick="javascript:fnInsertRecord()" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Branch")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </section>

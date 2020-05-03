@@ -1,0 +1,171 @@
+﻿@model InstaAlbum.Models.tblCustomer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+    $(document).ready(function () {
+
+        var txtEmail = document.getElementById("txtCustomerEmail");
+        $("#txtCustomerEmail").blur(function () {
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "{'Email':'" + txtEmail.value + "'}",
+                url: '/Customer/IsClientEmailExistOrNot',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.info(response.message, 'Email is already exist', { timeOut: 1000 });
+                        txtEmail.value = "";
+                        txtEmail.focus();
+                        return;
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        })
+    });
+    function fnInsertRecord() {
+
+        var txtClientName = document.getElementById("txtClientName");
+        var txtEmail = document.getElementById("txtCustomerEmail");
+        var txtPhoneNumber = document.getElementById("txtPhoneNumber");
+        var txtPassword = document.getElementById("txtPassword");
+        var chkIsActive = $('#chkIsActive').is(':checked') ;
+
+        if (txtClientName.value == null || txtClientName.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter client name', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtEmail.value == null || txtEmail.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter client Email', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtPhoneNumber.value == null || txtPhoneNumber.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter client phone number', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtPassword.value == null || txtPassword.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter password', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+
+        var objCustomerDetails = {
+            CustomerName: txtClientName.value,
+            CustomerEmail: txtEmail.value,
+            PhoneNumber: txtPhoneNumber.value,
+            Password: txtPassword.value,
+            IsActive: chkIsActive
+        }
+        $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(objCustomerDetails),
+                url: '/Customer/Create',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+    }
+
+</script>
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-account-group"></h1>
+                    </div>
+                </div>
+                <h3>Client Details </h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                       
+                            <h3 class="">Client Info</h3>
+                            
+                            <div class="card-body ">
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputText">Client Name:</label>
+                                        <input type="text" required id="txtClientName" placeholder="Enter Client Name" class="form-control"/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        <input type="email" required id="txtCustomerEmail" placeholder="Enter Client Email" class="form-control"/>    
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputNumber">Phone No:</label>
+                                        <input type="text" required id="txtPhoneNumber" placeholder="Enter Phone Number" class="form-control"/>
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputPassword">Password:</label>
+                                        <input type="password" required id="txtPassword" placeholder="Enter password" class="form-control"/>    
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">IsActive</label>
+                                    <label class="cstm-switch">
+                                        <input type="checkbox" id="chkIsActive" checked="checked" class="cstm-switch-input"/>
+                                        <span class="cstm-switch-indicator bg-success "></span>
+                                        <span class="cstm-switch-description"></span>
+                                    </label>
+
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" onclick="javascript:fnInsertRecord()" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Customer")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>

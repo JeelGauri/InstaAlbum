@@ -1,0 +1,917 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBranch">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Address" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblCity">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateID" Type="int" Nullable="false" />
+          <Property Name="CityName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="CustomerEmail" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="11" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="IsActive" Type="bit" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblFeedback">
+          <Key>
+            <PropertyRef Name="FeedbackID" />
+          </Key>
+          <Property Name="FeedbackID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="FeedbackMsg" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblGallery">
+          <Key>
+            <PropertyRef Name="GalleryID" />
+          </Key>
+          <Property Name="GalleryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PackageID" Type="int" Nullable="false" />
+          <Property Name="BranchID" Type="int" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="TotalAmount" Type="money" Nullable="false" />
+          <Property Name="PaymentMode" Type="varchar" MaxLength="30" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblPackage">
+          <Key>
+            <PropertyRef Name="PackageID" />
+          </Key>
+          <Property Name="PackageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="BranchID" Type="int" Nullable="false" />
+          <Property Name="PackageName" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="Offers" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Price" Type="money" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblPhotographer">
+          <Key>
+            <PropertyRef Name="PhotographerID" />
+          </Key>
+          <Property Name="PhotographerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchID" Type="int" Nullable="false" />
+          <Property Name="PhotographerName" Type="varchar" MaxLength="60" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="PhoneNo" Type="int" Nullable="false" />
+          <Property Name="DOB" Type="datetime" Nullable="false" />
+          <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="ProfilePic" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Address" Type="varchar(max)" Nullable="false" />
+          <Property Name="CameraName" Type="varchar" MaxLength="1000" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="tblSelfiePoint">
+          <Key>
+            <PropertyRef Name="SelfiePointID" />
+          </Key>
+          <Property Name="SelfiePointID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblState">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StateName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblStudioAdmin">
+          <Key>
+            <PropertyRef Name="StudioID" />
+          </Key>
+          <Property Name="StudioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudioName" Type="varchar" MaxLength="30" />
+          <Property Name="Address" Type="varchar(max)" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
+          <Property Name="PhoneNo" Type="int" Nullable="false" />
+          <Property Name="StudioLogo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="About" Type="varchar" MaxLength="100" />
+          <Property Name="OpeningHours" Type="varchar" MaxLength="30" />
+          <Property Name="ClosingHours" Type="varchar" MaxLength="30" />
+          <Property Name="Map" Type="varchar(max)" />
+          <Property Name="IsActive" Type="bit" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
+          <Property Name="ActivateDate" Type="date" />
+          <Property Name="DeactivateDate" Type="date" />
+        </EntityType>
+        <Association Name="FK_tblCity_tblState">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="1" />
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCity">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblFeedback_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblFeedback" Type="Self.tblFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblFeedback">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblGallery_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblGallery">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblGallery_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblGallery">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblPackage">
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPackage">
+              <PropertyRef Name="PackageID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPackage_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1" />
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblPackage">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPackage_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblPackage">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPhotographer_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPhotographer" Type="Self.tblPhotographer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblPhotographer">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSelfiePoint_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblSelfiePoint" Type="Self.tblSelfiePoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblSelfiePoint">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InstaAlbumModelStoreContainer">
+          <EntitySet Name="tblBranch" EntityType="Self.tblBranch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCity" EntityType="Self.tblCity" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblFeedback" EntityType="Self.tblFeedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblGallery" EntityType="Self.tblGallery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPackage" EntityType="Self.tblPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblPhotographer" EntityType="Self.tblPhotographer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSelfiePoint" EntityType="Self.tblSelfiePoint" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblStudioAdmin" EntityType="Self.tblStudioAdmin" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tblCity_tblState" Association="Self.FK_tblCity_tblState">
+            <End Role="tblState" EntitySet="tblState" />
+            <End Role="tblCity" EntitySet="tblCity" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblFeedback_tblCustomer" Association="Self.FK_tblFeedback_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblFeedback" EntitySet="tblFeedback" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblGallery_tblCategory" Association="Self.FK_tblGallery_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblGallery" EntitySet="tblGallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblGallery_tblCustomer" Association="Self.FK_tblGallery_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblGallery" EntitySet="tblGallery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblBranch" Association="Self.FK_tblOrder_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranch" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblCustomer" Association="Self.FK_tblOrder_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblPackage" Association="Self.FK_tblOrder_tblPackage">
+            <End Role="tblPackage" EntitySet="tblPackage" />
+            <End Role="tblOrder" EntitySet="tblOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPackage_tblBranch" Association="Self.FK_tblPackage_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranch" />
+            <End Role="tblPackage" EntitySet="tblPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPackage_tblCategory" Association="Self.FK_tblPackage_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblPackage" EntitySet="tblPackage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPhotographer_tblBranch" Association="Self.FK_tblPhotographer_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranch" />
+            <End Role="tblPhotographer" EntitySet="tblPhotographer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSelfiePoint_tblCustomer" Association="Self.FK_tblSelfiePoint_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="tblSelfiePoint" EntitySet="tblSelfiePoint" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="InstaAlbumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblBranch">
+          <Key>
+            <PropertyRef Name="BranchID" />
+          </Key>
+          <Property Name="BranchID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblBranch" FromRole="tblBranch" ToRole="tblOrder" />
+          <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblBranch" FromRole="tblBranch" ToRole="tblPackage" />
+          <NavigationProperty Name="tblPhotographers" Relationship="Self.FK_tblPhotographer_tblBranch" FromRole="tblBranch" ToRole="tblPhotographer" />
+        </EntityType>
+        <EntityType Name="tblCategory">
+          <Key>
+            <PropertyRef Name="CategoryID" />
+          </Key>
+          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblCategory" ToRole="tblGallery" />
+          <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblCategory" ToRole="tblPackage" />
+        </EntityType>
+        <EntityType Name="tblCity">
+          <Key>
+            <PropertyRef Name="CityID" />
+          </Key>
+          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateID" Type="Int32" Nullable="false" />
+          <Property Name="CityName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblState" Relationship="Self.FK_tblCity_tblState" FromRole="tblCity" ToRole="tblState" />
+        </EntityType>
+        <EntityType Name="tblCustomer">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblFeedbacks" Relationship="Self.FK_tblFeedback_tblCustomer" FromRole="tblCustomer" ToRole="tblFeedback" />
+          <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCustomer" FromRole="tblCustomer" ToRole="tblGallery" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblCustomer" FromRole="tblCustomer" ToRole="tblOrder" />
+          <NavigationProperty Name="tblSelfiePoints" Relationship="Self.FK_tblSelfiePoint_tblCustomer" FromRole="tblCustomer" ToRole="tblSelfiePoint" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblFeedback">
+          <Key>
+            <PropertyRef Name="FeedbackID" />
+          </Key>
+          <Property Name="FeedbackID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="FeedbackMsg" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblFeedback_tblCustomer" FromRole="tblFeedback" ToRole="tblCustomer" />
+        </EntityType>
+        <EntityType Name="tblGallery">
+          <Key>
+            <PropertyRef Name="GalleryID" />
+          </Key>
+          <Property Name="GalleryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblGallery" ToRole="tblCategory" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblGallery_tblCustomer" FromRole="tblGallery" ToRole="tblCustomer" />
+        </EntityType>
+        <EntityType Name="tblOrder">
+          <Key>
+            <PropertyRef Name="OrderID" />
+          </Key>
+          <Property Name="OrderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PackageID" Type="Int32" Nullable="false" />
+          <Property Name="BranchID" Type="Int32" Nullable="false" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="PaymentMode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblOrder_tblBranch" FromRole="tblOrder" ToRole="tblBranch" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblOrder_tblCustomer" FromRole="tblOrder" ToRole="tblCustomer" />
+          <NavigationProperty Name="tblPackage" Relationship="Self.FK_tblOrder_tblPackage" FromRole="tblOrder" ToRole="tblPackage" />
+        </EntityType>
+        <EntityType Name="tblPackage">
+          <Key>
+            <PropertyRef Name="PackageID" />
+          </Key>
+          <Property Name="PackageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="BranchID" Type="Int32" Nullable="false" />
+          <Property Name="PackageName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Offers" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblPackage_tblBranch" FromRole="tblPackage" ToRole="tblBranch" />
+          <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblPackage" ToRole="tblCategory" />
+          <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblPackage" FromRole="tblPackage" ToRole="tblOrder" />
+        </EntityType>
+        <EntityType Name="tblPhotographer">
+          <Key>
+            <PropertyRef Name="PhotographerID" />
+          </Key>
+          <Property Name="PhotographerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchID" Type="Int32" Nullable="false" />
+          <Property Name="PhotographerName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNo" Type="Int32" Nullable="false" />
+          <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProfilePic" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CameraName" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblPhotographer_tblBranch" FromRole="tblPhotographer" ToRole="tblBranch" />
+        </EntityType>
+        <EntityType Name="tblSelfiePoint">
+          <Key>
+            <PropertyRef Name="SelfiePointID" />
+          </Key>
+          <Property Name="SelfiePointID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblSelfiePoint_tblCustomer" FromRole="tblSelfiePoint" ToRole="tblCustomer" />
+        </EntityType>
+        <EntityType Name="tblState">
+          <Key>
+            <PropertyRef Name="StateID" />
+          </Key>
+          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StateName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblCities" Relationship="Self.FK_tblCity_tblState" FromRole="tblState" ToRole="tblCity" />
+        </EntityType>
+        <EntityType Name="tblStudioAdmin">
+          <Key>
+            <PropertyRef Name="StudioID" />
+          </Key>
+          <Property Name="StudioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudioName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNo" Type="Int32" Nullable="false" />
+          <Property Name="StudioLogo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="About" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="OpeningHours" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="ClosingHours" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Map" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <Property Name="ActivateDate" Type="DateTime" Precision="0" />
+          <Property Name="DeactivateDate" Type="DateTime" Precision="0" />
+        </EntityType>
+        <Association Name="FK_tblOrder_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPackage_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1" />
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblPackage">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPhotographer_tblBranch">
+          <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblPhotographer" Type="Self.tblPhotographer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblBranch">
+              <PropertyRef Name="BranchID" />
+            </Principal>
+            <Dependent Role="tblPhotographer">
+              <PropertyRef Name="BranchID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblGallery_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblGallery">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblPackage_tblCategory">
+          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCategory">
+              <PropertyRef Name="CategoryID" />
+            </Principal>
+            <Dependent Role="tblPackage">
+              <PropertyRef Name="CategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblCity_tblState">
+          <End Role="tblState" Type="Self.tblState" Multiplicity="1" />
+          <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblState">
+              <PropertyRef Name="StateID" />
+            </Principal>
+            <Dependent Role="tblCity">
+              <PropertyRef Name="StateID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblFeedback_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblFeedback" Type="Self.tblFeedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblFeedback">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblGallery_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblGallery">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSelfiePoint_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblSelfiePoint" Type="Self.tblSelfiePoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="tblSelfiePoint">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblOrder_tblPackage">
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblOrder" Type="Self.tblOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblPackage">
+              <PropertyRef Name="PackageID" />
+            </Principal>
+            <Dependent Role="tblOrder">
+              <PropertyRef Name="PackageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="InstaAlbumEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBranches" EntityType="Self.tblBranch" />
+          <EntitySet Name="tblCategories" EntityType="Self.tblCategory" />
+          <EntitySet Name="tblCities" EntityType="Self.tblCity" />
+          <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
+          <EntitySet Name="tblFeedbacks" EntityType="Self.tblFeedback" />
+          <EntitySet Name="tblGalleries" EntityType="Self.tblGallery" />
+          <EntitySet Name="tblOrders" EntityType="Self.tblOrder" />
+          <EntitySet Name="tblPackages" EntityType="Self.tblPackage" />
+          <EntitySet Name="tblPhotographers" EntityType="Self.tblPhotographer" />
+          <EntitySet Name="tblSelfiePoints" EntityType="Self.tblSelfiePoint" />
+          <EntitySet Name="tblStates" EntityType="Self.tblState" />
+          <EntitySet Name="tblStudioAdmins" EntityType="Self.tblStudioAdmin" />
+          <AssociationSet Name="FK_tblOrder_tblBranch" Association="Self.FK_tblOrder_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranches" />
+            <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPackage_tblBranch" Association="Self.FK_tblPackage_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranches" />
+            <End Role="tblPackage" EntitySet="tblPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPhotographer_tblBranch" Association="Self.FK_tblPhotographer_tblBranch">
+            <End Role="tblBranch" EntitySet="tblBranches" />
+            <End Role="tblPhotographer" EntitySet="tblPhotographers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblGallery_tblCategory" Association="Self.FK_tblGallery_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategories" />
+            <End Role="tblGallery" EntitySet="tblGalleries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPackage_tblCategory" Association="Self.FK_tblPackage_tblCategory">
+            <End Role="tblCategory" EntitySet="tblCategories" />
+            <End Role="tblPackage" EntitySet="tblPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblCity_tblState" Association="Self.FK_tblCity_tblState">
+            <End Role="tblState" EntitySet="tblStates" />
+            <End Role="tblCity" EntitySet="tblCities" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblFeedback_tblCustomer" Association="Self.FK_tblFeedback_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblFeedback" EntitySet="tblFeedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblGallery_tblCustomer" Association="Self.FK_tblGallery_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblGallery" EntitySet="tblGalleries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblCustomer" Association="Self.FK_tblOrder_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSelfiePoint_tblCustomer" Association="Self.FK_tblSelfiePoint_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="tblSelfiePoint" EntitySet="tblSelfiePoints" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblOrder_tblPackage" Association="Self.FK_tblOrder_tblPackage">
+            <End Role="tblPackage" EntitySet="tblPackages" />
+            <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="InstaAlbumModelStoreContainer" CdmEntityContainer="InstaAlbumEntities">
+          <EntitySetMapping Name="tblBranches">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblBranch">
+              <MappingFragment StoreEntitySet="tblBranch">
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="BranchName" ColumnName="BranchName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCategories">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblCategory">
+              <MappingFragment StoreEntitySet="tblCategory">
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCities">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblCity">
+              <MappingFragment StoreEntitySet="tblCity">
+                <ScalarProperty Name="CityID" ColumnName="CityID" />
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="CityName" ColumnName="CityName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblCustomers">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblCustomer">
+              <MappingFragment StoreEntitySet="tblCustomer">
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblFeedbacks">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblFeedback">
+              <MappingFragment StoreEntitySet="tblFeedback">
+                <ScalarProperty Name="FeedbackID" ColumnName="FeedbackID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="FeedbackMsg" ColumnName="FeedbackMsg" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblGalleries">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblGallery">
+              <MappingFragment StoreEntitySet="tblGallery">
+                <ScalarProperty Name="GalleryID" ColumnName="GalleryID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblOrders">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblOrder">
+              <MappingFragment StoreEntitySet="tblOrder">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
+                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPackages">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblPackage">
+              <MappingFragment StoreEntitySet="tblPackage">
+                <ScalarProperty Name="PackageID" ColumnName="PackageID" />
+                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="PackageName" ColumnName="PackageName" />
+                <ScalarProperty Name="Offers" ColumnName="Offers" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblPhotographers">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblPhotographer">
+              <MappingFragment StoreEntitySet="tblPhotographer">
+                <ScalarProperty Name="PhotographerID" ColumnName="PhotographerID" />
+                <ScalarProperty Name="BranchID" ColumnName="BranchID" />
+                <ScalarProperty Name="PhotographerName" ColumnName="PhotographerName" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="ProfilePic" ColumnName="ProfilePic" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="CameraName" ColumnName="CameraName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSelfiePoints">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblSelfiePoint">
+              <MappingFragment StoreEntitySet="tblSelfiePoint">
+                <ScalarProperty Name="SelfiePointID" ColumnName="SelfiePointID" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStates">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblState">
+              <MappingFragment StoreEntitySet="tblState">
+                <ScalarProperty Name="StateID" ColumnName="StateID" />
+                <ScalarProperty Name="StateName" ColumnName="StateName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblStudioAdmins">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblStudioAdmin">
+              <MappingFragment StoreEntitySet="tblStudioAdmin">
+                <ScalarProperty Name="StudioID" ColumnName="StudioID" />
+                <ScalarProperty Name="StudioName" ColumnName="StudioName" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="PhoneNo" ColumnName="PhoneNo" />
+                <ScalarProperty Name="StudioLogo" ColumnName="StudioLogo" />
+                <ScalarProperty Name="About" ColumnName="About" />
+                <ScalarProperty Name="OpeningHours" ColumnName="OpeningHours" />
+                <ScalarProperty Name="ClosingHours" ColumnName="ClosingHours" />
+                <ScalarProperty Name="Map" ColumnName="Map" />
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+                <ScalarProperty Name="ActivateDate" ColumnName="ActivateDate" />
+                <ScalarProperty Name="DeactivateDate" ColumnName="DeactivateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

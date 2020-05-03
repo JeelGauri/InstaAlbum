@@ -1,0 +1,140 @@
+﻿@model InstaAlbum.Models.tblCustomer
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <script>
+        function fnUpdateRecord() {
+
+            var hdnCustomerID = document.getElementById("hdnCustomerID");
+            var txtClientName = document.getElementById("txtClientName");
+            var txtEmail = document.getElementById("txtCustomerEmail");
+            var txtPhoneNumber = document.getElementById("txtPhoneNumber");
+            var chkIsActive = $('#chkIsActive').is(':checked');
+
+            if (txtClientName.value == null || txtClientName.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter client name', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtEmail.value == null || txtEmail.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter client Email', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtPhoneNumber.value == null || txtPhoneNumber.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter client phone number', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+
+            var objCustomerDetails = {
+                CustomerID:hdnCustomerID.value,
+                CustomerName: txtClientName.value,
+                CustomerEmail: txtEmail.value,
+                PhoneNumber: txtPhoneNumber.value,
+                IsActive: chkIsActive
+            }
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(objCustomerDetails),
+                url: '/Customer/EditCustomer',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is updated',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.href = '/Customer/';
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while updating record.', { timeOut: 1000 });
+                    return;
+                }
+
+            });
+        }
+
+    </script>
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-account-group"></h1>
+                    </div>
+                </div>
+                <h3>Update Client Details </h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+
+                        <h3 class="">Update Client Info</h3>
+
+                        <div class="card-body ">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Client Name:</label>
+                                    <input type="hidden" id="hdnCustomerID" value="@Html.DisplayFor(model => model.CustomerID)"/>
+                                    <input type="text" required id="txtClientName" value="@Html.DisplayFor(model => model.CustomerName)" placeholder="Enter Client Name" class="form-control" />    
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" required readonly="readonly" id="txtCustomerEmail" value="@Html.DisplayFor(model => model.CustomerEmail)" placeholder="Enter Client Email" class="form-control" />
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputNumber">Phone No:</label>
+                                    <input type="text" required id="txtPhoneNumber" value="@Html.DisplayFor(model => model.PhoneNumber)" placeholder="Enter Phone Number" class="form-control" />
+                                </div>
+                            </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label class="cstm-switch">
+                                            @if (Model.IsActive)
+                                            {
+                                                <input type="checkbox" id="chkIsActive" checked="checked" class="cstm-switch-input" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="chkIsActive" class="cstm-switch-input" />
+                                            }
+                                            <span class="cstm-switch-indicator bg-success "></span>
+                                            <span class="cstm-switch-description">Is Active?</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display:inline-block">
+                                    <input type="submit" value="Submit" onclick="javascript:fnUpdateRecord()" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Customer")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>

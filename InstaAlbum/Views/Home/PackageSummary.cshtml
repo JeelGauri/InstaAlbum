@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "PackageSummary";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+        <div class="bg-dark bg-dots m-b-30">
+            <div class="container">
+                <div class="row p-b-60 p-t-60">
+
+                    <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                        <div class="m-b-10">
+                            <div class="avatar avatar-lg ">
+                                <h1 class="mdi mdi-package"></h1>
+                            </div>
+                        </div>
+                        <h3>Package Details </h3>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <section class="pull-up">
+            <div class="container">
+                <div class="row ">
+                    <div class="col-lg-8 mx-auto  mt-2">
+                        <div class="card py-3 m-b-30">
+                            <div class="card-body">
+                                <form>
+                                    <h3 class="">Package Info</h3>
+
+                                    <div class="card-body ">
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputText">Package Name:</label>
+                                                <input type="text" class="form-control" id="inputText" placeholder="Enter Package Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputText">Category Name:</label>
+                                                <input type="text" class="form-control" id="inputText" placeholder="Enter Category Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputText">Branch Name:</label>
+                                                <input type="text" class="form-control" id="inputText" placeholder="Enter Branch Name">
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="inputText">Offers:</label>
+                                                <input type="text" class="form-control" id="inputText">
+                                            </div>
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-md-6">
+                                                <label for="inputPrice">Price:</label>
+                                                <input type="number" class="form-control" id="inputPrice">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary">Submit</button>
+                                            <button class="btn btn-success">Cancel</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            </section>
+       
+        <div class="container col-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <div>
+                                <h3>Package List</h3>
+                            </div>
+                            <div class="table-responsive">
+                                <table id="example-height" class="table" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Package Name</th>
+                                            <th>Category Name</th>
+                                            <th>Branch Name</th>
+                                            <th>Offers</th>
+                                            <th>Price</th>
+                                            <th>Edit</th>
+                                            <th>Delete</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Marriage Season Package</td>
+                                            <td>Wedding</td>
+                                            <td>Vesu</td>
+                                            <td>15%disc</td>
+                                            <td>50000</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Birthday Package</td>
+                                            <td>Baby's 1st b'day</td>
+                                            <td>Citylight</td>
+                                            <td>10%disc</td>
+                                            <td>10000</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>New Born Package</td>
+                                            <td>Baby Shower</td>
+                                            <td>Vesu</td>
+                                            <td>10%disc</td>
+                                            <td>15000-25000</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>Business Package</td>
+                                            <td>Office Party</td>
+                                            <td>Adajan</td>
+                                            <td>5%disc</td>
+                                            <td>10000</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>OutDoor Package</td>
+                                            <td>Travelling</td>
+                                            <td>Vesu</td>
+                                            <td>20%disc</td>
+                                            <td>100000</td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
