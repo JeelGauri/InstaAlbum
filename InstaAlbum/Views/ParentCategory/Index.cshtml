@@ -1,0 +1,276 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblParentCategory>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <script type="text/javascript">
+        function ConfirmationDialog(ParentCategoryID) {
+            if (confirm("Are you sure to delete?"))
+                fnDeleteRecord(ParentCategoryID);
+            else
+                return false;
+        }
+
+
+        function fnSaveParentCategoryID(ParentCategoryID) {
+            $("#hdnParentCategoryID").val(ParentCategoryID);
+        }
+    </script>
+    <script>
+        function fnDeleteRecord(ParentCategoryID) {
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "{'id':'" + ParentCategoryID + "'}",
+                url: '/ParentCategory/DeleteCategory',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is deleted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        toastr.info(response.message, 'Record is not deleted', { timeOut: 3000 });
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 3000 });
+                }
+
+            });
+        }
+
+
+        function fnInsertRecord() {
+
+            var txtCategoryName = document.getElementById("txtCategoryName");
+
+            if (txtCategoryName.value == null || txtCategoryName.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter category name', { timeOut: 1000, fadeOut: 1000 });
+                return;
+            }
+
+            var objParentCategoryDetails = {
+                ParentCategoryName: txtCategoryName.value
+            }
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(objParentCategoryDetails),
+                url: '/ParentCategory/Create',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        }
+
+        function fnInsertSubCategory() {
+
+            var txtSubCategoryName = document.getElementById("txtSubCategoryName");
+            var hdnParentCategoryID = document.getElementById("hdnParentCategoryID");
+
+            if (txtSubCategoryName.value == null || txtSubCategoryName.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter sub category name', { timeOut: 1000, fadeOut: 1000 });
+                return;
+            }
+
+            var objSubCategoryDetails = {
+                SubCategoryName: txtSubCategoryName.value
+            }
+
+            var objPCat = {
+                ParentCategoryID: hdnParentCategoryID.value
+            }
+
+            var jsonData = {
+                Pcat: objPCat,
+                SCat :objSubCategoryDetails
+
+            }
+
+            alert(JSON.stringify(jsonData));
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(jsonData),
+                url: '/SubCategory/Create',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut:1000 });
+                    return;
+                }
+
+            });
+        }
+    </script>
+    <div class="bg-dark bg-dots m-b-30">
+        <div class="container">
+            <div class="row p-b-60 p-t-60">
+
+                <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                    <div class="m-b-10">
+                        <div class="avatar avatar-lg ">
+                            <h1 class="mdi mdi-format-list-bulleted-type"></h1>
+                        </div>
+                    </div>
+                    <h3>Parent Category Details</h3>
+                    <a href="@Url.Action("Index", "SubCategory")"><h1 class="mdi mdi-arrow-right"></h1></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container col-12 pull-up">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div>
+                            <h3>Parent Category List</h3>
+                            <input type="hidden" id="hdnParentCategoryID"/>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Insert Parent Category
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="example-height" class="table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Category Name</th>
+                                        <th>Created Date</th>
+                                        <th>Add Sub Category</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.ParentCategoryName)
+                                            </td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            </td>
+                                            <td>
+                                                <input type="submit" value="Insert Sub Category" onclick="javascript:fnSaveParentCategoryID(@Html.DisplayFor(modelItem => item.ParentCategoryID))" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2"/>
+                                            </td>
+                                            <td>
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" onclick="return ConfirmationDialog(@Html.DisplayFor(modelItem => item.ParentCategoryID))" value="Delete" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Parent Category</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputText">Category Name:</label>
+                            <input type="text" required id="txtCategoryName" placeholder="Enter Category Name" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <input type="submit" id="btnInsertBranch" value="Submit" class="btn btn-primary" onclick="javascript:fnInsertRecord()" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+         aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Add Subcategory</h5>
+                    <button type="button" class="close" data-dismiss="modal"
+                            aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputText">Sub Category Name:</label>
+                            <input type="text" required id="txtSubCategoryName" placeholder="Enter Sub Category Name" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <input type="submit" id="btnInsertBranch" value="Submit" class="btn btn-primary" onclick="javascript:fnInsertSubCategory()" />
+                </div>
+            </div>
+        </div>
+    </div>

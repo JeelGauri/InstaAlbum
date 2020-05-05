@@ -11,8 +11,7 @@ namespace InstaAlbum.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tblCustomer
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,15 +26,11 @@ namespace InstaAlbum.Models
         public int CustomerID { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
+        public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public bool IsActive { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:d}")]
         public System.DateTime CreatedDate { get; set; }
-        
-        [DisplayFormat(DataFormatString = "{0:d}")]
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string PhoneNumber { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblFeedback> tblFeedbacks { get; set; }

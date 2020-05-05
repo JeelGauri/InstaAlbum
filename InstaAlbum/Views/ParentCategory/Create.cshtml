@@ -1,4 +1,4 @@
-﻿@model InstaAlbum.Models.tblCategory
+﻿@model InstaAlbum.Models.tblParentCategory
 
 @{
     ViewBag.Title = "Create";
@@ -12,14 +12,14 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>tblCategory</h4>
+        <h4>tblParentCategory</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
-            @Html.LabelFor(model => model.CategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ParentCategoryName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.CategoryName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CategoryName, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.ParentCategoryName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ParentCategoryName, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -28,14 +28,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
             </div>
         </div>
 

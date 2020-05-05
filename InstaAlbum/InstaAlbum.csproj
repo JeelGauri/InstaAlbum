@@ -129,9 +129,10 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BranchController.cs" />
-    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ParentCategoryController.cs" />
+    <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -153,9 +154,6 @@
     <Compile Include="Models\tblBranch.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblCategory.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\tblCity.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
@@ -174,6 +172,9 @@
     <Compile Include="Models\tblPackage.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tblParentCategory.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tblPhotographer.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
@@ -184,6 +185,9 @@
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblStudioAdmin.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblSubCategory.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -399,16 +403,21 @@
     <Content Include="Views\Customer\Details.cshtml" />
     <Content Include="Views\Customer\Edit.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
-    <Content Include="Views\Categories\Create.cshtml" />
-    <Content Include="Views\Categories\Delete.cshtml" />
-    <Content Include="Views\Categories\Details.cshtml" />
-    <Content Include="Views\Categories\Edit.cshtml" />
-    <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\Branch\Create.cshtml" />
     <Content Include="Views\Branch\Delete.cshtml" />
     <Content Include="Views\Branch\Details.cshtml" />
     <Content Include="Views\Branch\Edit.cshtml" />
     <Content Include="Views\Branch\Index.cshtml" />
+    <Content Include="Views\ParentCategory\Create.cshtml" />
+    <Content Include="Views\ParentCategory\Delete.cshtml" />
+    <Content Include="Views\ParentCategory\Details.cshtml" />
+    <Content Include="Views\ParentCategory\Edit.cshtml" />
+    <Content Include="Views\ParentCategory\Index.cshtml" />
+    <Content Include="Views\SubCategory\Create.cshtml" />
+    <Content Include="Views\SubCategory\Delete.cshtml" />
+    <Content Include="Views\SubCategory\Details.cshtml" />
+    <Content Include="Views\SubCategory\Edit.cshtml" />
+    <Content Include="Views\SubCategory\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,4 +1,4 @@
-﻿@model InstaAlbum.Models.tblCategory
+﻿@model InstaAlbum.Models.tblSubCategory
 
 @{
     ViewBag.Title = "Details";
@@ -8,15 +8,15 @@
 <h2>Details</h2>
 
 <div>
-    <h4>tblCategory</h4>
+    <h4>tblSubCategory</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.CategoryName)
+            @Html.DisplayNameFor(model => model.SubCategoryName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CategoryName)
+            @Html.DisplayFor(model => model.SubCategoryName)
         </dd>
 
         <dt>
@@ -28,16 +28,16 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.UpdatedDate)
+            @Html.DisplayNameFor(model => model.tblParentCategory.ParentCategoryName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.UpdatedDate)
+            @Html.DisplayFor(model => model.tblParentCategory.ParentCategoryName)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryID }) |
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SubCategoryID }) |
     @Html.ActionLink("Back to List", "Index")
 </p>

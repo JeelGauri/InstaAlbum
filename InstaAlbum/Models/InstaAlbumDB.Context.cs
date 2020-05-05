@@ -26,16 +26,17 @@ namespace InstaAlbum.Models
         }
     
         public virtual DbSet<tblBranch> tblBranches { get; set; }
-        public virtual DbSet<tblCategory> tblCategories { get; set; }
         public virtual DbSet<tblCity> tblCities { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblFeedback> tblFeedbacks { get; set; }
         public virtual DbSet<tblGallery> tblGalleries { get; set; }
         public virtual DbSet<tblOrder> tblOrders { get; set; }
         public virtual DbSet<tblPackage> tblPackages { get; set; }
+        public virtual DbSet<tblParentCategory> tblParentCategories { get; set; }
         public virtual DbSet<tblPhotographer> tblPhotographers { get; set; }
         public virtual DbSet<tblSelfiePoint> tblSelfiePoints { get; set; }
         public virtual DbSet<tblState> tblStates { get; set; }
         public virtual DbSet<tblStudioAdmin> tblStudioAdmins { get; set; }
+        public virtual DbSet<tblSubCategory> tblSubCategories { get; set; }
     }
 }

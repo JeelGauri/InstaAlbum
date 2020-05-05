@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblBranch">
           <Key>
             <PropertyRef Name="BranchID" />
@@ -12,15 +12,6 @@
           <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BranchName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
-          <Property Name="CreatedDate" Type="date" Nullable="false" />
-          <Property Name="UpdatedDate" Type="date" />
-        </EntityType>
-        <EntityType Name="tblCategory">
-          <Key>
-            <PropertyRef Name="CategoryID" />
-          </Key>
-          <Property Name="CategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CategoryName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
         </EntityType>
@@ -61,9 +52,10 @@
             <PropertyRef Name="GalleryID" />
           </Key>
           <Property Name="GalleryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="IsSelected" Type="bit" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
         </EntityType>
@@ -85,13 +77,21 @@
             <PropertyRef Name="PackageID" />
           </Key>
           <Property Name="PackageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="PackageName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Offers" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="Price" Type="money" Nullable="false" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
+        </EntityType>
+        <EntityType Name="tblParentCategory">
+          <Key>
+            <PropertyRef Name="ParentCategoryID" />
+          </Key>
+          <Property Name="ParentCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentCategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblPhotographer">
           <Key>
@@ -151,6 +151,15 @@
           <Property Name="ActivateDate" Type="date" />
           <Property Name="DeactivateDate" Type="date" />
         </EntityType>
+        <EntityType Name="tblSubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryID" />
+          </Key>
+          <Property Name="SubCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ParentCatgoryID" Type="int" />
+          <Property Name="SubCategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreatedDate" Type="date" />
+        </EntityType>
         <Association Name="FK_tblCity_tblState">
           <End Role="tblState" Type="Self.tblState" Multiplicity="1" />
           <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
@@ -178,16 +187,16 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblGallery_tblCategory">
-          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1">
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1">
             <OnDelete Action="Cascade" />
           </End>
           <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblCategory">
-              <PropertyRef Name="CategoryID" />
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
             </Principal>
             <Dependent Role="tblGallery">
-              <PropertyRef Name="CategoryID" />
+              <PropertyRef Name="SubCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -256,14 +265,14 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblPackage_tblCategory">
-          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
           <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblCategory">
-              <PropertyRef Name="CategoryID" />
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
             </Principal>
             <Dependent Role="tblPackage">
-              <PropertyRef Name="CategoryID" />
+              <PropertyRef Name="SubCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -295,19 +304,32 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblSubCategory_tblSubCategory">
+          <End Role="tblParentCategory" Type="Self.tblParentCategory" Multiplicity="0..1" />
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblParentCategory">
+              <PropertyRef Name="ParentCategoryID" />
+            </Principal>
+            <Dependent Role="tblSubCategory">
+              <PropertyRef Name="ParentCatgoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InstaAlbumModelStoreContainer">
           <EntitySet Name="tblBranch" EntityType="Self.tblBranch" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblCategory" EntityType="Self.tblCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCity" EntityType="Self.tblCity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback" EntityType="Self.tblFeedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGallery" EntityType="Self.tblGallery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblOrder" EntityType="Self.tblOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPackage" EntityType="Self.tblPackage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblParentCategory" EntityType="Self.tblParentCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPhotographer" EntityType="Self.tblPhotographer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSelfiePoint" EntityType="Self.tblSelfiePoint" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudioAdmin" EntityType="Self.tblStudioAdmin" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblSubCategory" EntityType="Self.tblSubCategory" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_tblCity_tblState" Association="Self.FK_tblCity_tblState">
             <End Role="tblState" EntitySet="tblState" />
             <End Role="tblCity" EntitySet="tblCity" />
@@ -317,7 +339,7 @@
             <End Role="tblFeedback" EntitySet="tblFeedback" />
           </AssociationSet>
           <AssociationSet Name="FK_tblGallery_tblCategory" Association="Self.FK_tblGallery_tblCategory">
-            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblSubCategory" EntitySet="tblSubCategory" />
             <End Role="tblGallery" EntitySet="tblGallery" />
           </AssociationSet>
           <AssociationSet Name="FK_tblGallery_tblCustomer" Association="Self.FK_tblGallery_tblCustomer">
@@ -341,7 +363,7 @@
             <End Role="tblPackage" EntitySet="tblPackage" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPackage_tblCategory" Association="Self.FK_tblPackage_tblCategory">
-            <End Role="tblCategory" EntitySet="tblCategory" />
+            <End Role="tblSubCategory" EntitySet="tblSubCategory" />
             <End Role="tblPackage" EntitySet="tblPackage" />
           </AssociationSet>
           <AssociationSet Name="FK_tblPhotographer_tblBranch" Association="Self.FK_tblPhotographer_tblBranch">
@@ -352,8 +374,13 @@
             <End Role="tblCustomer" EntitySet="tblCustomer" />
             <End Role="tblSelfiePoint" EntitySet="tblSelfiePoint" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblSubCategory_tblSubCategory" Association="Self.FK_tblSubCategory_tblSubCategory">
+            <End Role="tblParentCategory" EntitySet="tblParentCategory" />
+            <End Role="tblSubCategory" EntitySet="tblSubCategory" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InstaAlbumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -369,17 +396,6 @@
           <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblBranch" FromRole="tblBranch" ToRole="tblOrder" />
           <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblBranch" FromRole="tblBranch" ToRole="tblPackage" />
           <NavigationProperty Name="tblPhotographers" Relationship="Self.FK_tblPhotographer_tblBranch" FromRole="tblBranch" ToRole="tblPhotographer" />
-        </EntityType>
-        <EntityType Name="tblCategory">
-          <Key>
-            <PropertyRef Name="CategoryID" />
-          </Key>
-          <Property Name="CategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblCategory" ToRole="tblGallery" />
-          <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblCategory" ToRole="tblPackage" />
         </EntityType>
         <EntityType Name="tblCity">
           <Key>
@@ -399,6 +415,7 @@
           <Property Name="CustomerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CustomerEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -407,7 +424,6 @@
           <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCustomer" FromRole="tblCustomer" ToRole="tblGallery" />
           <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblCustomer" FromRole="tblCustomer" ToRole="tblOrder" />
           <NavigationProperty Name="tblSelfiePoints" Relationship="Self.FK_tblSelfiePoint_tblCustomer" FromRole="tblCustomer" ToRole="tblSelfiePoint" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblFeedback">
           <Key>
@@ -424,13 +440,14 @@
             <PropertyRef Name="GalleryID" />
           </Key>
           <Property Name="GalleryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsSelected" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblGallery" ToRole="tblCategory" />
           <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblGallery_tblCustomer" FromRole="tblGallery" ToRole="tblCustomer" />
+          <NavigationProperty Name="tblSubCategory" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblGallery" ToRole="tblSubCategory" />
         </EntityType>
         <EntityType Name="tblOrder">
           <Key>
@@ -453,7 +470,7 @@
             <PropertyRef Name="PackageID" />
           </Key>
           <Property Name="PackageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
           <Property Name="BranchID" Type="Int32" Nullable="false" />
           <Property Name="PackageName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Offers" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
@@ -461,8 +478,17 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblPackage_tblBranch" FromRole="tblPackage" ToRole="tblBranch" />
-          <NavigationProperty Name="tblCategory" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblPackage" ToRole="tblCategory" />
           <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblPackage" FromRole="tblPackage" ToRole="tblOrder" />
+          <NavigationProperty Name="tblSubCategory" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblPackage" ToRole="tblSubCategory" />
+        </EntityType>
+        <EntityType Name="tblParentCategory">
+          <Key>
+            <PropertyRef Name="ParentCategoryID" />
+          </Key>
+          <Property Name="ParentCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblSubCategories" Relationship="Self.FK_tblSubCategory_tblSubCategory" FromRole="tblParentCategory" ToRole="tblSubCategory" />
         </EntityType>
         <EntityType Name="tblPhotographer">
           <Key>
@@ -525,6 +551,18 @@
           <Property Name="ActivateDate" Type="DateTime" Precision="0" />
           <Property Name="DeactivateDate" Type="DateTime" Precision="0" />
         </EntityType>
+        <EntityType Name="tblSubCategory">
+          <Key>
+            <PropertyRef Name="SubCategoryID" />
+          </Key>
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ParentCatgoryID" Type="Int32" />
+          <Property Name="SubCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblSubCategory" ToRole="tblGallery" />
+          <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblSubCategory" ToRole="tblPackage" />
+          <NavigationProperty Name="tblParentCategory" Relationship="Self.FK_tblSubCategory_tblSubCategory" FromRole="tblSubCategory" ToRole="tblParentCategory" />
+        </EntityType>
         <Association Name="FK_tblOrder_tblBranch">
           <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -562,32 +600,6 @@
             </Principal>
             <Dependent Role="tblPhotographer">
               <PropertyRef Name="BranchID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblGallery_tblCategory">
-          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblCategory">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="tblGallery">
-              <PropertyRef Name="CategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblPackage_tblCategory">
-          <End Role="tblCategory" Type="Self.tblCategory" Multiplicity="1" />
-          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblCategory">
-              <PropertyRef Name="CategoryID" />
-            </Principal>
-            <Dependent Role="tblPackage">
-              <PropertyRef Name="CategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -655,6 +667,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblGallery_tblCategory">
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="tblGallery">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblOrder_tblPackage">
           <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -669,19 +695,44 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblPackage_tblCategory">
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
+          <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="tblPackage">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tblSubCategory_tblSubCategory">
+          <End Role="tblParentCategory" Type="Self.tblParentCategory" Multiplicity="0..1" />
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblParentCategory">
+              <PropertyRef Name="ParentCategoryID" />
+            </Principal>
+            <Dependent Role="tblSubCategory">
+              <PropertyRef Name="ParentCatgoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InstaAlbumEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="tblBranches" EntityType="Self.tblBranch" />
-          <EntitySet Name="tblCategories" EntityType="Self.tblCategory" />
           <EntitySet Name="tblCities" EntityType="Self.tblCity" />
           <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
           <EntitySet Name="tblFeedbacks" EntityType="Self.tblFeedback" />
           <EntitySet Name="tblGalleries" EntityType="Self.tblGallery" />
           <EntitySet Name="tblOrders" EntityType="Self.tblOrder" />
           <EntitySet Name="tblPackages" EntityType="Self.tblPackage" />
+          <EntitySet Name="tblParentCategories" EntityType="Self.tblParentCategory" />
           <EntitySet Name="tblPhotographers" EntityType="Self.tblPhotographer" />
           <EntitySet Name="tblSelfiePoints" EntityType="Self.tblSelfiePoint" />
           <EntitySet Name="tblStates" EntityType="Self.tblState" />
           <EntitySet Name="tblStudioAdmins" EntityType="Self.tblStudioAdmin" />
+          <EntitySet Name="tblSubCategories" EntityType="Self.tblSubCategory" />
           <AssociationSet Name="FK_tblOrder_tblBranch" Association="Self.FK_tblOrder_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranches" />
             <End Role="tblOrder" EntitySet="tblOrders" />
@@ -693,14 +744,6 @@
           <AssociationSet Name="FK_tblPhotographer_tblBranch" Association="Self.FK_tblPhotographer_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranches" />
             <End Role="tblPhotographer" EntitySet="tblPhotographers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblGallery_tblCategory" Association="Self.FK_tblGallery_tblCategory">
-            <End Role="tblCategory" EntitySet="tblCategories" />
-            <End Role="tblGallery" EntitySet="tblGalleries" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblPackage_tblCategory" Association="Self.FK_tblPackage_tblCategory">
-            <End Role="tblCategory" EntitySet="tblCategories" />
-            <End Role="tblPackage" EntitySet="tblPackages" />
           </AssociationSet>
           <AssociationSet Name="FK_tblCity_tblState" Association="Self.FK_tblCity_tblState">
             <End Role="tblState" EntitySet="tblStates" />
@@ -722,9 +765,21 @@
             <End Role="tblCustomer" EntitySet="tblCustomers" />
             <End Role="tblSelfiePoint" EntitySet="tblSelfiePoints" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblGallery_tblCategory" Association="Self.FK_tblGallery_tblCategory">
+            <End Role="tblSubCategory" EntitySet="tblSubCategories" />
+            <End Role="tblGallery" EntitySet="tblGalleries" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblOrder_tblPackage" Association="Self.FK_tblOrder_tblPackage">
             <End Role="tblPackage" EntitySet="tblPackages" />
             <End Role="tblOrder" EntitySet="tblOrders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblPackage_tblCategory" Association="Self.FK_tblPackage_tblCategory">
+            <End Role="tblSubCategory" EntitySet="tblSubCategories" />
+            <End Role="tblPackage" EntitySet="tblPackages" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tblSubCategory_tblSubCategory" Association="Self.FK_tblSubCategory_tblSubCategory">
+            <End Role="tblParentCategory" EntitySet="tblParentCategories" />
+            <End Role="tblSubCategory" EntitySet="tblSubCategories" />
           </AssociationSet>
         </EntityContainer>
       </Schema>
@@ -744,16 +799,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblCategories">
-            <EntityTypeMapping TypeName="InstaAlbumModel.tblCategory">
-              <MappingFragment StoreEntitySet="tblCategory">
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
-                <ScalarProperty Name="CategoryName" ColumnName="CategoryName" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="tblCities">
             <EntityTypeMapping TypeName="InstaAlbumModel.tblCity">
               <MappingFragment StoreEntitySet="tblCity">
@@ -768,10 +813,10 @@
           <EntitySetMapping Name="tblCustomers">
             <EntityTypeMapping TypeName="InstaAlbumModel.tblCustomer">
               <MappingFragment StoreEntitySet="tblCustomer">
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
                 <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
@@ -793,9 +838,10 @@
             <EntityTypeMapping TypeName="InstaAlbumModel.tblGallery">
               <MappingFragment StoreEntitySet="tblGallery">
                 <ScalarProperty Name="GalleryID" ColumnName="GalleryID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="IsSelected" ColumnName="IsSelected" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
@@ -819,13 +865,22 @@
             <EntityTypeMapping TypeName="InstaAlbumModel.tblPackage">
               <MappingFragment StoreEntitySet="tblPackage">
                 <ScalarProperty Name="PackageID" ColumnName="PackageID" />
-                <ScalarProperty Name="CategoryID" ColumnName="CategoryID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="PackageName" ColumnName="PackageName" />
                 <ScalarProperty Name="Offers" ColumnName="Offers" />
                 <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblParentCategories">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblParentCategory">
+              <MappingFragment StoreEntitySet="tblParentCategory">
+                <ScalarProperty Name="ParentCategoryID" ColumnName="ParentCategoryID" />
+                <ScalarProperty Name="ParentCategoryName" ColumnName="ParentCategoryName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -888,6 +943,16 @@
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
                 <ScalarProperty Name="ActivateDate" ColumnName="ActivateDate" />
                 <ScalarProperty Name="DeactivateDate" ColumnName="DeactivateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblSubCategories">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblSubCategory">
+              <MappingFragment StoreEntitySet="tblSubCategory">
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+                <ScalarProperty Name="ParentCatgoryID" ColumnName="ParentCatgoryID" />
+                <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

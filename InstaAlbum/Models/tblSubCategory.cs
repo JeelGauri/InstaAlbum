@@ -11,24 +11,28 @@ namespace InstaAlbum.Models
 {
     using System;
     using System.Collections.Generic;
-    
-    public partial class tblCategory
+    using System.ComponentModel.DataAnnotations;
+
+    public partial class tblSubCategory
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblCategory()
+        public tblSubCategory()
         {
             this.tblGalleries = new HashSet<tblGallery>();
             this.tblPackages = new HashSet<tblPackage>();
         }
     
-        public int CategoryID { get; set; }
-        public string CategoryName { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public int SubCategoryID { get; set; }
+        public Nullable<int> ParentCatgoryID { get; set; }
+        public string SubCategoryName { get; set; }
+
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
+        public Nullable<System.DateTime> CreatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGallery> tblGalleries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPackage> tblPackages { get; set; }
+        public virtual tblParentCategory tblParentCategory { get; set; }
     }
 }

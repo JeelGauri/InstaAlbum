@@ -15,13 +15,14 @@ namespace InstaAlbum.Models
     public partial class tblGallery
     {
         public int GalleryID { get; set; }
-        public int CategoryID { get; set; }
+        public int SubCategoryID { get; set; }
         public int CustomerID { get; set; }
         public string Image { get; set; }
+        public Nullable<bool> IsSelected { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual tblCategory tblCategory { get; set; }
         public virtual tblCustomer tblCustomer { get; set; }
+        public virtual tblSubCategory tblSubCategory { get; set; }
     }
 }
