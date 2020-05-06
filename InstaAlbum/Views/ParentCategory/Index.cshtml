@@ -118,8 +118,6 @@
                 SCat :objSubCategoryDetails
 
             }
-
-            alert(JSON.stringify(jsonData));
             $.ajax({
                 async: true,
                 type: 'POST',
@@ -161,7 +159,7 @@
                         </div>
                     </div>
                     <h3>Parent Category Details</h3>
-                    <a href="@Url.Action("Index", "SubCategory")"><h1 class="mdi mdi-arrow-right"></h1></a>
+                    <a href="@Url.Action("Index", "SubCategory")" title="Click here to go to Sub Category"><h1 class="mdi mdi-arrow-right"></h1></a>
                 </div>
             </div>
         </div>

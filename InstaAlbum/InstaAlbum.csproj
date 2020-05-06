@@ -132,6 +132,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParentCategoryController.cs" />
+    <Compile Include="Controllers\PhotographerController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -418,9 +419,16 @@
     <Content Include="Views\SubCategory\Details.cshtml" />
     <Content Include="Views\SubCategory\Edit.cshtml" />
     <Content Include="Views\SubCategory\Index.cshtml" />
+    <Content Include="Views\Photographer\Create.cshtml" />
+    <Content Include="Views\Photographer\Delete.cshtml" />
+    <Content Include="Views\Photographer\Details.cshtml" />
+    <Content Include="Views\Photographer\Edit.cshtml" />
+    <Content Include="Views\Photographer\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Gallery\" />
+    <Folder Include="PhotographerProfilePics\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

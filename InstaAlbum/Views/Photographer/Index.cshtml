@@ -1,0 +1,65 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblPhotographer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="container col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <h3>Photographer List</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="example-height" class="table" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>ProfilePic</th>
+                                        <th>Photographer Name</th>
+                                        <th>Contact</th>
+                                        <th>DOB</th>
+                                        <th>Branch Name</th>
+                                        <th>Camera Name</th>
+                                        <th>Created And Updated Date</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td><img src="~/PhotographerProfilePics/@item.ProfilePic" height="50px" width="50px"/></td>
+                                            <td>@Html.DisplayFor(modelItem => item.PhotographerName)</td>
+                                            <td>
+                                                @Html.DisplayFor(modelItem => item.Email)<br />
+                                                @Html.DisplayFor(modelItem => item.PhoneNo)
+                                            </td>
+                                            <td>@Html.DisplayFor(modelItem => item.DOB)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.tblBranch.BranchName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CameraName)</td>
+                                            <td>@Html.DisplayFor(modelItem => item.CreatedDate)<br/>
+                                                @Html.DisplayFor(modelItem => item.UpdatedDate)
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                            </td>
+                                            <td>
+                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    }
+                                    </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

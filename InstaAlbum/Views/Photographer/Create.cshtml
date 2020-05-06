@@ -1,0 +1,233 @@
+﻿@model InstaAlbum.Models.tblPhotographer
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+    $(document).ready(function () {  
+       $.ajax({  
+           type: "GET",  
+           url: "/Branch/getAllBranch",  
+           data: "{}",  
+           success: function (data) {  
+               var s = '<option value="0">Please Select a Branch</option>';  
+               for (var i = 0; i < data.length; i++) {  
+                   s += '<option value="' + data[i].branchid + '">' + data[i].branchname+ '</option>';  
+               }  
+               $("#ddlBranch").html(s);  
+           }  
+       });  
+   });  
+</script>
+
+<script>
+
+    function fnValidateInputs() {
+
+        var IsValid = true;
+        var txtPhotographerName = $("#txtPhotographerName").val();
+        var txtEmail = $("#txtEmail").val();
+        var txtPhno = $("#txtPhno").val();
+        var txtDOB = $("#txtDOB").val();
+        var txtAddress = $("#txtAddress").val();
+
+        if (txtPhotographerName.length <= 0 || txtPhotographerName.length == "") {
+            toastr.warning('Input Error', 'Please enter photographer name', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtEmail.length <= 0 || txtEmail.length == "") {
+            toastr.warning('Input Error', 'Please enter photographer email', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtPhno.length <= 0 || txtPhno.length == "") {
+            toastr.warning('Input Error', 'Please enter phone number', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtDOB.length <= 0 || txtDOB.length == "") {
+            toastr.warning('Input Error', 'Please enter date of birth', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtAddress.length <= 0 || txtAddress.length == "") {
+            toastr.warning('Input Error', 'Please enter photographer name', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        return IsValid;
+    }
+
+
+    function fnInsertRecord() {
+
+        var ddlBranchID = document.getElementById("ddlBranch").value;
+        var txtPhotographerName = $("#txtPhotographerName").val();
+        var txtEmail = $("#txtEmail").val();
+        var txtPhno = $("#txtPhno").val();
+        var txtDOB = $("#txtDOB").val();
+        var txtAddress = $("#txtAddress").val();
+        var txtCameraName = $("#txtCameraName").val();
+        var chkIsActive = $('#chkIsActive').is(':checked');
+        var gender = $("#rdMale").is(':checked') ? "Male" : "Female";
+
+        var IsValid = fnValidateInputs();
+
+        var formData = new FormData();
+        var file = document.getElementById("inputProfile").files[0];
+        formData.append("imageFile", file);
+
+        if (IsValid == true) {
+
+            formData.append("PhotographerName", txtPhotographerName);
+            formData.append("Email", txtEmail);
+            formData.append("BranchID", ddlBranchID);
+            formData.append("PhoneNo", txtPhno);
+            formData.append("DOB", txtDOB);
+            formData.append("Gender", gender);
+            formData.append("Address", txtAddress);
+            formData.append("CameraName", txtCameraName);
+            formData.append("IsActive", chkIsActive);
+        }
+        else {
+            toastr.warning('Input Error', 'Please check the inputs.', { timeOut: 3000, fadeOut: 1000 });
+        }
+
+         $.ajax({
+               type: "POST",
+                url: '/Photographer/InsertPhotographer',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+
+    }
+
+</script>
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-camera-account"></h1>
+                    </div>
+                </div>
+                <h4>Photographer Management</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Photographer Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Photographer Name:</label>
+                                    <input type="text" class="form-control" id="txtPhotographerName" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputNumber">Phone No:</label>
+                                    <input type="number" class="form-control" id="txtPhno" placeholder="Phone Number">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputDob">DOB</label>
+                                    <input type="date" class="form-control" id="txtDOB" placeholder="DOB">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputgender">Gender</label>
+                                    <br />
+                                    <input type="radio" checked="checked" id="rdMale" name="status" />Male
+                                    <input type="radio" name="status" id="rdFemale" />Female
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Profile Pic</label>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputAddress">Address</label>
+                                    <textarea type="text" class="form-control" id="txtAddress" placeholder="Apartment, studio, or floor"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Camera Name:</label>
+                                    <input type="text" class="form-control" id="txtCameraName" placeholder="Enter Camera Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Branch Name:</label>
+                                    <select class="form-control" id="ddlBranch" name="departmentsDropdown"></select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">IsActive</label>
+                                    <label class="cstm-switch">
+                                        <input type="checkbox" id="chkIsActive" checked="checked" class="cstm-switch-input" />
+                                        <span class="cstm-switch-indicator bg-success "></span>
+                                        <span class="cstm-switch-description"></span>
+                                    </label>
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary"/>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

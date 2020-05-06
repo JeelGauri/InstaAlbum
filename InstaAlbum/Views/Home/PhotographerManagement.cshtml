@@ -1,115 +1,111 @@
-﻿
+﻿@model InstaAlbum.Models.tblPhotographer
 @{
     ViewBag.Title = "PhotographerManagement";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-    
-        <div class="bg-dark bg-dots m-b-30">
-            <div class="container">
-                <div class="row p-b-60 p-t-60">
 
-                    <div class="col-lg-8 text-center mx-auto text-white p-b-30">
-                        <div class="m-b-10">
-                            <div class="avatar avatar-lg ">
-                                <h1 class="mdi mdi-camera-account"></h1>
+
+<script>
+
+    function fnValidateInputs() {
+
+        var value = $("#ddl1").val();
+
+    }
+
+
+</script>
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-camera-account"></h1>
+                    </div>
+                </div>
+                <h4>Photographer Management</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Photographer Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Photographer Name:</label>
+                                    <input type="text" class="form-control" id="txtPhotographerName" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                                </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputNumber">Phone No:</label>
+                                    <input type="number" class="form-control" id="txtPhno" placeholder="Phone Number">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputDob">DOB</label>
+                                    <input type="date" class="form-control" id="txtDOB" placeholder="DOB">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputgender">Gender</label>
+                                    <br />
+                                    <input type="radio" checked="checked" id="rdMale" name="status" />Male
+                                    <input type="radio" name="status" id="rdFemale" />Female
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Profile Pic</label>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputAddress">Address</label>
+                                    <textarea type="text" class="form-control" id="txtAddress" placeholder="Apartment, studio, or floor"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Camera Name:</label>
+                                    <input type="text" class="form-control" id="txtCameraName" placeholder="Enter Camera Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Branch Name:</label>
+                                    @Html.DropDownListFor(model => model.BranchID, new SelectList(ViewBag.BranchID, "BranchID", "BranchName"),"Select Branch", new { id = "ddlBranch" })
+                                </div>
+
+                                <div class="form-group">
+                                    <button class="btn btn-primary">Submit</button>
+                                </div>
+
+                            </div>
+
                         </div>
-                        <h4>Photographer Management</h4>
+                        <!--widget card ends-->
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <section class="pull-up">
-            <div class="container">
-                <div class="row ">
-                    <div class="col-lg-8 mx-auto  mt-2">
-                        <div class="card py-3 m-b-30">
-                            <div class="card-body">
-                                <!--widget card begin-->
-                                <div class="card m-b-30">
-                                    <div class="card-header">
-                                            <h3>
-                                                Photographer Details
-                                            </h3>
-
-                                            <br />
-
-                                            <p class="m-b-0 text-muted">
-                                                <button class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Insert New Photographer</button>
-                                            </p>
-                                    </div>
-                                    <div class="card-body ">
-                                        <div class="form-row">
-                                            <div class="form-group col-md-6">
-                                                <label for="inputText">Photographer Name:</label>
-                                                <input type="text" class="form-control" id="inputText" placeholder="Enter Name">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputEmail4">Email</label>
-                                                <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
-                                            </div>
-                                            <div class="form-group col-md-6">
-                                                <label for="inputNumber">Phone No:</label>
-                                                <input type="number" class="form-control" id="inputNumber">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="inputDob">DOB</label>
-                                            <input type="date" class="form-control" id="inputDob" placeholder="DOB">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="inputgender">Gender</label>
-                                            <br />
-                                            <input type="radio" name="status" />Male
-                                            <input type="radio" name="status" />Female
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label for="inputProfile">Profile Pic</label>
-                                            <input type="file" class="form-control" id="inputProfile">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="inputAddress">Address</label>
-                                            <input type="text" class="form-control" id="inputAddress" placeholder="Apartment, studio, or floor">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="inputText">Camera Name:</label>
-                                            <input type="text" class="form-control" id="inputText" placeholder="Enter Camera Name">
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="inputText">Branch Name:</label>
-                                            <input type="text" class="form-control" id="inputText" placeholder="Enter Branch Name">
-                                        </div>
-
-                                        <div class="form-group">
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" id="gridCheck">
-                                                <label class="form-check-label" for="gridCheck">
+</section>
 
 
-                                                    Check me out
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <button class="btn btn-primary">Submit</button>
-                                        </div>
-                                        
-                                    </div>
-                                    
-                                </div>
-                                <!--widget card ends-->
-                            </div>
-                        </div>
-                    </div>
-                </div>  
-            </div>
-        
-        </section>
 
-
-        

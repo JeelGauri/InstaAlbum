@@ -20,6 +20,16 @@ namespace InstaAlbum.Controllers
             return View(db.tblBranches.ToList());
         }
 
+
+        public ActionResult getAllBranch()
+        {
+            return Json(db.tblBranches.Select(x => new
+            {
+                branchid = x.BranchID,
+                branchname = x.BranchName
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         // GET: Branch/Details/5
         public ActionResult Details(int? id)
         {
