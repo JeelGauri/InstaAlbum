@@ -56,7 +56,7 @@ namespace InstaAlbum.Controllers
             newPhotographer.PhotographerName = Request.Form["PhotographerName"];
             newPhotographer.Email = Request.Form["Email"];
             newBranch.BranchID = Convert.ToInt32(Request.Form["BranchID"]);
-            newPhotographer.PhoneNo = Convert.ToInt32(Request.Form["PhoneNo"]);
+            newPhotographer.PhoneNo = Request.Form["PhoneNo"];
             newPhotographer.DOB = Convert.ToDateTime(Request.Form["DOB"]);
             newPhotographer.Gender = Request.Form["Gender"];
             newPhotographer.Address = Request.Form["Address"];
@@ -135,16 +135,12 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult UpdatePhotographer()
         {
-            tblPhotographer newPhotographer = new tblPhotographer();
+            int intPhotoGrapherID = Convert.ToInt32(Request.Form["PhotographerID"]);
+            tblPhotographer newPhotographer = db.tblPhotographers.SingleOrDefault(p => p.PhotographerID == intPhotoGrapherID);
             tblBranch newBranch = new tblBranch();
-            newPhotographer.PhotographerID = Convert.ToInt32(Request.Form["PhotographerID"]);
             newPhotographer.PhotographerName = Request.Form["PhotographerName"];
-            newPhotographer.Email = Request.Form["Email"];
-            newPhotographer.ProfilePic = Request.Form["ProfilePic"];
             newBranch.BranchID = Convert.ToInt32(Request.Form["BranchID"]);
-            newPhotographer.PhoneNo = Convert.ToInt32(Request.Form["PhoneNo"]);
-            newPhotographer.DOB = Convert.ToDateTime(Request.Form["DOB"]);
-            newPhotographer.CreatedDate = Convert.ToDateTime(Request.Form["CreatedDate"]);
+            newPhotographer.PhoneNo = Request.Form["PhoneNo"];
             newPhotographer.Gender = Request.Form["Gender"];
             newPhotographer.Address = Request.Form["Address"];
             newPhotographer.CameraName = Request.Form["CameraName"];
@@ -169,10 +165,13 @@ namespace InstaAlbum.Controllers
                         fileContent = file.InputStream;
 
 
-                        if (mimeType.Equals(""))
+                        if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
                         {
-
+                            return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
                         }
+                        if(fileSize > 2000000)
+                            return Json(new { SizeWarning = true, message = "Profile pic size must less than 2 MB." }, JsonRequestBehavior.AllowGet);
+
                         //To save file, use SaveAs method
                         file.SaveAs(Server.MapPath("~/PhotographerProfilePics/") + fileName); //File will be saved in application root
                         string path = Server.MapPath("~/PhotographerProfilePics/" + newPhotographer.ProfilePic);
@@ -191,26 +190,13 @@ namespace InstaAlbum.Controllers
             return Json(new { success = false, message = "Record not updated" }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Photographer/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblPhotographer tblPhotographer = db.tblPhotographers.Find(id);
-            if (tblPhotographer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblPhotographer);
-        }
-
-        // POST: Photographer/Delete/5
         [HttpPost]
         public ActionResult DeletePhotographer(int id)
         {
             tblPhotographer tblPhotographer = db.tblPhotographers.Find(id);
+            string path = Server.MapPath("~/PhotographerProfilePics/" + tblPhotographer.ProfilePic);
+            FileInfo delfile = new FileInfo(path);
+            delfile.Delete();
             db.tblPhotographers.Remove(tblPhotographer);
             db.SaveChanges();
             return RedirectToAction("Index");

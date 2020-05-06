@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="fbb22ee511a54224abf902b557044ebc" Name="Diagram1">
+      <Diagram DiagramId="a4cc49d0223b4f3390f496cd58147cae" Name="Diagram1">
         <EntityTypeShape EntityType="InstaAlbumModel.tblBranch" Width="1.5" PointX="3.75" PointY="1.375" IsExpanded="true" />
         <EntityTypeShape EntityType="InstaAlbumModel.tblCity" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
         <EntityTypeShape EntityType="InstaAlbumModel.tblCustomer" Width="1.5" PointX="0.75" PointY="5.875" IsExpanded="true" />

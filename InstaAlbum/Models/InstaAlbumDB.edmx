@@ -101,7 +101,7 @@
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="PhotographerName" Type="varchar" MaxLength="60" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="PhoneNo" Type="int" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="DOB" Type="datetime" Nullable="false" />
           <Property Name="Gender" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="ProfilePic" Type="varchar" MaxLength="500" Nullable="false" />
@@ -498,7 +498,7 @@
           <Property Name="BranchID" Type="Int32" Nullable="false" />
           <Property Name="PhotographerName" Type="String" MaxLength="60" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PhoneNo" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DOB" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ProfilePic" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />

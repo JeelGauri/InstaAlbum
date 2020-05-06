@@ -19,7 +19,7 @@ namespace InstaAlbum.Models
         public int BranchID { get; set; }
         public string PhotographerName { get; set; }
         public string Email { get; set; }
-        public int PhoneNo { get; set; }
+        public string PhoneNo { get; set; }
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime DOB { get; set; }
         public string Gender { get; set; }

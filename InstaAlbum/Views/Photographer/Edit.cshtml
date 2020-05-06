@@ -40,8 +40,6 @@
         function fnUpdateRecord() {
 
         var hdnPhotographerID = $("#hdnPhotographerID").val();
-        var hdnProfilePic = $("#hdnProfilePic").val();
-        var hdnCreatedDate = $("#hdnCreatedDate").val();
         var ddlBranchID = document.getElementById("ddlBranch").value;
         var txtPhotographerName = $("#txtPhotographerName").val();
         var txtEmail = $("#txtEmail").val();
@@ -57,17 +55,14 @@
         var formData = new FormData();
         var file = document.getElementById("inputProfile").files[0];
         formData.append("imageFile", file);
-            alert(IsValid);
+
         if (IsValid == true) {
 
             formData.append("PhotographerID", hdnPhotographerID);
-            formData.append("ProfilePic", hdnProfilePic);
             formData.append("PhotographerName", txtPhotographerName);
             formData.append("Email", txtEmail);
             formData.append("BranchID", ddlBranchID);
             formData.append("PhoneNo", txtPhno);
-            formData.append("DOB", txtDOB);
-            formData.append("CreatedDate", hdnCreatedDate);
             formData.append("Gender", gender);
             formData.append("Address", txtAddress);
             formData.append("CameraName", txtCameraName);
@@ -89,7 +84,7 @@
                     if (response.success === true) {
                         toastr.success(
                             response.message,
-                            'Record is inserted',
+                            'Record is updated',
                             {
                                 timeOut: 1000,
                                 fadeOut: 1000,
@@ -99,9 +94,36 @@
                             }
                         );
                     }
+                    else if (response.Formatwarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
+                    else if (response.SizeWarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture Size error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
+
                 },
                 error: function () {
-                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    toastr.error('Error occur', 'Error occur while updating record.', { timeOut: 3000 });
                     return;
                 }
 
@@ -145,8 +167,6 @@
                                     <div class="form-group col-md-6">
                                         <label for="inputText">Photographer Name:</label>
                                         <input type="hidden" id="hdnPhotographerID" value="@Html.DisplayFor(model => model.PhotographerID)" />
-                                        <input type="hidden" id="hdnProfilePic" value="@Html.DisplayFor(model => model.ProfilePic)" />
-                                        <input type="hidden" id="hdnCreatedDate" value="@Html.DisplayFor(model => model.CreatedDate)" />
                                         <input type="text" class="form-control" value="@Html.DisplayFor(model => model.PhotographerName)" id="txtPhotographerName" placeholder="Enter Name">
                                     </div>
                                     <div class="form-group col-md-6">
