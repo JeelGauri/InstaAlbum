@@ -4,125 +4,237 @@
     ViewBag.Title = "Edit";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>Edit</h2>
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
     
-    <div class="form-horizontal">
-        <h4>tblPhotographer</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.PhotographerID)
+    <script>
+        function fnValidateInputs() {
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.BranchID, "BranchID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("BranchID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.BranchID, "", new { @class = "text-danger" })
+        var IsValid = true;
+        var txtPhotographerName = $("#txtPhotographerName").val();
+        var txtEmail = $("#txtEmail").val();
+        var txtPhno = $("#txtPhno").val();
+        var txtAddress = $("#txtAddress").val();
+
+        if (txtPhotographerName.length <= 0 || txtPhotographerName.length == "") {
+            toastr.warning('Input Error', 'Please enter photographer name', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtEmail.length <= 0 || txtEmail.length == "") {
+            toastr.warning('Input Error', 'Please enter photographer email', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtPhno.length <= 0 || txtPhno.length == "") {
+            toastr.warning('Input Error', 'Please enter phone number', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        if (txtAddress.length <= 0 || txtAddress.length == "") {
+            toastr.warning('Input Error', 'Please enter photographer name', { timeOut: 3000, fadeOut: 1000 });
+            IsValid = false;
+        }
+
+        return IsValid;
+        }
+
+        function fnUpdateRecord() {
+
+        var hdnPhotographerID = $("#hdnPhotographerID").val();
+        var hdnProfilePic = $("#hdnProfilePic").val();
+        var hdnCreatedDate = $("#hdnCreatedDate").val();
+        var ddlBranchID = document.getElementById("ddlBranch").value;
+        var txtPhotographerName = $("#txtPhotographerName").val();
+        var txtEmail = $("#txtEmail").val();
+        var txtPhno = $("#txtPhno").val();
+        var txtDOB = $("#txtDOB").val();
+        var txtAddress = $("#txtAddress").val();
+        var txtCameraName = $("#txtCameraName").val();
+        var chkIsActive = $('#chkIsActive').is(':checked');
+        var gender = $("#rdMale").is(':checked') ? "Male" : "Female";
+
+        var IsValid = fnValidateInputs();
+
+        var formData = new FormData();
+        var file = document.getElementById("inputProfile").files[0];
+        formData.append("imageFile", file);
+            alert(IsValid);
+        if (IsValid == true) {
+
+            formData.append("PhotographerID", hdnPhotographerID);
+            formData.append("ProfilePic", hdnProfilePic);
+            formData.append("PhotographerName", txtPhotographerName);
+            formData.append("Email", txtEmail);
+            formData.append("BranchID", ddlBranchID);
+            formData.append("PhoneNo", txtPhno);
+            formData.append("DOB", txtDOB);
+            formData.append("CreatedDate", hdnCreatedDate);
+            formData.append("Gender", gender);
+            formData.append("Address", txtAddress);
+            formData.append("CameraName", txtCameraName);
+            formData.append("IsActive", chkIsActive);
+        }
+        else {
+            toastr.warning('Input Error', 'Please check the inputs.', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+
+         $.ajax({
+               type: "POST",
+                url: '/Photographer/UpdatePhotographer',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.href = '/Photographer/';
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+
+        }
+
+        function fnSetGender(gender) {
+            alert(gender);
+            if (gender == "Male")
+                $("#rdMale").prop("checked", true);
+            else
+                $("#rdFemale").prop("checked", true);
+        }
+    </script>
+    <div class="bg-dark bg-dots m-b-30">
+        <div class="container">
+            <div class="row p-b-60 p-t-60">
+
+                <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                    <div class="m-b-10">
+                        <div class="avatar avatar-lg ">
+                            <h1 class="mdi mdi-camera-account"></h1>
+                        </div>
+                    </div>
+                    <h4>Photographer Management</h4>
+                </div>
             </div>
         </div>
+    </div>
+    <section class="pull-up">
+        <div class="container">
+            <div class="row ">
+                <div class="col-lg-8 mx-auto  mt-2">
+                    <div class="card py-3 m-b-30">
+                        <div class="card-body">
+                            <h3>Photographer Details</h3>
+                            <div class="card-body ">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhotographerName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhotographerName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhotographerName, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputText">Photographer Name:</label>
+                                        <input type="hidden" id="hdnPhotographerID" value="@Html.DisplayFor(model => model.PhotographerID)" />
+                                        <input type="hidden" id="hdnProfilePic" value="@Html.DisplayFor(model => model.ProfilePic)" />
+                                        <input type="hidden" id="hdnCreatedDate" value="@Html.DisplayFor(model => model.CreatedDate)" />
+                                        <input type="text" class="form-control" value="@Html.DisplayFor(model => model.PhotographerName)" id="txtPhotographerName" placeholder="Enter Name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputEmail4">Email</label>
+                                        <input type="email" readonly class="form-control" value="@Html.DisplayFor(model => model.Email)" id="txtEmail" placeholder="Email">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputNumber">Phone No:</label>
+                                        <input type="number" class="form-control" value="@Html.DisplayFor(model => model.PhoneNo)" id="txtPhno" placeholder="Phone Number">
+                                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputDob">DOB</label>
+                                        <input type="text" class="form-control" readonly value="@Html.DisplayFor(model => model.DOB)" id="txtDOB" placeholder="DOB">
+                                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.PhoneNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputgender">Gender</label>
+                                        <br />
+                                        @if (Model.Gender == "Male")
+                                        {
+                                            <input type="radio" checked id="rdMale" name="status" /><label id="lblMale" for="rdMale" value="Male">Male</label>
+                                            <input type="radio" name="status" id="rdFemale" /><label id="lblMale" for="rdFemale" value="Female">Female</label>
+                                        }
+                                        else
+                                        {
+                                            <input type="radio" id="rdMale" name="status" /><label id="lblMale" for="rdMale" value="Male">Male</label>
+                                            <input type="radio" checked  name="status" id="rdFemale" /><label id="lblMale" for="rdFemale" value="Female">Female</label>
+                                        }
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputProfile">Profile Pic</label>
+                                        <input type="file" class="form-control" id="inputProfile">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <label for="inputAddress">Address</label>
+                                        <textarea type="text" class="form-control" id="txtAddress" placeholder="Apartment, studio, or floor">@Html.DisplayFor(model => model.Address)
+                                        </textarea>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputText">Camera Name:</label>
+                                        <input type="text" class="form-control" value="@Html.DisplayFor(model => model.CameraName)" id="txtCameraName" placeholder="Enter Camera Name">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label for="inputText">Branch Name:</label>
+                                        @Html.DropDownList("BranchID", null, htmlAttributes: new { @class = "form-control",@id="ddlBranch" })
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="inputProfile">IsActive</label>
+                                        <label class="cstm-switch">
+                                            @if(Model.IsActive == true)
+                                            {
+                                                <input type="checkbox" id="chkIsActive" checked="checked" class="cstm-switch-input" />
+                                            }
+                                            else
+                                            {
+                                                <input type="checkbox" id="chkIsActive" class="cstm-switch-input" />
+                                            }
+                                            <span class="cstm-switch-indicator bg-success "></span>
+                                            <span class="cstm-switch-description"></span>
+                                        </label>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <input type="submit" onclick="javascript:fnUpdateRecord()" value="Submit" class="btn btn-primary" />
+                                        <a href="@Url.Action("Index", "Photographer")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                    </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Gender, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProfilePic, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ProfilePic, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ProfilePic, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Address, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Address, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CameraName, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CameraName, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CameraName, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.CreatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.CreatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.CreatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.UpdatedDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.UpdatedDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.UpdatedDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.IsActive, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.IsActive)
-                    @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+                            </div>
+                            <!--widget card ends-->
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+    </section>

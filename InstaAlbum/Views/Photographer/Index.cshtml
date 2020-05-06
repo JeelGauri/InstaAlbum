@@ -4,6 +4,48 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+    <script type="text/javascript">
+        function ConfirmationDialog(PhotographerID) {
+            if (confirm("Are you sure to delete?"))
+                fnDeleteRecord(PhotographerID);
+            else
+                return false;
+        }
+    </script>
+    <script>
+    function fnDeleteRecord(PhotographerID) {
+        $.ajax({
+            async: true,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: "{'id':'" + PhotographerID + "'}",
+            url: '/Photographer/DeletePhotographer',
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                      response.message,
+                      'Record is deleted',
+                      {
+                        timeOut: 1000,
+                        fadeOut: 1000,
+                        onHidden: function () {
+                            window.location.reload();
+                          }
+                      }
+                    );
+                }
+                else {
+                    toastr.info(response.message, 'Record is not deleted',  { timeOut: 3000 });
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 3000 });
+            }
+
+        });
+    }
+    </script>
 
     <div class="container col-12">
         <div class="row">
@@ -12,6 +54,7 @@
                     <div class="card-body">
                         <div>
                             <h3>Photographer List</h3>
+                            <a href="@Url.Action("Create", "Photographer")" class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" >Add Photographer</a> 
                         </div>
                         <div class="table-responsive">
                             <table id="example-height" class="table" style="width:100%">
@@ -45,10 +88,10 @@
                                                 @Html.DisplayFor(modelItem => item.UpdatedDate)
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success">Edit</button>
+                                                @Html.ActionLink("Update", "Edit", new { id = item.PhotographerID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" })
                                             </td>
                                             <td>
-                                                <button type="button" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Delete</button>
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" onclick="return ConfirmationDialog(@Html.DisplayFor(modelItem => item.PhotographerID))" value="Delete" />
                                             </td>
                                         </tr>
                                     }

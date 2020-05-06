@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Entity;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -132,17 +133,62 @@ namespace InstaAlbum.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "PhotographerID,BranchID,PhotographerName,Email,PhoneNo,DOB,Gender,ProfilePic,Address,CameraName,CreatedDate,UpdatedDate,IsActive")] tblPhotographer tblPhotographer)
+        public ActionResult UpdatePhotographer()
         {
+            tblPhotographer newPhotographer = new tblPhotographer();
+            tblBranch newBranch = new tblBranch();
+            newPhotographer.PhotographerID = Convert.ToInt32(Request.Form["PhotographerID"]);
+            newPhotographer.PhotographerName = Request.Form["PhotographerName"];
+            newPhotographer.Email = Request.Form["Email"];
+            newPhotographer.ProfilePic = Request.Form["ProfilePic"];
+            newBranch.BranchID = Convert.ToInt32(Request.Form["BranchID"]);
+            newPhotographer.PhoneNo = Convert.ToInt32(Request.Form["PhoneNo"]);
+            newPhotographer.DOB = Convert.ToDateTime(Request.Form["DOB"]);
+            newPhotographer.CreatedDate = Convert.ToDateTime(Request.Form["CreatedDate"]);
+            newPhotographer.Gender = Request.Form["Gender"];
+            newPhotographer.Address = Request.Form["Address"];
+            newPhotographer.CameraName = Request.Form["CameraName"];
+            newPhotographer.IsActive = Request.Form["IsActive"] == "true" ? true : false;
+
             if (ModelState.IsValid)
             {
-                db.Entry(tblPhotographer).State = EntityState.Modified;
+                if (Request.Files.Count > 0)
+                {
+                    int fileSize = 0;
+                    string fileName = string.Empty;
+                    string mimeType = string.Empty;
+                    System.IO.Stream fileContent;
+
+                    for (int i = 0; i < Request.Files.Count; i++)
+                    {
+                        HttpPostedFileBase file = Request.Files[i]; //Uploaded file
+                                                                    //Use the following properties to get file's name, size and MIMEType
+                        fileSize = file.ContentLength;
+                        fileName = file.FileName;
+                        mimeType = file.ContentType;
+                        fileContent = file.InputStream;
+
+
+                        if (mimeType.Equals(""))
+                        {
+
+                        }
+                        //To save file, use SaveAs method
+                        file.SaveAs(Server.MapPath("~/PhotographerProfilePics/") + fileName); //File will be saved in application root
+                        string path = Server.MapPath("~/PhotographerProfilePics/" + newPhotographer.ProfilePic);
+                        FileInfo delfile = new FileInfo(path);
+                        delfile.Delete();
+                        newPhotographer.ProfilePic = fileName;
+                    }
+                }
+                newPhotographer.UpdatedDate= DateTime.Now;
+                newPhotographer.BranchID = newBranch.BranchID;
+                db.Entry(newPhotographer).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return Json(new { success = true, message = "Record updated" }, JsonRequestBehavior.AllowGet);
             }
-            ViewBag.BranchID = new SelectList(db.tblBranches, "BranchID", "BranchName", tblPhotographer.BranchID);
-            return View(tblPhotographer);
+            ViewBag.BranchID = new SelectList(db.tblBranches, "BranchID", "BranchName", newPhotographer.BranchID);
+            return Json(new { success = false, message = "Record not updated" }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Photographer/Delete/5
@@ -161,9 +207,8 @@ namespace InstaAlbum.Controllers
         }
 
         // POST: Photographer/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        [HttpPost]
+        public ActionResult DeletePhotographer(int id)
         {
             tblPhotographer tblPhotographer = db.tblPhotographers.Find(id);
             db.tblPhotographers.Remove(tblPhotographer);
@@ -178,6 +223,15 @@ namespace InstaAlbum.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        public ActionResult IsEmailExistOrNot(string Email)
+        {
+            if (db.tblPhotographers.Any(c => c.Email == Email))
+                return Json(new { success = true, message = "Record Existed" }, JsonRequestBehavior.AllowGet);
+            else
+                return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);
+
         }
     }
 }

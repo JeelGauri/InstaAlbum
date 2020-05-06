@@ -7,7 +7,33 @@
 
 <script>
 
-    $(document).ready(function () {  
+    $(document).ready(function () {
+       var txtEmail = document.getElementById("txtEmail");
+        $("#txtEmail").blur(function () {
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "{'Email':'" + txtEmail.value + "'}",
+                url: '/Photographer/IsEmailExistOrNot',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.info(response.message, 'Email is already exist', { timeOut: 1000 });
+                        txtEmail.value = "";
+                        txtEmail.focus();
+                        return;
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        })
+
        $.ajax({  
            type: "GET",  
            url: "/Branch/getAllBranch",  
@@ -95,6 +121,7 @@
         }
         else {
             toastr.warning('Input Error', 'Please check the inputs.', { timeOut: 3000, fadeOut: 1000 });
+            return;
         }
 
          $.ajax({
@@ -217,7 +244,8 @@
                             </div>
                             <div class="form-row">
                                 <div class="form-group">
-                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary"/>
+                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Photographer")" title="Click here to get List" class="btn btn-success">Cancel</a>
                                 </div>
 
                             </div>
