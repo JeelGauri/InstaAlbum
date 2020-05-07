@@ -12,18 +12,14 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblOrder
+    public partial class CustomerConfigure
     {
-        public int OrderID { get; set; }
-        public int PackageID { get; set; }
-        public int BranchID { get; set; }
         public int CustomerID { get; set; }
-        public decimal TotalAmount { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public int ParentCategoryID { get; set; }
+        public int SubCategoryID { get; set; }
     
-        public virtual tblBranch tblBranch { get; set; }
         public virtual tblCustomer tblCustomer { get; set; }
-        public virtual tblPackage tblPackage { get; set; }
+        public virtual tblParentCategory tblParentCategory { get; set; }
+        public virtual tblSubCategory tblSubCategory { get; set; }
     }
 }

@@ -14,7 +14,7 @@ namespace InstaAlbum.Models
     
     public partial class tblGallery
     {
-        public int GalleryID { get; set; }
+        public long GalleryID { get; set; }
         public int SubCategoryID { get; set; }
         public int CustomerID { get; set; }
         public string Image { get; set; }

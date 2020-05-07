@@ -11,8 +11,7 @@ namespace InstaAlbum.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-
+    
     public partial class tblPhotographer
     {
         public int PhotographerID { get; set; }
@@ -20,15 +19,12 @@ namespace InstaAlbum.Models
         public string PhotographerName { get; set; }
         public string Email { get; set; }
         public string PhoneNo { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime DOB { get; set; }
         public string Gender { get; set; }
         public string ProfilePic { get; set; }
         public string Address { get; set; }
         public string CameraName { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public System.DateTime CreatedDate { get; set; }
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:MM/dd/yyyy}")]
         public Nullable<System.DateTime> UpdatedDate { get; set; }
         public Nullable<bool> IsActive { get; set; }
     

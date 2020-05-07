@@ -5,6 +5,24 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
       <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CustomerConfigure">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="ParentCategoryID" />
+            <PropertyRef Name="SubCategoryID" />
+          </Key>
+          <Property Name="CustomerID" Type="int" Nullable="false" />
+          <Property Name="ParentCategoryID" Type="int" Nullable="false" />
+          <Property Name="SubCategoryID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblAboutUs">
+          <Key>
+            <PropertyRef Name="AboutUsID" />
+          </Key>
+          <Property Name="AboutUsID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblBranch">
           <Key>
             <PropertyRef Name="BranchID" />
@@ -12,16 +30,6 @@
           <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BranchName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
-          <Property Name="CreatedDate" Type="date" Nullable="false" />
-          <Property Name="UpdatedDate" Type="date" />
-        </EntityType>
-        <EntityType Name="tblCity">
-          <Key>
-            <PropertyRef Name="CityID" />
-          </Key>
-          <Property Name="CityID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StateID" Type="int" Nullable="false" />
-          <Property Name="CityName" Type="varchar" MaxLength="20" Nullable="false" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
         </EntityType>
@@ -51,7 +59,7 @@
           <Key>
             <PropertyRef Name="GalleryID" />
           </Key>
-          <Property Name="GalleryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="GalleryID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="SubCategoryID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
@@ -68,7 +76,6 @@
           <Property Name="BranchID" Type="int" Nullable="false" />
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="TotalAmount" Type="money" Nullable="false" />
-          <Property Name="PaymentMode" Type="varchar" MaxLength="30" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
         </EntityType>
@@ -121,35 +128,33 @@
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
         </EntityType>
-        <EntityType Name="tblState">
+        <EntityType Name="tblService">
           <Key>
-            <PropertyRef Name="StateID" />
+            <PropertyRef Name="ServiceID" />
           </Key>
-          <Property Name="StateID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StateName" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceName" Type="int" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
-          <Property Name="UpdatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblStudioAdmin">
           <Key>
             <PropertyRef Name="StudioID" />
           </Key>
           <Property Name="StudioID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="StudioName" Type="varchar" MaxLength="30" />
+          <Property Name="StudioName" Type="varchar" MaxLength="50" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
           <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
-          <Property Name="PhoneNo" Type="int" Nullable="false" />
+          <Property Name="PhoneNo" Type="varchar" MaxLength="15" Nullable="false" />
           <Property Name="StudioLogo" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="About" Type="varchar" MaxLength="100" />
           <Property Name="OpeningHours" Type="varchar" MaxLength="30" />
           <Property Name="ClosingHours" Type="varchar" MaxLength="30" />
           <Property Name="Map" Type="varchar(max)" />
-          <Property Name="IsActive" Type="bit" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
           <Property Name="UpdatedDate" Type="date" />
-          <Property Name="ActivateDate" Type="date" />
-          <Property Name="DeactivateDate" Type="date" />
         </EntityType>
         <EntityType Name="tblSubCategory">
           <Key>
@@ -158,17 +163,52 @@
           <Property Name="SubCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentCatgoryID" Type="int" />
           <Property Name="SubCategoryName" Type="nvarchar" MaxLength="50" />
+          <Property Name="SubCategoryCoverPhoto" Type="varchar" MaxLength="200" />
           <Property Name="CreatedDate" Type="date" />
         </EntityType>
-        <Association Name="FK_tblCity_tblState">
-          <End Role="tblState" Type="Self.tblState" Multiplicity="1" />
-          <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
+        <EntityType Name="tblWebGallery">
+          <Key>
+            <PropertyRef Name="WebGalleryID" />
+          </Key>
+          <Property Name="WebGalleryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceID" Type="int" Nullable="false" />
+          <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="varchar(max)" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_CustomerConfigure_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+          <End Role="CustomerConfigure" Type="Self.CustomerConfigure" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tblState">
-              <PropertyRef Name="StateID" />
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
             </Principal>
-            <Dependent Role="tblCity">
-              <PropertyRef Name="StateID" />
+            <Dependent Role="CustomerConfigure">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerConfigure_tblParentCategory">
+          <End Role="tblParentCategory" Type="Self.tblParentCategory" Multiplicity="1" />
+          <End Role="CustomerConfigure" Type="Self.CustomerConfigure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblParentCategory">
+              <PropertyRef Name="ParentCategoryID" />
+            </Principal>
+            <Dependent Role="CustomerConfigure">
+              <PropertyRef Name="ParentCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerConfigure_tblSubCategory">
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
+          <End Role="CustomerConfigure" Type="Self.CustomerConfigure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="CustomerConfigure">
+              <PropertyRef Name="SubCategoryID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -316,9 +356,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblWebGallery_tblService">
+          <End Role="tblService" Type="Self.tblService" Multiplicity="1" />
+          <End Role="tblWebGallery" Type="Self.tblWebGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblService">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="tblWebGallery">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InstaAlbumModelStoreContainer">
+          <EntitySet Name="CustomerConfigure" EntityType="Self.CustomerConfigure" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblAboutUs" EntityType="Self.tblAboutUs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBranch" EntityType="Self.tblBranch" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblCity" EntityType="Self.tblCity" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblCustomer" EntityType="Self.tblCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblFeedback" EntityType="Self.tblFeedback" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblGallery" EntityType="Self.tblGallery" Schema="dbo" store:Type="Tables" />
@@ -327,12 +380,21 @@
           <EntitySet Name="tblParentCategory" EntityType="Self.tblParentCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPhotographer" EntityType="Self.tblPhotographer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSelfiePoint" EntityType="Self.tblSelfiePoint" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tblState" EntityType="Self.tblState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblService" EntityType="Self.tblService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudioAdmin" EntityType="Self.tblStudioAdmin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSubCategory" EntityType="Self.tblSubCategory" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_tblCity_tblState" Association="Self.FK_tblCity_tblState">
-            <End Role="tblState" EntitySet="tblState" />
-            <End Role="tblCity" EntitySet="tblCity" />
+          <EntitySet Name="tblWebGallery" EntityType="Self.tblWebGallery" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_CustomerConfigure_tblCustomer" Association="Self.FK_CustomerConfigure_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomer" />
+            <End Role="CustomerConfigure" EntitySet="CustomerConfigure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerConfigure_tblParentCategory" Association="Self.FK_CustomerConfigure_tblParentCategory">
+            <End Role="tblParentCategory" EntitySet="tblParentCategory" />
+            <End Role="CustomerConfigure" EntitySet="CustomerConfigure" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerConfigure_tblSubCategory" Association="Self.FK_CustomerConfigure_tblSubCategory">
+            <End Role="tblSubCategory" EntitySet="tblSubCategory" />
+            <End Role="CustomerConfigure" EntitySet="CustomerConfigure" />
           </AssociationSet>
           <AssociationSet Name="FK_tblFeedback_tblCustomer" Association="Self.FK_tblFeedback_tblCustomer">
             <End Role="tblCustomer" EntitySet="tblCustomer" />
@@ -378,12 +440,37 @@
             <End Role="tblParentCategory" EntitySet="tblParentCategory" />
             <End Role="tblSubCategory" EntitySet="tblSubCategory" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblWebGallery_tblService" Association="Self.FK_tblWebGallery_tblService">
+            <End Role="tblService" EntitySet="tblService" />
+            <End Role="tblWebGallery" EntitySet="tblWebGallery" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InstaAlbumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CustomerConfigure">
+          <Key>
+            <PropertyRef Name="CustomerID" />
+            <PropertyRef Name="ParentCategoryID" />
+            <PropertyRef Name="SubCategoryID" />
+          </Key>
+          <Property Name="CustomerID" Type="Int32" Nullable="false" />
+          <Property Name="ParentCategoryID" Type="Int32" Nullable="false" />
+          <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tblCustomer" Relationship="Self.FK_CustomerConfigure_tblCustomer" FromRole="CustomerConfigure" ToRole="tblCustomer" />
+          <NavigationProperty Name="tblParentCategory" Relationship="Self.FK_CustomerConfigure_tblParentCategory" FromRole="CustomerConfigure" ToRole="tblParentCategory" />
+          <NavigationProperty Name="tblSubCategory" Relationship="Self.FK_CustomerConfigure_tblSubCategory" FromRole="CustomerConfigure" ToRole="tblSubCategory" />
+        </EntityType>
+        <EntityType Name="tblAboutU">
+          <Key>
+            <PropertyRef Name="AboutUsID" />
+          </Key>
+          <Property Name="AboutUsID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
         <EntityType Name="tblBranch">
           <Key>
             <PropertyRef Name="BranchID" />
@@ -397,17 +484,6 @@
           <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblBranch" FromRole="tblBranch" ToRole="tblPackage" />
           <NavigationProperty Name="tblPhotographers" Relationship="Self.FK_tblPhotographer_tblBranch" FromRole="tblBranch" ToRole="tblPhotographer" />
         </EntityType>
-        <EntityType Name="tblCity">
-          <Key>
-            <PropertyRef Name="CityID" />
-          </Key>
-          <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StateID" Type="Int32" Nullable="false" />
-          <Property Name="CityName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="tblState" Relationship="Self.FK_tblCity_tblState" FromRole="tblCity" ToRole="tblState" />
-        </EntityType>
         <EntityType Name="tblCustomer">
           <Key>
             <PropertyRef Name="CustomerID" />
@@ -420,6 +496,7 @@
           <Property Name="IsActive" Type="Boolean" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CustomerConfigures" Relationship="Self.FK_CustomerConfigure_tblCustomer" FromRole="tblCustomer" ToRole="CustomerConfigure" />
           <NavigationProperty Name="tblFeedbacks" Relationship="Self.FK_tblFeedback_tblCustomer" FromRole="tblCustomer" ToRole="tblFeedback" />
           <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCustomer" FromRole="tblCustomer" ToRole="tblGallery" />
           <NavigationProperty Name="tblOrders" Relationship="Self.FK_tblOrder_tblCustomer" FromRole="tblCustomer" ToRole="tblOrder" />
@@ -439,7 +516,7 @@
           <Key>
             <PropertyRef Name="GalleryID" />
           </Key>
-          <Property Name="GalleryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GalleryID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="SubCategoryID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
@@ -458,7 +535,6 @@
           <Property Name="BranchID" Type="Int32" Nullable="false" />
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
-          <Property Name="PaymentMode" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="tblBranch" Relationship="Self.FK_tblOrder_tblBranch" FromRole="tblOrder" ToRole="tblBranch" />
@@ -488,6 +564,7 @@
           <Property Name="ParentCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CustomerConfigures" Relationship="Self.FK_CustomerConfigure_tblParentCategory" FromRole="tblParentCategory" ToRole="CustomerConfigure" />
           <NavigationProperty Name="tblSubCategories" Relationship="Self.FK_tblSubCategory_tblSubCategory" FromRole="tblParentCategory" ToRole="tblSubCategory" />
         </EntityType>
         <EntityType Name="tblPhotographer">
@@ -520,36 +597,34 @@
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblSelfiePoint_tblCustomer" FromRole="tblSelfiePoint" ToRole="tblCustomer" />
         </EntityType>
-        <EntityType Name="tblState">
+        <EntityType Name="tblService">
           <Key>
-            <PropertyRef Name="StateID" />
+            <PropertyRef Name="ServiceID" />
           </Key>
-          <Property Name="StateID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StateName" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceName" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="tblCities" Relationship="Self.FK_tblCity_tblState" FromRole="tblState" ToRole="tblCity" />
+          <NavigationProperty Name="tblWebGalleries" Relationship="Self.FK_tblWebGallery_tblService" FromRole="tblService" ToRole="tblWebGallery" />
         </EntityType>
         <EntityType Name="tblStudioAdmin">
           <Key>
             <PropertyRef Name="StudioID" />
           </Key>
           <Property Name="StudioID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="StudioName" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="StudioName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="PhoneNo" Type="Int32" Nullable="false" />
+          <Property Name="PhoneNo" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="StudioLogo" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="About" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="OpeningHours" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="ClosingHours" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
           <Property Name="Map" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsActive" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <Property Name="ActivateDate" Type="DateTime" Precision="0" />
-          <Property Name="DeactivateDate" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="tblSubCategory">
           <Key>
@@ -558,11 +633,60 @@
           <Property Name="SubCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentCatgoryID" Type="Int32" />
           <Property Name="SubCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SubCategoryCoverPhoto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="CustomerConfigures" Relationship="Self.FK_CustomerConfigure_tblSubCategory" FromRole="tblSubCategory" ToRole="CustomerConfigure" />
           <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblCategory" FromRole="tblSubCategory" ToRole="tblGallery" />
           <NavigationProperty Name="tblPackages" Relationship="Self.FK_tblPackage_tblCategory" FromRole="tblSubCategory" ToRole="tblPackage" />
           <NavigationProperty Name="tblParentCategory" Relationship="Self.FK_tblSubCategory_tblSubCategory" FromRole="tblSubCategory" ToRole="tblParentCategory" />
         </EntityType>
+        <EntityType Name="tblWebGallery">
+          <Key>
+            <PropertyRef Name="WebGalleryID" />
+          </Key>
+          <Property Name="WebGalleryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceID" Type="Int32" Nullable="false" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="tblService" Relationship="Self.FK_tblWebGallery_tblService" FromRole="tblWebGallery" ToRole="tblService" />
+        </EntityType>
+        <Association Name="FK_CustomerConfigure_tblCustomer">
+          <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1" />
+          <End Role="CustomerConfigure" Type="Self.CustomerConfigure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblCustomer">
+              <PropertyRef Name="CustomerID" />
+            </Principal>
+            <Dependent Role="CustomerConfigure">
+              <PropertyRef Name="CustomerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerConfigure_tblParentCategory">
+          <End Role="tblParentCategory" Type="Self.tblParentCategory" Multiplicity="1" />
+          <End Role="CustomerConfigure" Type="Self.CustomerConfigure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblParentCategory">
+              <PropertyRef Name="ParentCategoryID" />
+            </Principal>
+            <Dependent Role="CustomerConfigure">
+              <PropertyRef Name="ParentCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerConfigure_tblSubCategory">
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1" />
+          <End Role="CustomerConfigure" Type="Self.CustomerConfigure" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="CustomerConfigure">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblOrder_tblBranch">
           <End Role="tblBranch" Type="Self.tblBranch" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -600,18 +724,6 @@
             </Principal>
             <Dependent Role="tblPhotographer">
               <PropertyRef Name="BranchID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_tblCity_tblState">
-          <End Role="tblState" Type="Self.tblState" Multiplicity="1" />
-          <End Role="tblCity" Type="Self.tblCity" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblState">
-              <PropertyRef Name="StateID" />
-            </Principal>
-            <Dependent Role="tblCity">
-              <PropertyRef Name="StateID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -719,9 +831,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblWebGallery_tblService">
+          <End Role="tblService" Type="Self.tblService" Multiplicity="1" />
+          <End Role="tblWebGallery" Type="Self.tblWebGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblService">
+              <PropertyRef Name="ServiceID" />
+            </Principal>
+            <Dependent Role="tblWebGallery">
+              <PropertyRef Name="ServiceID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="InstaAlbumEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CustomerConfigures" EntityType="Self.CustomerConfigure" />
+          <EntitySet Name="tblAboutUs" EntityType="Self.tblAboutU" />
           <EntitySet Name="tblBranches" EntityType="Self.tblBranch" />
-          <EntitySet Name="tblCities" EntityType="Self.tblCity" />
           <EntitySet Name="tblCustomers" EntityType="Self.tblCustomer" />
           <EntitySet Name="tblFeedbacks" EntityType="Self.tblFeedback" />
           <EntitySet Name="tblGalleries" EntityType="Self.tblGallery" />
@@ -730,9 +855,22 @@
           <EntitySet Name="tblParentCategories" EntityType="Self.tblParentCategory" />
           <EntitySet Name="tblPhotographers" EntityType="Self.tblPhotographer" />
           <EntitySet Name="tblSelfiePoints" EntityType="Self.tblSelfiePoint" />
-          <EntitySet Name="tblStates" EntityType="Self.tblState" />
+          <EntitySet Name="tblServices" EntityType="Self.tblService" />
           <EntitySet Name="tblStudioAdmins" EntityType="Self.tblStudioAdmin" />
           <EntitySet Name="tblSubCategories" EntityType="Self.tblSubCategory" />
+          <EntitySet Name="tblWebGalleries" EntityType="Self.tblWebGallery" />
+          <AssociationSet Name="FK_CustomerConfigure_tblCustomer" Association="Self.FK_CustomerConfigure_tblCustomer">
+            <End Role="tblCustomer" EntitySet="tblCustomers" />
+            <End Role="CustomerConfigure" EntitySet="CustomerConfigures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerConfigure_tblParentCategory" Association="Self.FK_CustomerConfigure_tblParentCategory">
+            <End Role="tblParentCategory" EntitySet="tblParentCategories" />
+            <End Role="CustomerConfigure" EntitySet="CustomerConfigures" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerConfigure_tblSubCategory" Association="Self.FK_CustomerConfigure_tblSubCategory">
+            <End Role="tblSubCategory" EntitySet="tblSubCategories" />
+            <End Role="CustomerConfigure" EntitySet="CustomerConfigures" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblOrder_tblBranch" Association="Self.FK_tblOrder_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranches" />
             <End Role="tblOrder" EntitySet="tblOrders" />
@@ -744,10 +882,6 @@
           <AssociationSet Name="FK_tblPhotographer_tblBranch" Association="Self.FK_tblPhotographer_tblBranch">
             <End Role="tblBranch" EntitySet="tblBranches" />
             <End Role="tblPhotographer" EntitySet="tblPhotographers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_tblCity_tblState" Association="Self.FK_tblCity_tblState">
-            <End Role="tblState" EntitySet="tblStates" />
-            <End Role="tblCity" EntitySet="tblCities" />
           </AssociationSet>
           <AssociationSet Name="FK_tblFeedback_tblCustomer" Association="Self.FK_tblFeedback_tblCustomer">
             <End Role="tblCustomer" EntitySet="tblCustomers" />
@@ -781,6 +915,10 @@
             <End Role="tblParentCategory" EntitySet="tblParentCategories" />
             <End Role="tblSubCategory" EntitySet="tblSubCategories" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblWebGallery_tblService" Association="Self.FK_tblWebGallery_tblService">
+            <End Role="tblService" EntitySet="tblServices" />
+            <End Role="tblWebGallery" EntitySet="tblWebGalleries" />
+          </AssociationSet>
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
@@ -788,23 +926,30 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InstaAlbumModelStoreContainer" CdmEntityContainer="InstaAlbumEntities">
+          <EntitySetMapping Name="CustomerConfigures">
+            <EntityTypeMapping TypeName="InstaAlbumModel.CustomerConfigure">
+              <MappingFragment StoreEntitySet="CustomerConfigure">
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="ParentCategoryID" ColumnName="ParentCategoryID" />
+                <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAboutUs">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblAboutU">
+              <MappingFragment StoreEntitySet="tblAboutUs">
+                <ScalarProperty Name="AboutUsID" ColumnName="AboutUsID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tblBranches">
             <EntityTypeMapping TypeName="InstaAlbumModel.tblBranch">
               <MappingFragment StoreEntitySet="tblBranch">
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="BranchName" ColumnName="BranchName" />
                 <ScalarProperty Name="Address" ColumnName="Address" />
-                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="tblCities">
-            <EntityTypeMapping TypeName="InstaAlbumModel.tblCity">
-              <MappingFragment StoreEntitySet="tblCity">
-                <ScalarProperty Name="CityID" ColumnName="CityID" />
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="CityName" ColumnName="CityName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
@@ -855,7 +1000,6 @@
                 <ScalarProperty Name="BranchID" ColumnName="BranchID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="TotalAmount" ColumnName="TotalAmount" />
-                <ScalarProperty Name="PaymentMode" ColumnName="PaymentMode" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
@@ -914,13 +1058,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblStates">
-            <EntityTypeMapping TypeName="InstaAlbumModel.tblState">
-              <MappingFragment StoreEntitySet="tblState">
-                <ScalarProperty Name="StateID" ColumnName="StateID" />
-                <ScalarProperty Name="StateName" ColumnName="StateName" />
+          <EntitySetMapping Name="tblServices">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblService">
+              <MappingFragment StoreEntitySet="tblService">
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="ServiceName" ColumnName="ServiceName" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
-                <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -938,11 +1083,8 @@
                 <ScalarProperty Name="OpeningHours" ColumnName="OpeningHours" />
                 <ScalarProperty Name="ClosingHours" ColumnName="ClosingHours" />
                 <ScalarProperty Name="Map" ColumnName="Map" />
-                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
-                <ScalarProperty Name="ActivateDate" ColumnName="ActivateDate" />
-                <ScalarProperty Name="DeactivateDate" ColumnName="DeactivateDate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -952,6 +1094,18 @@
                 <ScalarProperty Name="SubCategoryID" ColumnName="SubCategoryID" />
                 <ScalarProperty Name="ParentCatgoryID" ColumnName="ParentCatgoryID" />
                 <ScalarProperty Name="SubCategoryName" ColumnName="SubCategoryName" />
+                <ScalarProperty Name="SubCategoryCoverPhoto" ColumnName="SubCategoryCoverPhoto" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblWebGalleries">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblWebGallery">
+              <MappingFragment StoreEntitySet="tblWebGallery">
+                <ScalarProperty Name="WebGalleryID" ColumnName="WebGalleryID" />
+                <ScalarProperty Name="ServiceID" ColumnName="ServiceID" />
+                <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>

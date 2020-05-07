@@ -12,20 +12,21 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblState
+    public partial class tblService
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblState()
+        public tblService()
         {
-            this.tblCities = new HashSet<tblCity>();
+            this.tblWebGalleries = new HashSet<tblWebGallery>();
         }
     
-        public int StateID { get; set; }
-        public string StateName { get; set; }
+        public int ServiceID { get; set; }
+        public int ServiceName { get; set; }
+        public string Image { get; set; }
+        public string Description { get; set; }
         public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblCity> tblCities { get; set; }
+        public virtual ICollection<tblWebGallery> tblWebGalleries { get; set; }
     }
 }

@@ -137,6 +137,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CustomerConfigure.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ImageProcessing.cs" />
     <Compile Include="Models\InstaAlbumDB.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -152,10 +156,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblBranch.cs">
+    <Compile Include="Models\tblAboutU.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblCity.cs">
+    <Compile Include="Models\tblBranch.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblCustomer.cs">
@@ -182,13 +186,16 @@
     <Compile Include="Models\tblSelfiePoint.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblState.cs">
+    <Compile Include="Models\tblService.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblStudioAdmin.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblSubCategory.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblWebGallery.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -393,12 +400,8 @@
     <Content Include="Views\Home\About.cshtml" />
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\CategoryDetails.cshtml" />
-    <Content Include="Views\Home\PhotographerManagement.cshtml" />
-    <Content Include="Views\Home\ClientDetails.cshtml" />
     <Content Include="Views\Home\PackageSummary.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\PhotographerList.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />
     <Content Include="Views\Customer\Delete.cshtml" />
     <Content Include="Views\Customer\Details.cshtml" />

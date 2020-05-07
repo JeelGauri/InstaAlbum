@@ -12,14 +12,10 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblCity
+    public partial class tblAboutU
     {
-        public int CityID { get; set; }
-        public int StateID { get; set; }
-        public string CityName { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
-    
-        public virtual tblState tblState { get; set; }
+        public int AboutUsID { get; set; }
+        public string Image { get; set; }
+        public string Description { get; set; }
     }
 }

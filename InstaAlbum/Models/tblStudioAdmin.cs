@@ -19,16 +19,13 @@ namespace InstaAlbum.Models
         public string Address { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public int PhoneNo { get; set; }
+        public string PhoneNo { get; set; }
         public string StudioLogo { get; set; }
         public string About { get; set; }
         public string OpeningHours { get; set; }
         public string ClosingHours { get; set; }
         public string Map { get; set; }
-        public Nullable<bool> IsActive { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public Nullable<System.DateTime> ActivateDate { get; set; }
-        public Nullable<System.DateTime> DeactivateDate { get; set; }
     }
 }

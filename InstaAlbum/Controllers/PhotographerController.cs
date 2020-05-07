@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using InstaAlbum.Models;
 
@@ -70,22 +72,29 @@ namespace InstaAlbum.Controllers
                 string mimeType = string.Empty;
                 System.IO.Stream fileContent;
 
-                for (int i = 0; i < Request.Files.Count; i++)
+                if (Request.Files.Count > 0)
                 {
-                    HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                                //Use the following properties to get file's name, size and MIMEType
+                    HttpPostedFileBase file = Request.Files[0];
+
                     fileSize = file.ContentLength;
                     fileName = file.FileName;
                     mimeType = file.ContentType;
                     fileContent = file.InputStream;
 
 
-                    if (mimeType.Equals(""))
+                    if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
                     {
-
+                        return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
                     }
+
+                    #region Save And compress file
                     //To save file, use SaveAs method
-                    file.SaveAs(Server.MapPath("~/PhotographerProfilePics/") + fileName); //File will be saved in application root
+                    file.SaveAs(Server.MapPath("~/PhotographerProfilePics/") + fileName);
+                    if(!ImageProcessing.InsertImages(Server.MapPath("~/PhotographerProfilePics/") + fileName))
+                    {
+                        return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
+                    }
+                    #endregion
                 }
 
                 newPhotographer.CreatedDate = DateTime.Now;
@@ -98,19 +107,6 @@ namespace InstaAlbum.Controllers
 
             ViewBag.BranchID = new SelectList(db.tblBranches, "BranchID", "BranchName", newPhotographer.BranchID);
             return Json(new { success = false, message = "Record not inserted" }, JsonRequestBehavior.AllowGet);
-        }
-
-        private ImageCodecInfo GetEncoder(ImageFormat format)
-        {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
-            foreach (ImageCodecInfo codec in codecs)
-            {
-                if (codec.FormatID == format.Guid)
-                {
-                    return codec;
-                }
-            }
-            return null;
         }
 
         // GET: Photographer/Edit/5
@@ -155,30 +151,34 @@ namespace InstaAlbum.Controllers
                     string mimeType = string.Empty;
                     System.IO.Stream fileContent;
 
-                    for (int i = 0; i < Request.Files.Count; i++)
+                    HttpPostedFileBase file = Request.Files[0]; 
+
+                    fileSize = file.ContentLength;
+                    fileName = file.FileName;
+                    mimeType = file.ContentType;
+                    fileContent = file.InputStream;
+
+
+                    if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
                     {
-                        HttpPostedFileBase file = Request.Files[i]; //Uploaded file
-                                                                    //Use the following properties to get file's name, size and MIMEType
-                        fileSize = file.ContentLength;
-                        fileName = file.FileName;
-                        mimeType = file.ContentType;
-                        fileContent = file.InputStream;
-
-
-                        if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
-                        {
-                            return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
-                        }
-                        if(fileSize > 2000000)
-                            return Json(new { SizeWarning = true, message = "Profile pic size must less than 2 MB." }, JsonRequestBehavior.AllowGet);
-
-                        //To save file, use SaveAs method
-                        file.SaveAs(Server.MapPath("~/PhotographerProfilePics/") + fileName); //File will be saved in application root
-                        string path = Server.MapPath("~/PhotographerProfilePics/" + newPhotographer.ProfilePic);
-                        FileInfo delfile = new FileInfo(path);
-                        delfile.Delete();
-                        newPhotographer.ProfilePic = fileName;
+                        return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
                     }
+                    //WebImage img = new WebImage(file.InputStream);
+
+                    #region Save And compress file
+                    //To save file, use SaveAs method
+                    file.SaveAs(Server.MapPath("~/PhotographerProfilePics/") + fileName);
+                        
+
+                    if (!ImageProcessing.InsertImages(Server.MapPath("~/PhotographerProfilePics/") + fileName))
+                    {
+                        return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
+                    }
+                    string path = Server.MapPath("~/PhotographerProfilePics/" + newPhotographer.ProfilePic);
+                    FileInfo delfile = new FileInfo(path);
+                    delfile.Delete();
+                    newPhotographer.ProfilePic = fileName;
+                    #endregion
                 }
                 newPhotographer.UpdatedDate= DateTime.Now;
                 newPhotographer.BranchID = newBranch.BranchID;
@@ -219,5 +219,7 @@ namespace InstaAlbum.Controllers
                 return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);
 
         }
+
+        
     }
 }
