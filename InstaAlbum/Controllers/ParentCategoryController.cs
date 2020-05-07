@@ -19,7 +19,16 @@ namespace InstaAlbum.Controllers
         {
             return View(db.tblParentCategories.ToList());
         }
-       
+
+        public ActionResult getAllCategory()
+        {
+            return Json(db.tblParentCategories.Select(c => new
+            {
+                ParentCategoryID = c.ParentCategoryID,
+                ParentCategoryName = c.ParentCategoryName
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         // POST: ParentCategory/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

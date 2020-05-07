@@ -1,0 +1,403 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblGallery>
+@{
+    ViewBag.Title = "GalleryList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <script type="text/javascript">
+        function ConfirmationDialog(GalleryID) {
+            if (confirm("Are you sure to delete?"))
+                fnDeleteRecord(GalleryID);
+            else
+                return false;
+        }
+    </script>
+<script>
+
+    $(document).ready(function () {
+        $('#divspinner').modal('hide');
+        var ddlParentCategory = $("#ddlParentCategory");
+        var ddlParentCategory2 = $("#ddlParentCategory2");
+        $.ajax({
+            type: "GET",
+            url: "/ParentCategory/getAllCategory",
+            data: "{}",
+            success: function (data) {
+                var parentCategoryData = '<option value="0">Please Select Parent Category</option>';
+                for (var i = 0; i < data.length; i++) {
+                    parentCategoryData += '<option value="' + data[i].ParentCategoryID + '">' + data[i].ParentCategoryName + '</option>';
+                }
+                ddlParentCategory.html(parentCategoryData);
+                ddlParentCategory2.html(parentCategoryData);
+
+            }
+        });
+
+        var ddlSubCategory = $("#ddlSubCategory");
+        var ddlSubCategory2 = $("#ddlSubCategory2");
+
+        ddlParentCategory.change(function () {
+
+            var selectedValue = ddlParentCategory.val();
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "{'id':'" + selectedValue + "'}",
+                url: '/SubCategory/GetSubCat/',
+                success: function (data) {
+                    var subCategoryData = '<option value="0">Please Select Sub Category</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        subCategoryData += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                    }
+                    ddlSubCategory.html(subCategoryData);
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while getting parent category.', { timeOut: 3000 });
+                }
+            });
+
+        });
+
+        ddlParentCategory2.change(function () {
+
+            var selectedValue2 = ddlParentCategory2.val();
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "{'id':'" + selectedValue2 + "'}",
+                url: '/SubCategory/GetSubCat/',
+                success: function (data) {
+                    var subCategoryData2 = '<option value="0">Please Select Sub Category</option>';
+                    for (var i = 0; i < data.length; i++) {
+                        subCategoryData2 += '<option value="' + data[i].id + '">' + data[i].name + '</option>';
+                    }
+                    ddlSubCategory2.html(subCategoryData2);
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while geting sub category record.', { timeOut: 3000 });
+                }
+            });
+
+        });
+        });
+
+
+
+    function fnInsertImages() {
+
+        var ddlParentCategory = $("#ddlParentCategory");
+        var ddlSubCategory = $("#ddlSubCategory");
+        var _customerID = @ViewBag.CustomerID;
+        var formData = new FormData();
+
+        var ins = document.getElementById('inputProfile').files.length;
+        for (var x = 0; x < ins; x++) {
+            formData.append("imageFile", document.getElementById('inputProfile').files[x]);
+        }
+        formData.append("CustomerID", _customerID);
+        formData.append("ParentCategoryID", ddlParentCategory.val());
+        formData.append("SubCategoryID", ddlSubCategory.val());
+        $('#exampleModal').modal('hide');
+        $('#divspinner').modal('show');
+        $.ajax({
+               type: "POST",
+                url: '/Gallery/InsertImages',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        $('#divspinner').modal('hide');
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                    else if (response.Formatwarning === true) {
+                        $('#divspinner').modal('hide');
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
+                },
+            error: function () {
+                    $('#divspinner').modal('hide');
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+    }
+
+    function fnDownloadJson() {
+        var ddlParentCategory = $("#ddlParentCategory2");
+        var ddlSubCategory = $("#ddlSubCategory2");
+        var _customerID = @ViewBag.CustomerID;
+        var formData = new FormData();
+        formData.append("CustomerID", _customerID);
+        formData.append("ParentCategoryID", ddlParentCategory.val());
+        formData.append("SubCategoryID", ddlSubCategory.val());
+
+         $.ajax({
+               type: "POST",
+                url: '/Gallery/getJsonFile',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'File Created',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+            error: function () {
+                    toastr.error('Error occur', 'Error occur while creating file.', { timeOut: 3000 });
+                    return;
+                }
+
+         });
+
+    }
+    function fnDeleteRecord(GalleryID) {
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "{'id':'" + GalleryID + "'}",
+                url: '/Gallery/DeleteImage',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is deleted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                    else {
+                        toastr.info(response.message, 'Record is not deleted', { timeOut: 3000 });
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 3000 });
+                }
+
+            });
+        }
+</script>
+
+
+<div class="modal fade" id="divspinner" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                Uploading...
+            </div>
+            <div class="modal-body">
+                <div class="spinner-border spinner-border-sm" style="align-content:center; width: 3rem; height: 3rem;" role="status">
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-account-group"></h1>
+                    </div>
+                </div>
+                <h3>Gallery List</h3>
+                <a href="@Url.Action("GalleryCustomerList", "Gallery")" title="Click here to go back"><h1 class="mdi mdi-arrow-left"></h1></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container col-12 pull-up">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div>
+                        <h3>@ViewBag.CustomerName Gallery List</h3>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Insert Images
+                        </button>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal2">
+                            Get File
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="example-height" class="table" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Parent Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Is Selected</th>
+                                    <th>Created & Update Date</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="hidden" id="hdnCustomerID" value="@ViewBag.CustomerID" />
+                                            <a target="_blank" href="~/Gallery/@item.Image"><img src="~/Gallery/@item.Image" height="50px" width="50px" /></a>
+                                        </td>
+                                        <td>
+                                            @item.findParentCatNameByID(item.SubCategoryID)
+                                        </td>
+                                        <td>
+                                            @item.findSubCatNameByID(item.SubCategoryID)
+                                        </td>
+                                        <td>
+                                            @(item.IsSelected == true ? "Yes" : "No")
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.CreatedDate)
+                                            <br />
+                                            @Html.DisplayFor(modelItem => item.UpdatedDate)
+                                        </td>
+                                        <td>
+                                            <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" onclick="return ConfirmationDialog(@Html.DisplayFor(modelItem => item.GalleryID))" value="Delete" />
+                                        </td>
+
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Images</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputText">Parent Category: </label>
+                        <select id="ddlParentCategory" class="custom-select"></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">SubCategory: </label>
+                        <select id="ddlSubCategory" class="custom-select">
+                            <option value="0">Select Sub Category</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">Upload Images: </label>
+                        <input type="file" multiple class="form-control" id="inputProfile" />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnInsertBranch" value="Submit" class="btn btn-primary" onclick="javascript:fnInsertImages()" />
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Images</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputText">Parent Category: </label>
+                        <select id="ddlParentCategory2" class="custom-select"></select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputEmail4">SubCategory: </label>
+                        <select id="ddlSubCategory2" class="custom-select">
+                            <option value="0">Select Sub Category</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" id="btnInsertBranch" value="Get Json" class="btn btn-primary" onclick="javascript:fnDownloadJson()" />
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+

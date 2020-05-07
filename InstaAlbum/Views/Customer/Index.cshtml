@@ -78,6 +78,7 @@
                         <table id="example-height" class="table" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Profile Pic</th>
                                     <th>Customer Name</th>
                                     <th>Email</th>
                                     <th>Phone No</th>
@@ -92,6 +93,7 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+                                        <td><img src="~/CustomerProfile/@item.ProfilePic" height="50px" width="50px" /></td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.CustomerName)
                                         </td>

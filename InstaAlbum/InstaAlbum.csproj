@@ -130,6 +130,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\BranchController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\GalleryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParentCategoryController.cs" />
     <Compile Include="Controllers\PhotographerController.cs" />
@@ -140,6 +141,7 @@
     <Compile Include="Models\CustomerConfigure.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\ImageJsonFormat.cs" />
     <Compile Include="Models\ImageProcessing.cs" />
     <Compile Include="Models\InstaAlbumDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -427,10 +429,18 @@
     <Content Include="Views\Photographer\Details.cshtml" />
     <Content Include="Views\Photographer\Edit.cshtml" />
     <Content Include="Views\Photographer\Index.cshtml" />
+    <Content Include="Views\Gallery\Create.cshtml" />
+    <Content Include="Views\Gallery\Delete.cshtml" />
+    <Content Include="Views\Gallery\Details.cshtml" />
+    <Content Include="Views\Gallery\Edit.cshtml" />
+    <Content Include="Views\Gallery\GalleryCustomerList.cshtml" />
+    <Content Include="Views\Gallery\GalleryList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="CustomerProfile\" />
     <Folder Include="Gallery\" />
+    <Folder Include="NewFolder1\" />
     <Folder Include="PhotographerProfilePics\" />
   </ItemGroup>
   <ItemGroup>

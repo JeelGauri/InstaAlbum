@@ -27,20 +27,22 @@
                 return;
             }
 
-            var objCustomerDetails = {
-                CustomerID:hdnCustomerID.value,
-                CustomerName: txtClientName.value,
-                CustomerEmail: txtEmail.value,
-                PhoneNumber: txtPhoneNumber.value,
-                IsActive: chkIsActive
-            }
-            $.ajax({
-                async: true,
-                type: 'POST',
-                dataType: 'JSON',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(objCustomerDetails),
+            var formData = new FormData();
+            var file = document.getElementById("inputProfile").files[0];
+            formData.append("imageFile", file);
+            formData.append("CustomerID", hdnCustomerID.value);
+            formData.append("CustomerName", txtClientName.value);
+            formData.append("CustomerEmail", txtEmail.value);
+            formData.append("PhoneNo", txtPhoneNumber.value);
+            formData.append("IsActive", chkIsActive);
+
+             $.ajax({
+               type: "POST",
                 url: '/Customer/EditCustomer',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     if (response.success === true) {
                         toastr.success(
@@ -55,9 +57,22 @@
                             }
                         );
                     }
+                    else if (response.Formatwarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
                 },
                 error: function () {
-                    toastr.error('Error occur', 'Error occur while updating record.', { timeOut: 1000 });
+                    toastr.error('Error occur', 'Error occur while updating record.', { timeOut: 3000 });
                     return;
                 }
 
@@ -103,27 +118,33 @@
                                     <label for="inputEmail4">Email</label>
                                     <input type="email" required readonly="readonly" id="txtCustomerEmail" value="@Html.DisplayFor(model => model.CustomerEmail)" placeholder="Enter Client Email" class="form-control" />
                                 </div>
+                            </div>
+                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputNumber">Phone No:</label>
                                     <input type="text" required id="txtPhoneNumber" value="@Html.DisplayFor(model => model.PhoneNumber)" placeholder="Enter Phone Number" class="form-control" />
                                 </div>
-                            </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-6">
-                                        <label class="cstm-switch">
-                                            @if (Model.IsActive)
-                                            {
-                                                <input type="checkbox" id="chkIsActive" checked="checked" class="cstm-switch-input" />
-                                            }
-                                            else
-                                            {
-                                                <input type="checkbox" id="chkIsActive" class="cstm-switch-input" />
-                                            }
-                                            <span class="cstm-switch-indicator bg-success "></span>
-                                            <span class="cstm-switch-description">Is Active?</span>
-                                        </label>
-                                    </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Profile Pic</label>
+                                    <input type="file" class="form-control" id="inputProfile">
                                 </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="cstm-switch">
+                                        @if (Model.IsActive)
+                                        {
+                                            <input type="checkbox" id="chkIsActive" checked="checked" class="cstm-switch-input" />
+                                        }
+                                        else
+                                        {
+                                            <input type="checkbox" id="chkIsActive" class="cstm-switch-input" />
+                                        }
+                                        <span class="cstm-switch-indicator bg-success "></span>
+                                        <span class="cstm-switch-description">Is Active?</span>
+                                    </label>
+                                </div>
+                            </div>
                                 <div class="form-group" style="display:inline-block">
                                     <input type="submit" value="Submit" onclick="javascript:fnUpdateRecord()" class="btn btn-primary" />
                                     <a href="@Url.Action("Index", "Customer")" title="Click here to get List" class="btn btn-success">Cancel</a>

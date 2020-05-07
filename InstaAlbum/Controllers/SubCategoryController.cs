@@ -21,9 +21,16 @@ namespace InstaAlbum.Controllers
             return View(tblSubCategories.ToList());
         }
 
-       
+        [HttpPost]
+        public ActionResult GetSubCat(int id)
+        {
+            return Json(db.tblSubCategories.Where(c => c.ParentCatgoryID == id).Select(c => new
+            {
+                id = c.SubCategoryID,
+                name = c.SubCategoryName
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
 
-       
         // POST: SubCategory/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.

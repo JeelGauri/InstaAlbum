@@ -1,0 +1,128 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblCustomer>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <script type="text/javascript">
+
+        var _ClientID = 0;
+
+        
+
+
+        function fnConfigureClient() {
+            var ddlParentCategory = $("#ddlParentCategory");
+            var ddlSubCategory = $("#ddlSubCategory");
+
+            var formData = new FormData();
+            formData.append("CustomerID", _ClientID);
+            formData.append("ParentCategoryID", ddlParentCategory.val());
+            formData.append("SubCategoryID", ddlSubCategory.val());
+            $.ajax({
+               type: "POST",
+                url: '/Gallery/ConfigureClient',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Customer is successfully configured.',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while configuring customer.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        }
+
+        function fnGoToGallery(CustomerID) {
+
+            if (CustomerID <= 0) {
+                toastr.warning('Input Error', 'Client ID is not supplied!', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+
+            var formData = new FormData();
+            formData.append("CustomerID", CustomerID);
+            $.ajax({
+                type: "POST",
+                url: '/Gallery/GalleryList/' + CustomerID,
+                data: {},
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                 success: function (response) {
+                     window.location.href = '/Gallery/GalleryList';
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        }
+    </script>
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-image-multiple"></h1>
+                    </div>
+                </div>
+                <h3>Gallery</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row list">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-4 m-b-30">
+                    <div class="card ">
+                        <div class="card-media">
+                            <img class="card-img-top" src="~/CustomerProfile/@item.ProfilePic" alt="Card image cap">
+
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title"> @Html.DisplayFor(modelItem => item.CustomerName)</h5>
+                            <div class="form-row">
+                                Phone Number:&nbsp;&nbsp; <a href="tel:@Html.DisplayFor(modelItem => item.PhoneNumber)">@Html.DisplayFor(modelItem => item.PhoneNumber)</a><br />
+                            </div>
+                            <div class="form-row">
+                                Email:&nbsp;&nbsp; <a href="mailto:@Html.DisplayFor(modelItem => item.CustomerEmail)">@Html.DisplayFor(modelItem => item.CustomerEmail)</a><br />
+                            </div>
+                            <div class="form-row">
+                                @Html.ActionLink("View Gallery", "GalleryList", new { id = item.CustomerID }, htmlAttributes: new { @class="btn btn-primary" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+
+
+

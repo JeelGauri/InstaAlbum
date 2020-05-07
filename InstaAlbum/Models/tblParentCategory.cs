@@ -11,9 +11,12 @@ namespace InstaAlbum.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.Linq;
+
     public partial class tblParentCategory
     {
+        private InstaAlbumEntities db = new InstaAlbumEntities();
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblParentCategory()
         {
@@ -29,5 +32,14 @@ namespace InstaAlbum.Models
         public virtual ICollection<CustomerConfigure> CustomerConfigures { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblSubCategory> tblSubCategories { get; set; }
+
+        public string getCatName(int id)
+        {
+            tblParentCategory cat = db.tblParentCategories.SingleOrDefault(c => c.ParentCategoryID == id);
+            if (cat != null && cat.ParentCategoryName.Length > 0)
+                return cat.ParentCategoryName;
+            else
+                return "";
+        }
     }
 }
