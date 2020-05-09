@@ -99,7 +99,8 @@
           </Key>
           <Property Name="ParentCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentCategoryName" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreatedDate" Type="date" />
+          <Property Name="Image" Type="varchar" MaxLength="500" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPhotographer">
           <Key>
@@ -564,9 +565,10 @@
           </Key>
           <Property Name="ParentCategoryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ParentCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <Property Name="CreatedDate" Type="DateTime" Precision="0" Nullable="false" />
           <NavigationProperty Name="CustomerConfigures" Relationship="Self.FK_CustomerConfigure_tblParentCategory" FromRole="tblParentCategory" ToRole="CustomerConfigure" />
           <NavigationProperty Name="tblSubCategories" Relationship="Self.FK_tblSubCategory_tblSubCategory" FromRole="tblParentCategory" ToRole="tblSubCategory" />
+          <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="tblPhotographer">
           <Key>
@@ -1024,6 +1026,7 @@
           <EntitySetMapping Name="tblParentCategories">
             <EntityTypeMapping TypeName="InstaAlbumModel.tblParentCategory">
               <MappingFragment StoreEntitySet="tblParentCategory">
+                <ScalarProperty Name="Image" ColumnName="Image" />
                 <ScalarProperty Name="ParentCategoryID" ColumnName="ParentCategoryID" />
                 <ScalarProperty Name="ParentCategoryName" ColumnName="ParentCategoryName" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />

@@ -61,17 +61,18 @@
                 return;
             }
 
-            var objParentCategoryDetails = {
-                ParentCategoryName: txtCategoryName.value
-            }
+            var formData = new FormData();
+            var file = document.getElementById("inputProfile").files[0];
+            formData.append("imageFile", file);
+            formData.append("ParentCategoryName", txtCategoryName.value);
 
             $.ajax({
-                async: true,
-                type: 'POST',
-                dataType: 'JSON',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(objParentCategoryDetails),
-                url: '/ParentCategory/Create',
+               type: "POST",
+                url: '/ParentCategory/InsertParentCategory',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     if (response.success === true) {
                         toastr.success(
@@ -82,6 +83,19 @@
                                 fadeOut: 1000,
                                 onHidden: function () {
                                     window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                    else if (response.Formatwarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
                                 }
                             }
                         );
@@ -105,26 +119,24 @@
                 return;
             }
 
-            var objSubCategoryDetails = {
-                SubCategoryName: txtSubCategoryName.value
+            if (hdnParentCategoryID.value == null || hdnParentCategoryID.value.length <= 0) {
+                toastr.warning('Input Error', 'Parent Category ID is not supplied!', { timeOut: 1000, fadeOut: 1000 });
+                return;
             }
+            var formData = new FormData();
+            var file = document.getElementById("inputProfile2").files[0];
+            formData.append("imageFile", file);
+            formData.append("SubCategoryName", txtSubCategoryName.value);
+            formData.append("ParentCategoryID", hdnParentCategoryID.value);
 
-            var objPCat = {
-                ParentCategoryID: hdnParentCategoryID.value
-            }
 
-            var jsonData = {
-                Pcat: objPCat,
-                SCat :objSubCategoryDetails
-
-            }
             $.ajax({
-                async: true,
-                type: 'POST',
-                dataType: 'JSON',
-                contentType: 'application/json; charset=utf-8',
-                data: JSON.stringify(jsonData),
-                url: '/SubCategory/Create',
+               type: "POST",
+                url: '/SubCategory/InsertSubCategory',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
                 success: function (response) {
                     if (response.success === true) {
                         toastr.success(
@@ -139,14 +151,30 @@
                             }
                         );
                     }
+                    else if (response.Formatwarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
                 },
                 error: function () {
-                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut:1000 });
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
                     return;
                 }
 
             });
+            
         }
+
+
     </script>
     <div class="bg-dark bg-dots m-b-30">
         <div class="container">
@@ -182,6 +210,7 @@
                             <table id="example-height" class="table" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>Cover Pic</th>
                                         <th>Category Name</th>
                                         <th>Created Date</th>
                                         <th>Add Sub Category</th>
@@ -192,6 +221,9 @@
                                     @foreach (var item in Model)
                                     {
                                         <tr>
+                                            <td>
+                                                <a target="_blank" href="~/ParentCategoryImages/@item.Image"><img src="~/ParentCategoryImages/@item.Image" height="50px" width="50px" /></a>
+                                            </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.ParentCategoryName)
                                             </td>
@@ -233,7 +265,12 @@
                             <input type="text" required id="txtCategoryName" placeholder="Enter Category Name" class="form-control" />
                         </div>
                     </div>
-                </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputProfile">Profile Pic</label>
+                            <input type="file" class="form-control" id="inputProfile">
+                        </div>
+                    </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
                         Close
@@ -242,6 +279,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="modal fade" id="exampleModal2" tabindex="-1" role="dialog"
@@ -260,6 +298,12 @@
                         <div class="form-group col-md-12">
                             <label for="inputText">Sub Category Name:</label>
                             <input type="text" required id="txtSubCategoryName" placeholder="Enter Sub Category Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="inputProfile2">Profile Pic</label>
+                            <input type="file" class="form-control" id="inputProfile2">
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "StudioManagement";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-tooltip-edit"></h1>
+                    </div>
+                </div>
+                <h4>Studio Management</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Studio Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Studio Name</label>
+                                    <input type="text" class="form-control" id="txtStudioName" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="txtEmail" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputNumber">Phone No:</label>
+                                    <input type="number" class="form-control" id="txtPhno" placeholder="Phone Number">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword">Password</label>
+                                    <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">Address</label>
+                                    <textarea type="text" class="form-control" id="txtAddress" placeholder="Address"></textarea>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Studio Logo</label>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">About</label>
+                                    <textarea type="text" class="form-control" id="txtAbout" placeholder="Studio Description"></textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Opening Hours</label>
+                                    <input type="text" class="form-control" id="txtOpeningHours" placeholder="Enter Opening Hours">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Closing Hours</label>
+                                    <input type="text" class="form-control" id="txtClosingHours" placeholder="Enter Closing Hours">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Map</label>
+                                    <input type="map" class="form-control" id="Map" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Photographer")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

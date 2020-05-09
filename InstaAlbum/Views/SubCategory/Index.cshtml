@@ -80,8 +80,9 @@
                         <table id="example-height" class="table" style="width:100%">
                             <thead>
                                 <tr>
+                                    <th>Cover Photo</th>
                                     <th>Parent Category Name</th>
-                                    <th>Category Name</th>
+                                    <th>Sub Category Name</th>
                                     <th>Created Date</th>
                                     <th>Delete</th>
                                 </tr>
@@ -90,6 +91,9 @@
                                 @foreach (var item in Model)
                                 {
                                     <tr>
+                                        <td>
+                                            <a target="_blank" href="~/SubCategoryImages/@item.SubCategoryCoverPhoto"><img src="~/SubCategoryImages/@item.SubCategoryCoverPhoto" height="50px" width="50px" /></a>
+                                        </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.tblParentCategory.ParentCategoryName)
                                         </td>
