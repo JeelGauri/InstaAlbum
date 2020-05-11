@@ -781,6 +781,22 @@
     <Content Include="Views\Gallery\Edit.cshtml" />
     <Content Include="Views\Gallery\GalleryCustomerList.cshtml" />
     <Content Include="Views\Gallery\GalleryList.cshtml" />
+    <Content Include="Views\UserHome\About.cshtml" />
+    <Content Include="Views\UserHome\Category.cshtml" />
+    <Content Include="Views\UserHome\CategoryWiseImage.cshtml" />
+    <Content Include="Views\UserHome\Contact.cshtml" />
+    <Content Include="Views\UserHome\Feedback.cshtml" />
+    <Content Include="Views\UserHome\Gallery.cshtml" />
+    <Content Include="Views\UserHome\Index.cshtml" />
+    <Content Include="Views\UserHome\Protfolio.cshtml" />
+    <Content Include="Views\UserHome\SubCategory.cshtml" />
+    <Content Include="Views\Studio\AddStudioDetails.cshtml" />
+    <Content Include="Views\Studio\Create.cshtml" />
+    <Content Include="Views\Studio\Delete.cshtml" />
+    <Content Include="Views\Studio\Details.cshtml" />
+    <Content Include="Views\Studio\Edit.cshtml" />
+    <Content Include="Views\Studio\EditStudioDetails.cshtml" />
+    <Content Include="Views\Studio\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
