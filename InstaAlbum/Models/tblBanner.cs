@@ -12,14 +12,11 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class CustomerConfigure
+    public partial class tblBanner
     {
-        public int CustomerID { get; set; }
-        public int ParentCategoryID { get; set; }
-        public int SubCategoryID { get; set; }
-    
-        public virtual tblCustomer tblCustomer { get; set; }
-        public virtual tblParentCategory tblParentCategory { get; set; }
-        public virtual tblSubCategory tblSubCategory { get; set; }
+        public int BannerID { get; set; }
+        public string BannerImage { get; set; }
+        public string BannerHeading { get; set; }
+        public string BannerDescription { get; set; }
     }
 }

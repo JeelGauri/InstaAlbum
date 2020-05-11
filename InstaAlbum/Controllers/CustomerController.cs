@@ -220,13 +220,5 @@ namespace InstaAlbum.Controllers
 
         }
 
-        public ActionResult CheckClientIsConfiguredOrNot()
-        {
-            int CustomerID = Convert.ToInt32(Request.Form["ClientID"]);
-            if (db.CustomerConfigures.Any(c => c.CustomerID == CustomerID))
-                return Json(new { success = true, message = "Record Existed" }, JsonRequestBehavior.AllowGet);
-            else
-                return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);
-        }
     }
 }

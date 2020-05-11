@@ -139,9 +139,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\CustomerConfigure.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\ImageJsonFormat.cs" />
     <Compile Include="Models\ImageProcessing.cs" />
     <Compile Include="Models\InstaAlbumDB.Context.cs">
@@ -160,6 +157,12 @@
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\tblAboutU.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblBanner.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblBooking.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBranch.cs">
@@ -184,6 +187,9 @@
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPhotographer.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPortfolio.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblSelfiePoint.cs">

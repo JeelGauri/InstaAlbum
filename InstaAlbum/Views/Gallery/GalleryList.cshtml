@@ -293,10 +293,10 @@
                                             <a target="_blank" href="~/Gallery/@item.Image"><img src="~/Gallery/@item.Image" height="50px" width="50px" /></a>
                                         </td>
                                         <td>
-                                            @item.findParentCatNameByID(item.SubCategoryID)
+                                            @item.tblSubCategory.tblParentCategory.ParentCategoryName
                                         </td>
                                         <td>
-                                            @item.findSubCatNameByID(item.SubCategoryID)
+                                            @item.tblSubCategory.SubCategoryName
                                         </td>
                                         <td>
                                             @(item.IsSelected == true ? "Yes" : "No")

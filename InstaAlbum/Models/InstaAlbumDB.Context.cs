@@ -25,8 +25,9 @@ namespace InstaAlbum.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<CustomerConfigure> CustomerConfigures { get; set; }
         public virtual DbSet<tblAboutU> tblAboutUs { get; set; }
+        public virtual DbSet<tblBanner> tblBanners { get; set; }
+        public virtual DbSet<tblBooking> tblBookings { get; set; }
         public virtual DbSet<tblBranch> tblBranches { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
         public virtual DbSet<tblFeedback> tblFeedbacks { get; set; }
@@ -35,6 +36,7 @@ namespace InstaAlbum.Models
         public virtual DbSet<tblPackage> tblPackages { get; set; }
         public virtual DbSet<tblParentCategory> tblParentCategories { get; set; }
         public virtual DbSet<tblPhotographer> tblPhotographers { get; set; }
+        public virtual DbSet<tblPortfolio> tblPortfolios { get; set; }
         public virtual DbSet<tblSelfiePoint> tblSelfiePoints { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblStudioAdmin> tblStudioAdmins { get; set; }

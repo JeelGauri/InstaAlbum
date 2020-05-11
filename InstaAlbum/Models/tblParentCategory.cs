@@ -17,17 +17,17 @@ namespace InstaAlbum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblParentCategory()
         {
-            this.CustomerConfigures = new HashSet<CustomerConfigure>();
+            this.tblBookings = new HashSet<tblBooking>();
             this.tblSubCategories = new HashSet<tblSubCategory>();
         }
     
         public int ParentCategoryID { get; set; }
         public string ParentCategoryName { get; set; }
-        public System.DateTime CreatedDate { get; set; }
         public string Image { get; set; }
+        public System.DateTime CreatedDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerConfigure> CustomerConfigures { get; set; }
+        public virtual ICollection<tblBooking> tblBookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblSubCategory> tblSubCategories { get; set; }
     }
