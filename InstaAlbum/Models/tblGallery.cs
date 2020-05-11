@@ -11,11 +11,9 @@ namespace InstaAlbum.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-
+    
     public partial class tblGallery
     {
-        private InstaAlbumEntities db = new InstaAlbumEntities();
         public long GalleryID { get; set; }
         public int SubCategoryID { get; set; }
         public int CustomerID { get; set; }
@@ -26,18 +24,5 @@ namespace InstaAlbum.Models
     
         public virtual tblCustomer tblCustomer { get; set; }
         public virtual tblSubCategory tblSubCategory { get; set; }
-
-        public string findParentCatNameByID(int id)
-        {
-            tblSubCategory scat = db.tblSubCategories.SingleOrDefault(s => s.SubCategoryID == id);
-            tblParentCategory pcat = new tblParentCategory();
-            return pcat.getCatName(Convert.ToInt32(scat.ParentCatgoryID));
-        }
-
-        public string findSubCatNameByID(int id)
-        {
-            tblSubCategory scat = db.tblSubCategories.SingleOrDefault(s => s.SubCategoryID == id);
-            return scat.SubCategoryName;
-        }
     }
 }

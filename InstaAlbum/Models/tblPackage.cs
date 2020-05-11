@@ -32,6 +32,5 @@ namespace InstaAlbum.Models
         public virtual tblBranch tblBranch { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblOrder> tblOrders { get; set; }
-        public virtual tblSubCategory tblSubCategory { get; set; }
     }
 }

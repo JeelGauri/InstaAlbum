@@ -4,25 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4f735928bebc443686bb7ebe8a5fdc86" Name="Diagram1">
-        <EntityTypeShape EntityType="InstaAlbumModel.CustomerConfigure" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblAboutU" Width="1.5" PointX="0.75" PointY="3.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblBranch" Width="1.5" PointX="3.75" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblCustomer" Width="1.5" PointX="0.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblFeedback" Width="1.5" PointX="3" PointY="12" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblGallery" Width="1.5" PointX="6" PointY="10.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblOrder" Width="1.5" PointX="6" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblPackage" Width="1.5" PointX="3.75" PointY="15.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblParentCategory" Width="1.5" PointX="1.5" PointY="25.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblPhotographer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblSelfiePoint" Width="1.5" PointX="3" PointY="22" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblService" Width="1.5" PointX="8.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblStudioAdmin" Width="1.5" PointX="8.75" PointY="7.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblSubCategory" Width="1.5" PointX="1.5" PointY="15.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblWebGallery" Width="1.5" PointX="11" PointY="3.375" IsExpanded="true" />
-        <AssociationConnector Association="InstaAlbumModel.FK_CustomerConfigure_tblCustomer" ManuallyRouted="false" />
-        <AssociationConnector Association="InstaAlbumModel.FK_CustomerConfigure_tblParentCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="InstaAlbumModel.FK_CustomerConfigure_tblSubCategory" ManuallyRouted="false" />
+      <Diagram DiagramId="65fa093d5318446d83162d651b1fde54" Name="Diagram1">
+        <EntityTypeShape EntityType="InstaAlbumModel.tblAboutU" Width="1.875" PointX="0.75" PointY="0.75" IsExpanded="false" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBanner" Width="1.5" PointX="5.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBooking" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBranch" Width="1.5" PointX="3.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblCustomer" Width="1.5" PointX="0.75" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblFeedback" Width="1.5" PointX="3" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblGallery" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblOrder" Width="1.5" PointX="6" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblPackage" Width="1.5" PointX="3.75" PointY="21.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblParentCategory" Width="1.5" PointX="0.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblPhotographer" Width="1.5" PointX="6" PointY="11.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblPortfolio" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblSelfiePoint" Width="1.5" PointX="3" PointY="17.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblService" Width="1.5" PointX="5.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblStudioAdmin" Width="1.5" PointX="8.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblSubCategory" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblWebGallery" Width="1.5" PointX="8" PointY="0.875" IsExpanded="true" />
+        <AssociationConnector Association="InstaAlbumModel.FK_tblBooking_tblCustomer" ManuallyRouted="false" />
+        <AssociationConnector Association="InstaAlbumModel.FK_tblBooking_tblParentCategory" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblOrder_tblBranch" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblPackage_tblBranch" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblPhotographer_tblBranch" ManuallyRouted="false" />
@@ -30,11 +31,10 @@
         <AssociationConnector Association="InstaAlbumModel.FK_tblGallery_tblCustomer" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblOrder_tblCustomer" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblSelfiePoint_tblCustomer" ManuallyRouted="false" />
-        <AssociationConnector Association="InstaAlbumModel.FK_tblGallery_tblCategory" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblOrder_tblPackage" ManuallyRouted="false" />
-        <AssociationConnector Association="InstaAlbumModel.FK_tblPackage_tblCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="InstaAlbumModel.FK_tblSubCategory_tblSubCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="InstaAlbumModel.FK_tblSubCategory_tblParentCategory" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblWebGallery_tblService" ManuallyRouted="false" />
+        <AssociationConnector Association="InstaAlbumModel.FK_tblGallery_tblSubCategory" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

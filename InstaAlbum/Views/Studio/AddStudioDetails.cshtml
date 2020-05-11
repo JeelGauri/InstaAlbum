@@ -1,0 +1,214 @@
+﻿
+@{
+    ViewBag.Title = "AddStudioDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <script>
+        
+        function fnInsertRecord() {
+
+            var txtStudioName = document.getElementById("txtStudioName");
+            var txtEmail = document.getElementById("txtStudioEmail");
+            var txtPhoneNumber = document.getElementById("txtPhno");
+            var txtPassword = document.getElementById("txtPassword");
+            var txtAddress = document.getElementById("txtAddress");
+            var txtAbout = document.getElementById("txtAbout");
+            var txtOpeningHours = document.getElementById("txtOpeningHours");
+            var txtClosingHours = document.getElementById("txtClosingHours");
+            var txtMap= document.getElementById("txtMap");
+
+            if (txtStudioName.value == null || txtStudioName.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Studio name', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtEmail.value == null || txtEmail.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Studio Email', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtPhoneNumber.value == null || txtPhoneNumber.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Studio phone number', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtPassword.value == null || txtPassword.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter password', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtAddress.value == null || txtAddress.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Address', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtAbout.value == null || txtAbout.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Description', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtOpeningHours.value == null || txtOpeningHours.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter OpeningHours', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtClosingHours.value == null || txtClosingHours.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter ClosingHours', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+            if (txtMap.value == null || txtMap.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter map value(Any lanmark near by you.)', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+
+            var formData = new FormData();
+            var file = document.getElementById("inputProfile").files[0];
+            formData.append("imageFile", file);
+            formData.append("StudioName", txtStudioName.value);
+            formData.append("StudioEmail", txtEmail.value);
+            formData.append("PhoneNo", txtPhoneNumber.value);
+            formData.append("Password", txtPassword.value);
+            formData.append("Address", txtAddress.value);
+            formData.append("About", txtAbout.value);
+            formData.append("OpeningHours", txtOpeningHours.value);
+            formData.append("ClosingHours", txtClosingHours.value);
+            formData.append("Map", txtMap.value);
+
+            $.ajax({
+                type: "POST",
+                url: '/Studio/InsertStudio',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.reload();
+                                }
+                            }
+                        );
+                    }
+                    else if (response.Formatwarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+        }
+
+    </script>
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-tooltip-edit"></h1>
+                    </div>
+                </div>
+                <h4>Studio Details</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Add Studio Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Studio Name</label>
+                                    <input type="text" class="form-control" id="txtStudioName" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" class="form-control" id="txtStudioEmail" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputNumber">Phone No:</label>
+                                    <input type="number" class="form-control" id="txtPhno" placeholder="Phone Number">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputPassword">Password</label>
+                                    <input type="password" class="form-control" id="txtPassword" placeholder="Password">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">Address</label>
+                                    <textarea type="text" class="form-control" id="txtAddress" placeholder="Address"></textarea>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Studio Logo:</label>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                    <font color="red">Note: Logo must be in PNG format only.</font>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">About</label>
+                                    <textarea type="text" class="form-control" id="txtAbout" placeholder="Studio Description"></textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Opening Hours</label>
+                                    <input type="text" class="form-control" id="txtOpeningHours" placeholder="Enter Opening Hours">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Closing Hours</label>
+                                    <input type="text" class="form-control" id="txtClosingHours" placeholder="Enter Closing Hours">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Map</label>
+                                    <input type="text" placeholder="Type your Google Map Address" title="Type any landmark  like 'VR Mall' " class="form-control" id="txtMap" />
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Studio")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

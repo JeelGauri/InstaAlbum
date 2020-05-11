@@ -1,0 +1,175 @@
+﻿@model InstaAlbum.Models.tblStudioAdmin
+@{
+    ViewBag.Title = "EditStudioDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+    function fnUpdateRecord() {
+
+        var hdnStudioID = document.getElementById("hdnStudioID");
+        var txtStudioName = document.getElementById("txtStudioName");
+        var txtEmail = document.getElementById("txtStudioEmail");
+        var txtPhoneNumber = document.getElementById("txtPhno");
+        var txtPassword = document.getElementById("txtPassword");
+        var txtAddress = document.getElementById("txtAddress");
+        var txtAbout = document.getElementById("txtAbout");
+        var txtOpeningHours = document.getElementById("txtOpeningHours");
+        var txtClosingHours = document.getElementById("txtClosingHours");
+        var txtMap= document.getElementById("txtMap");
+
+        var formData = new FormData();
+        var file = document.getElementById("inputProfile").files[0];
+        formData.append("imageFile", file);
+
+        formData.append("StudioID", hdnStudioID.value);
+        formData.append("StudioName", txtStudioName.value);
+        formData.append("StudioEmail", txtEmail.value);
+        formData.append("PhoneNo", txtPhoneNumber.value);
+        formData.append("Address", txtAddress.value);
+        formData.append("About", txtAbout.value);
+        formData.append("OpeningHours", txtOpeningHours.value);
+        formData.append("ClosingHours", txtClosingHours.value);
+        formData.append("Map", txtMap.value);
+
+        $.ajax({
+            type: "POST",
+            url: '/Studio/UpdateStudioDetails',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Record is updated',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.href= "/Studio/";
+                            }
+                        }
+                    );
+                }
+                else if (response.Formatwarning === true) {
+                    toastr.warning(
+                        response.message,
+                        'Picture format error',
+                        {
+                            timeOut: 3000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                return;
+                            }
+                        }
+                    );
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while Updating record.', { timeOut: 3000 });
+                return;
+            }
+
+        });
+    }
+
+</script>
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-tooltip-edit"></h1>
+                    </div>
+                </div>
+                <h4>Studio Details</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Edit Studio Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Studio Name</label>
+                                    <input type="hidden" id="hdnStudioID" value="@Html.DisplayFor(model => model.StudioID)" />
+                                    <input type="text" value="@Html.DisplayFor(model => model.StudioName)" class="form-control" id="txtStudioName" placeholder="Enter Name">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmail4">Email</label>
+                                    <input type="email" value="@Html.DisplayFor(model => model.Email)" class="form-control" id="txtStudioEmail" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputNumber">Phone No:</label>
+                                    <input type="number" value="@Html.DisplayFor(model => model.PhoneNo)" class="form-control" id="txtPhno" placeholder="Phone Number">
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">Address</label>
+                                    <textarea type="text" class="form-control" id="txtAddress" placeholder="Address">@Html.DisplayFor(model => model.Address)</textarea>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Studio Logo</label>
+                                    <img src="~/StudioLogo/@Html.DisplayFor(model => model.StudioLogo)" height="50px" width="50px"/>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress">About</label>
+                                    <textarea type="text" class="form-control" id="txtAbout" placeholder="Studio Description">@Html.DisplayFor(model => model.About)</textarea>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Opening Hours</label>
+                                    <input type="text" value="@Html.DisplayFor(model => model.OpeningHours)" class="form-control" id="txtOpeningHours" placeholder="Enter Opening Hours">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Closing Hours</label>
+                                    <input type="text" value="@Html.DisplayFor(model => model.ClosingHours)" class="form-control" id="txtClosingHours" placeholder="Enter Closing Hours">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Map</label>
+                                    <input type="text" value="@Html.DisplayFor(model => model.Map)" placeholder="Type your Google Map Address" title="Type any landmark  like 'VR Mall' " class="form-control" id="txtMap" />
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="submit" onclick="javascript:fnUpdateRecord()" value="Update" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Studio")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

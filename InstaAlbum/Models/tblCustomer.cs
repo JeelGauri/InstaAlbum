@@ -17,7 +17,7 @@ namespace InstaAlbum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblCustomer()
         {
-            this.CustomerConfigures = new HashSet<CustomerConfigure>();
+            this.tblBookings = new HashSet<tblBooking>();
             this.tblFeedbacks = new HashSet<tblFeedback>();
             this.tblGalleries = new HashSet<tblGallery>();
             this.tblOrders = new HashSet<tblOrder>();
@@ -29,13 +29,13 @@ namespace InstaAlbum.Models
         public string CustomerEmail { get; set; }
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
+        public string ProfilePic { get; set; }
         public bool IsActive { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public string ProfilePic { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerConfigure> CustomerConfigures { get; set; }
+        public virtual ICollection<tblBooking> tblBookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblFeedback> tblFeedbacks { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

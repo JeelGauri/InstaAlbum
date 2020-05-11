@@ -1,0 +1,126 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblStudioAdmin>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-tooltip-edit"></h1>
+                    </div>
+                </div>
+                <h3>Studio Details </h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+    <div class="container pull-up">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Studio Info </h3>
+                        <div class="card-body ">
+                            @if (Model.Count() > 0)
+                            {
+                                foreach (var item in Model.Reverse().Take(1))
+                                {
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label class="label" for="lblStudioName">Studio Name:</label>
+                                            <label id="lblStudioName" class="form-control">@item.StudioName</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="lblEmail">Email:</label>
+                                            <label class="form-control" id="lblEmail">@item.Email</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="lblPhoneNumber">Phone No:</label>
+                                            <label class="form-control" id="lblPhoneNumber">@item.PhoneNo</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="lblAddress">Address:</label>
+                                            <pre style="width: 300px; height: 5pc; overflow-y: scroll;">@item.Address</pre>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="imgStudioLogo">Studio Logo:</label>
+                                            <img id="imgStudioLogo" src="~/StudioLogo/@item.StudioLogo" height="50px" width="50px">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="lblAbout">About:</label>
+                                            <pre style="width: 300px; height: 5pc; overflow-y: scroll;">@item.About</pre>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="lblOpeningHours">Opening Hours:</label>
+                                            <label class="form-control" id="lblOpeningHours">@item.OpeningHours</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="lblClosingHours">Closing Hours:</label>
+                                            <label class="form-control" id="lblClosingHours">@item.ClosingHours</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label for="">Map:</label>
+                                            <iframe height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=@item.Map&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            @Html.ActionLink("Update","EditStudioDetails", new { id = item.StudioID }, htmlAttributes: new { @class="btn btn-primary" })
+                                            <a href="@Url.Action("Index", "Studio")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                        </div>
+
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <a href="@Url.Action("AddStudioDetails", "Studio")" title="Click here to get List" class="btn btn-primary">Add Studio Details</a>
+                                        <a href="@Url.Action("Index", "Studio")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

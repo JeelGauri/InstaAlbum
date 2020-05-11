@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "StudioDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-tooltip-edit"></h1>
+                    </div>
+                </div>
+                <h4>Studio Details</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Add Studio Details </h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label class="label" for="lblStudioName">Studio Name:</label>
+                                    <label id="lblStudioName" class="form-control">Insta Album Photo Studio</label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lblEmail">Email:</label>
+                                    <label class="form-control" id="lblEmail"></label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lblPhoneNumber">Phone No:</label>
+                                    <label class="form-control" id="lblPhoneNumber"></label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lblAddress">Address:</label>
+                                    <label class="form-control" id="lblAddress"></label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="imgStudioLogo">Studio Logo:</label>
+                                    <img id="imgStudioLogo" height="50px" width="50px">
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lblAbout">About:</label>
+                                    <label class="form-control" id="lblAbout"></label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lblOpeningHours">Opening Hours:</label>
+                                    <label class="form-control" id="lblOpeningHours"></label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="lblClosingHours">Closing Hours:</label>
+                                    <label class="form-control" id="lblClosingHours"></label>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="">Map:</label>
+                                    <iframe src="https://maps.google.com/maps?width=100%&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street%2C%20Dublin%2C%20Ireland+(My%20Business%20Name)&amp;ie=UTF8&amp;t=&amp;z=14&amp;iwloc=B&amp;output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"><a href="https://www.maps.ie/draw-radius-circle-map/">km radius map</a>
+                                    </iframe>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Studio")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

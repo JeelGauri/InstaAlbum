@@ -134,13 +134,11 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParentCategoryController.cs" />
     <Compile Include="Controllers\PhotographerController.cs" />
+    <Compile Include="Controllers\StudioController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\UserHomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Models\CustomerConfigure.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ImageJsonFormat.cs" />
     <Compile Include="Models\ImageProcessing.cs" />
@@ -160,6 +158,12 @@
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\tblAboutU.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblBanner.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblBooking.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBranch.cs">
@@ -184,6 +188,9 @@
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPhotographer.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblPortfolio.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblSelfiePoint.cs">
@@ -255,6 +262,7 @@
     <Content Include="adminassets\img\guides\random-07.svg" />
     <Content Include="adminassets\img\guides\random-08.svg" />
     <Content Include="adminassets\img\iceccream-bowl.png" />
+    <Content Include="adminassets\img\studio.png" />
     <Content Include="adminassets\img\login.svg" />
     <Content Include="adminassets\img\logo.png" />
     <Content Include="adminassets\img\logo.svg" />
@@ -683,8 +691,14 @@
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
       <LastGenOutput>InstaAlbumDB.cs</LastGenOutput>
     </Content>
+    <Content Include="ParentCategoryImages\bday.jpg" />
+    <Content Include="ParentCategoryImages\kids.jpg" />
+    <Content Include="ParentCategoryImages\wedding.jpg" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="SubCategoryImages\Baby.jpg" />
+    <Content Include="SubCategoryImages\Beach Wedding.jpg" />
+    <Content Include="SubCategoryImages\Cake.jpg" />
     <Content Include="www.tinymce.com\pricing.html" />
     <Content Include="adminassets\img\guides\random-06.svg.readme" />
     <Content Include="adminassets\img\login.svg.readme" />
@@ -767,22 +781,13 @@
     <Content Include="Views\Gallery\Edit.cshtml" />
     <Content Include="Views\Gallery\GalleryCustomerList.cshtml" />
     <Content Include="Views\Gallery\GalleryList.cshtml" />
-    <Content Include="Views\Shared\_userLayout.cshtml" />
-    <Content Include="Views\UserHome\Index.cshtml" />
-    <Content Include="Views\UserHome\Contact.cshtml" />
-    <Content Include="Views\UserHome\About.cshtml" />
-    <Content Include="Views\UserHome\Feedback.cshtml" />
-    <Content Include="Views\UserHome\Protfolio.cshtml" />
-    <Content Include="Views\UserHome\Gallery.cshtml" />
-    <Content Include="Views\UserHome\Category.cshtml" />
-    <Content Include="Views\UserHome\SubCategory.cshtml" />
-    <Content Include="Views\UserHome\CategoryWiseImage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="CustomerProfile\" />
     <Folder Include="Gallery\" />
     <Folder Include="PhotographerProfilePics\" />
+    <Folder Include="StudioLogo\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

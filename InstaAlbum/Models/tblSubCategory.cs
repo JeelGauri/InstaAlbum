@@ -17,9 +17,7 @@ namespace InstaAlbum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblSubCategory()
         {
-            this.CustomerConfigures = new HashSet<CustomerConfigure>();
             this.tblGalleries = new HashSet<tblGallery>();
-            this.tblPackages = new HashSet<tblPackage>();
         }
     
         public int SubCategoryID { get; set; }
@@ -28,12 +26,8 @@ namespace InstaAlbum.Models
         public string SubCategoryCoverPhoto { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CustomerConfigure> CustomerConfigures { get; set; }
+        public virtual tblParentCategory tblParentCategory { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGallery> tblGalleries { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPackage> tblPackages { get; set; }
-        public virtual tblParentCategory tblParentCategory { get; set; }
     }
 }

@@ -8,7 +8,7 @@
 <script>
 
     $(document).ready(function () {
-       var txtEmail = document.getElementById("txtEmail");
+        var txtEmail = document.getElementById("txtEmail");
         $("#txtEmail").blur(function () {
 
             $.ajax({
@@ -34,19 +34,19 @@
             });
         })
 
-       $.ajax({  
-           type: "GET",  
-           url: "/Branch/getAllBranch",  
-           data: "{}",  
-           success: function (data) {  
-               var s = '<option value="0">Please Select a Branch</option>';  
-               for (var i = 0; i < data.length; i++) {  
-                   s += '<option value="' + data[i].branchid + '">' + data[i].branchname+ '</option>';  
-               }  
-               $("#ddlBranch").html(s);  
-           }  
-       });  
-   });  
+        $.ajax({
+            type: "GET",
+            url: "/Branch/getAllBranch",
+            data: "{}",
+            success: function (data) {
+                var s = '<option value="0">Please Select a Branch</option>';
+                for (var i = 0; i < data.length; i++) {
+                    s += '<option value="' + data[i].branchid + '">' + data[i].branchname + '</option>';
+                }
+                $("#ddlBranch").html(s);
+            }
+        });
+    });
 </script>
 
 <script>
@@ -124,47 +124,47 @@
             return;
         }
 
-         $.ajax({
-               type: "POST",
-                url: '/Photographer/InsertPhotographer',
-                data: formData,
-                dataType: 'json',
-                contentType: false,
-                processData: false,
-                success: function (response) {
-                    if (response.success === true) {
-                        toastr.success(
-                            response.message,
-                            'Record is inserted',
-                            {
-                                timeOut: 1000,
-                                fadeOut: 1000,
-                                onHidden: function () {
-                                    window.location.reload();
-                                }
+        $.ajax({
+            type: "POST",
+            url: '/Photographer/InsertPhotographer',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Record is inserted',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.reload();
                             }
-                        );
-                    }
-                    else if (response.Formatwarning === true) {
-                        toastr.warning(
-                            response.message,
-                            'Picture format error',
-                            {
-                                timeOut: 3000,
-                                fadeOut: 1000,
-                                onHidden: function () {
-                                    return;
-                                }
-                            }
-                        );
-                    }
-                },
-                error: function () {
-                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
-                    return;
+                        }
+                    );
                 }
+                else if (response.Formatwarning === true) {
+                    toastr.warning(
+                        response.message,
+                        'Picture format error',
+                        {
+                            timeOut: 3000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                return;
+                            }
+                        }
+                    );
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                return;
+            }
 
-            });
+        });
 
     }
 
@@ -219,7 +219,7 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputgender">Gender</label>
-                                    <br/>
+                                    <br />
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" checked id="rdMale" name="gender" class="custom-control-input">
                                         <label class="custom-control-label" for="rdMale">Male</label>

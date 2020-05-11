@@ -33,17 +33,58 @@ namespace InstaAlbum.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        public ActionResult Create(tblParentCategory tblParentCategory)
+        public ActionResult InsertParentCategory()
         {
-            if (ModelState.IsValid)
+            try
             {
-                tblParentCategory.CreatedDate = DateTime.Now;
-                db.tblParentCategories.Add(tblParentCategory);
-                db.SaveChanges();
-                return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
+                tblParentCategory newCat = new tblParentCategory();
+                newCat.ParentCategoryName = Request.Form["ParentCategoryName"];
+
+                if (ModelState.IsValid)
+                {
+                    int fileSize = 0;
+                    string fileName = string.Empty;
+                    string mimeType = string.Empty;
+                    System.IO.Stream fileContent;
+
+                    if (Request.Files.Count > 0)
+                    {
+                        HttpPostedFileBase file = Request.Files[0];
+
+                        fileSize = file.ContentLength;
+                        fileName = file.FileName;
+                        mimeType = file.ContentType;
+                        fileContent = file.InputStream;
+
+
+                        if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
+                        {
+                            return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
+                        }
+
+                        #region Save And compress file
+                        //To save file, use SaveAs method
+                        file.SaveAs(Server.MapPath("~/ParentCategoryImages/") + fileName);
+                        if (!ImageProcessing.InsertImages(Server.MapPath("~/ParentCategoryImages/") + fileName))
+                        {
+                            return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
+                        }
+                        #endregion
+                    }
+                    newCat.Image = fileName;
+
+                    newCat.CreatedDate = DateTime.Now;
+                    db.tblParentCategories.Add(newCat);
+                    db.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record Not inserted" }, JsonRequestBehavior.AllowGet);
             }
 
-            return View(tblParentCategory);
+
+            return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
         }
 
        

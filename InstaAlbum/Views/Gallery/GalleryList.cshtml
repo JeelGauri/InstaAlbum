@@ -293,10 +293,10 @@
                                             <a target="_blank" href="~/Gallery/@item.Image"><img src="~/Gallery/@item.Image" height="50px" width="50px" /></a>
                                         </td>
                                         <td>
-                                            @item.findParentCatNameByID(item.SubCategoryID)
+                                            @item.tblSubCategory.tblParentCategory.ParentCategoryName
                                         </td>
                                         <td>
-                                            @item.findSubCatNameByID(item.SubCategoryID)
+                                            @item.tblSubCategory.SubCategoryName
                                         </td>
                                         <td>
                                             @(item.IsSelected == true ? "Yes" : "No")
@@ -369,7 +369,7 @@
     <div class="modal-dialog  modal-dialog-align-top-left" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Add Images</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Get JSON File</h5>
                 <button type="button" class="close" data-dismiss="modal"
                         aria-label="Close">
                     <span aria-hidden="true">&times;</span>

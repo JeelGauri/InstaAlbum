@@ -182,24 +182,6 @@ namespace InstaAlbum.Controllers
             }
         }
 
-        [HttpPost]
-        public ActionResult ConfigureClient()
-        {
-            try
-            {
-                CustomerConfigure customerConfigure = new CustomerConfigure();
-                customerConfigure.CustomerID = Convert.ToInt32(Request.Form["CustomerID"]);
-                customerConfigure.ParentCategoryID = Convert.ToInt32(Request.Form["ParentCategoryID"]);
-                customerConfigure.SubCategoryID = Convert.ToInt32(Request.Form["SubCategoryID"]);
-                db.CustomerConfigures.Add(customerConfigure);
-                db.SaveChanges();
-                return Json(new { success = true, message = "Customer is configured." }, JsonRequestBehavior.AllowGet);
-            }
-            catch (Exception ex)
-            {
-                return Json(new { success = false, message = "Customer is not configured."+ex.Message }, JsonRequestBehavior.AllowGet);
-            }
-        }
         // GET: Gallery/Edit/5
         public ActionResult Edit(long? id)
         {
