@@ -56,6 +56,16 @@ namespace InstaAlbum.Controllers
         {
             return View();
         }
+
+        public ActionResult AddStudioDetails()
+        {
+            return View();
+        }
+
+        public ActionResult EditStudioDetails()
+        {
+            return View();
+        }
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";

@@ -48,55 +48,63 @@ namespace InstaAlbum.Controllers
         public ActionResult InsertCustomer()
         {
             ViewBag.message = false;
-            if (ModelState.IsValid)
+            try
             {
-                tblCustomer newCust = new tblCustomer();
-                newCust.CustomerName = Request.Form["CustomerName"];
-                newCust.CustomerEmail = Request.Form["CustomerEmail"];
-                newCust.PhoneNumber = Request.Form["PhoneNo"];
-                newCust.Password = Request.Form["Password"];
-                newCust.IsActive = Request.Form["IsActive"] == "true" ? true : false;
-                newCust.CreatedDate = DateTime.Now;
-
                 if (ModelState.IsValid)
                 {
-                    int fileSize = 0;
-                    string fileName = string.Empty;
-                    string mimeType = string.Empty;
-                    System.IO.Stream fileContent;
+                    tblCustomer newCust = new tblCustomer();
+                    newCust.CustomerName = Request.Form["CustomerName"];
+                    newCust.CustomerEmail = Request.Form["CustomerEmail"];
+                    newCust.PhoneNumber = Request.Form["PhoneNo"];
+                    newCust.Password = Request.Form["Password"];
+                    newCust.IsActive = Request.Form["IsActive"] == "true" ? true : false;
+                    newCust.CreatedDate = DateTime.Now;
 
-                    if (Request.Files.Count > 0)
+                    if (ModelState.IsValid)
                     {
-                        HttpPostedFileBase file = Request.Files[0];
+                        int fileSize = 0;
+                        string fileName = string.Empty;
+                        string mimeType = string.Empty;
+                        System.IO.Stream fileContent;
 
-                        fileSize = file.ContentLength;
-                        fileName = file.FileName;
-                        mimeType = file.ContentType;
-                        fileContent = file.InputStream;
-
-
-                        if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
+                        if (Request.Files.Count > 0)
                         {
-                            return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
-                        }
+                            HttpPostedFileBase file = Request.Files[0];
 
-                        #region Save And compress file
-                        //To save file, use SaveAs method
-                        file.SaveAs(Server.MapPath("~/CustomerProfile/") + fileName);
-                        if (!ImageProcessing.InsertImages(Server.MapPath("~/CustomerProfile/") + fileName))
-                        {
-                            return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
+                            fileSize = file.ContentLength;
+                            fileName = file.FileName;
+                            mimeType = file.ContentType;
+                            fileContent = file.InputStream;
+
+
+                            if (mimeType.ToLower() != "image/jpeg" && mimeType.ToLower() != "image/jpg" && mimeType.ToLower() != "image/png")
+                            {
+                                return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
+                            }
+
+                            #region Save And compress file
+                            //To save file, use SaveAs method
+                            file.SaveAs(Server.MapPath("~/CustomerProfile/") + fileName);
+                            if (!ImageProcessing.InsertImages(Server.MapPath("~/CustomerProfile/") + fileName))
+                            {
+                                return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
+                            }
+                            #endregion
                         }
-                        #endregion
+                        newCust.ProfilePic = fileName;
                     }
-                    newCust.ProfilePic = fileName;
+                    db.tblCustomers.Add(newCust);
+                    db.SaveChanges();
+                    
                 }
-                db.tblCustomers.Add(newCust);
-                db.SaveChanges();
-                return Json(new { success = true, message = "Record Inserted" }, JsonRequestBehavior.AllowGet);
             }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Record not Inserted" }, JsonRequestBehavior.AllowGet);
+            }
+            
 
-            return Json(new { success = false, message = "Record not inserted" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
         }
 
         // GET: Customer/Edit/5

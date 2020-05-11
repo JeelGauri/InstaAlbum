@@ -134,6 +134,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ParentCategoryController.cs" />
     <Compile Include="Controllers\PhotographerController.cs" />
+    <Compile Include="Controllers\StudioController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -444,6 +445,13 @@
     <Content Include="Views\Gallery\GalleryList.cshtml" />
     <Content Include="Views\Home\StudioManagement.cshtml" />
     <Content Include="Views\Home\StudioDetails.cshtml" />
+    <Content Include="Views\Studio\Create.cshtml" />
+    <Content Include="Views\Studio\Delete.cshtml" />
+    <Content Include="Views\Studio\Details.cshtml" />
+    <Content Include="Views\Studio\Edit.cshtml" />
+    <Content Include="Views\Studio\Index.cshtml" />
+    <Content Include="Views\Studio\AddStudioDetails.cshtml" />
+    <Content Include="Views\Studio\EditStudioDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
