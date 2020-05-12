@@ -45,5 +45,6 @@ namespace InstaAlbum.Controllers
         {
             return View();
         }
+        
     }
 }
