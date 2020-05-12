@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -115,6 +116,9 @@ namespace InstaAlbum.Controllers
             tblSubCategory tblSubCategory = db.tblSubCategories.Find(id);
             db.tblSubCategories.Remove(tblSubCategory);
             db.SaveChanges();
+            string path = Server.MapPath("~/SubCategoryImages/" + tblSubCategory.SubCategoryCoverPhoto);
+            FileInfo delfile = new FileInfo(path);
+            delfile.Delete();
             return Json(new { success = true, message = "Record deleted" }, JsonRequestBehavior.AllowGet);
         }
 

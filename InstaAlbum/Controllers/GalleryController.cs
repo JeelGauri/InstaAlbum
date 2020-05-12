@@ -239,6 +239,9 @@ namespace InstaAlbum.Controllers
             tblGallery tblGallery = db.tblGalleries.Find(id);
             db.tblGalleries.Remove(tblGallery);
             db.SaveChanges();
+            string path = Server.MapPath("~/Gallery/" + tblGallery.Image);
+            FileInfo delfile = new FileInfo(path);
+            delfile.Delete();
             return Json(new { success = true, message = "Image is deleted."}, JsonRequestBehavior.AllowGet);
         }
 

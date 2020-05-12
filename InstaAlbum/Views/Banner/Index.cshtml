@@ -92,10 +92,10 @@
                             }
                         );
                     }
-                    else if (response.Formatwarning === true) {
+                    else if (response.Sizewarning === true) {
                         toastr.warning(
                             response.message,
-                            'Picture format error',
+                            'Banner Image Size is greater than 2 MB.',
                             {
                                 timeOut: 3000,
                                 fadeOut: 1000,
@@ -105,10 +105,10 @@
                             }
                         );
                     }
-                    else if (response.Formatwarning === true) {
+                    else if (response.ImageEmpty === true) {
                         toastr.warning(
                             response.message,
-                            'Picture format error',
+                            'Banner Image is not selected.',
                             {
                                 timeOut: 3000,
                                 fadeOut: 1000,
@@ -128,21 +128,6 @@
     }
 </script>
 
-<div class="modal fade" id="divspinner" tabindex="-1" role="dialog"
-     aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                Uploading...
-            </div>
-            <div class="modal-body">
-                <div class="spinner-border spinner-border-sm" style="align-content:center; width: 3rem; height: 3rem;" role="status">
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 <div class="bg-dark bg-dots m-b-30">
     <div class="container">
         <div class="row p-b-60 p-t-60">
@@ -150,7 +135,7 @@
             <div class="col-lg-8 text-center mx-auto text-white p-b-30">
                 <div class="m-b-10">
                     <div class="avatar avatar-lg ">
-                        <h1 class="mdi mdi-account-group"></h1>
+                        <h1 class="mdi mdi-image-area"></h1>
                     </div>
                 </div>
                 <h3>Banner Details</h3>
@@ -177,6 +162,7 @@
                                     <th>Image</th>
                                     <th>Heading</th>
                                     <th>Description</th>
+                                    <th>Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -222,7 +208,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-12">
                         <label for="inputText">Heading: </label>
-                        <input type="text" id="txtHeading" class="form-control" placeholder="Enter Heading"></input>
+                        <input type="text" id="txtHeading" class="form-control" placeholder="Enter Heading"/>
                     </div>
                 </div>
                 <div class="form-row">

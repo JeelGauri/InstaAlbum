@@ -192,6 +192,9 @@ namespace InstaAlbum.Controllers
             tblStudioAdmin tblStudioAdmin = db.tblStudioAdmins.Find(id);
             db.tblStudioAdmins.Remove(tblStudioAdmin);
             db.SaveChanges();
+            string path = Server.MapPath("~/StudioLogo/" + tblStudioAdmin.StudioLogo);
+            FileInfo delfile = new FileInfo(path);
+            delfile.Delete();
             return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
         }
 

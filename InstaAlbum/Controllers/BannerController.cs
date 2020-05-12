@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -60,12 +61,17 @@ namespace InstaAlbum.Controllers
                                 return Json(new { Sizewarning = true, message = "Size must be less than 2 MB." }, JsonRequestBehavior.AllowGet);
                             }
 
+
                             #region Save And compress file
                             //To save file, use SaveAs method
                             file.SaveAs(Server.MapPath("~/BannerImages/") + fileName);
+                            newBanner.BannerImage = fileName;
                             #endregion
                         }
-                        newBanner.BannerImage = fileName;
+                        else
+                        {
+                            return Json(new { ImageEmpty = true, message = "Image is not selected." }, JsonRequestBehavior.AllowGet);
+                        }
                     }
                     db.tblBanners.Add(newBanner);
                     db.SaveChanges();
@@ -81,15 +87,16 @@ namespace InstaAlbum.Controllers
             return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
         }
 
-       
-        // POST: Banner/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
+      
+        [HttpPost]
         public ActionResult DeleteBanner(int id)
         {
             tblBanner tblBanner = db.tblBanners.Find(id);
             db.tblBanners.Remove(tblBanner);
             db.SaveChanges();
+            string path = Server.MapPath("~/BannerImages/" + tblBanner.BannerImage);
+            FileInfo delfile = new FileInfo(path);
+            delfile.Delete();
             return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
         }
 
