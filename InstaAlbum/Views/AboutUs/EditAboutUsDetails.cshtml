@@ -1,0 +1,123 @@
+﻿@model InstaAlbum.Models.tblAboutU
+@{
+    ViewBag.Title = "EditAboutUsDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+    function fnUpdateRecord() {
+
+        var hdnAboutUsID = document.getElementById("hdnAboutUsID");
+        var txtDescription = document.getElementById("txtDescription");
+
+        var formData = new FormData();
+        var file = document.getElementById("inputProfile").files[0];
+        formData.append("imageFile", file);
+
+        formData.append("AboutUsID", hdnAboutUsID.value);
+        formData.append("Description", txtDescription.value);
+
+        $.ajax({
+            type: "POST",
+            url: '/AboutUs/UpdateAboutUsDetails',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Record is updated',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.href = "/AboutUs/";
+                            }
+                        }
+                    );
+                }
+                else if (response.Formatwarning === true) {
+                    toastr.warning(
+                        response.message,
+                        'Picture format error',
+                        {
+                            timeOut: 3000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                return;
+                            }
+                        });
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while Updating record.', { timeOut: 3000 });
+                return;
+            }
+
+        });
+    }
+
+</script>
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-information-outline"></h1>
+                    </div>
+                </div>
+                <h4>AboutUs Details</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Edit AboutUs Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Image</label>
+                                    <input type="hidden" id="hdnAboutUsID" value="@Model.AboutUsID"/>
+                                    <img src="~/AboutUsImages/@Html.DisplayFor(model => model.Image)" height="50px" width="50px" />
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputDescription">Description</label>
+                                    <textarea type="text" class="form-control" id="txtDescription" placeholder="AboutUs Description">@Html.DisplayFor(model => model.Description)</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="submit" onclick="javascript:fnUpdateRecord()" value="Update" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "AboutUs")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>
+
+

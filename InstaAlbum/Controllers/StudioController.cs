@@ -82,7 +82,7 @@ namespace InstaAlbum.Controllers
                 return Json(new { success = false, message = "Record not Inserted" }, JsonRequestBehavior.AllowGet);
             }
 
-            return Json(new { success = true, message = "Record Inserted" }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, message = "Record Inserted" }, JsonRequestBehavior.AllowGet);           
         }
 
         // GET: Studio/Edit/5

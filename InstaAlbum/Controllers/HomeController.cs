@@ -28,6 +28,11 @@ namespace InstaAlbum.Controllers
             return View();
         }
 
+        public ActionResult PageNotFound()
+        {
+            return View();
+        }
+
         public ActionResult PackageSummary()
         {
             return View();

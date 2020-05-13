@@ -1,0 +1,175 @@
+﻿@model InstaAlbum.Models.tblPortfolio
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script>
+
+    function fnInsertRecord() {
+
+        var txtPortfolioName = document.getElementById("txtPortfolioName");
+        var txtSmallDescription = document.getElementById("txtSmallDescription");
+        var txtDescription = document.getElementById("txtDescription");
+
+         if (txtPortfolioName.value == null || txtPortfolioName.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Portfolio Name', { timeOut: 3000, fadeOut: 1000 });
+                return;
+        }
+         if (txtSmallDescription.value == null || txtSmallDescription.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Small Description', { timeOut: 3000, fadeOut: 1000 });
+                return;
+        }
+         if (txtDescription.value == null || txtDescription.value.length <= 0) {
+                toastr.warning('Input Error', 'Please enter Description', { timeOut: 3000, fadeOut: 1000 });
+                return;
+            }
+
+        var formData = new FormData();
+        var file = document.getElementById("inputProfile").files[0];
+        formData.append("imageFile", file);
+
+        formData.append("PortfolioName", txtPortfolioName.value);
+        formData.append("SmallDescription", txtSmallDescription.value);
+        formData.append("Description", txtDescription.value);
+
+
+        $.ajax({
+            type: "POST",
+            url: '/Portfolio/InsertPortfolio',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Record is inserted',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.href = "/Portfolio/";
+                            }
+                        }
+                    );
+                }
+                else if (response.Formatwarning === true) {
+                    toastr.warning(
+                        response.message,
+                        'Picture format error',
+                        {
+                            timeOut: 3000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                return;
+                            }
+                        }
+                    );
+                }
+                else if (response.Sizewarning === true) {
+                    toastr.warning(
+                        response.message,
+                        'Image Size is greater than 2 MB.',
+                        {
+                            timeOut: 3000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                return;
+                            }
+                        }
+                    );
+                }
+                else if (response.ImageEmpty === true) {
+                        toastr.warning(
+                            response.message,
+                            'Please Select the Image.',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                return;
+            }
+
+        });
+
+    }
+
+</script>
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-account-card-details"></h1>
+                    </div>
+                </div>
+                <h4>Portfolio</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+                        <h3>Portfolio Details</h3>
+                        <div class="card-body ">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputText">Portfolio Name:</label>
+                                    <input type="text" class="form-control" id="txtPortfolioName" placeholder="Enter Name">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Portfolio Image</label>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputSmallDescription">Small Description</label>
+                                    <textarea type="text" class="form-control" id="txtSmallDescription" placeholder="Enter Small Description"></textarea>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputDescription">Description</label>
+                                    <textarea type="text" class="form-control" id="txtDescription" placeholder="Enter Description"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="submit" onclick="javascript:fnInsertRecord()" value="Submit" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Portfolio")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+
+                        </div>
+                        <!--widget card ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

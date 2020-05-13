@@ -1,0 +1,75 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblAboutU>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-information-outline"></h1>
+                    </div>
+                </div>
+                <h3>About Us </h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container pull-up">
+    <div class="row ">
+        <div class="col-lg-8 mx-auto  mt-2">
+            <div class="card py-3 m-b-30">
+                <div class="card-body">
+                    <h3>AboutUs Info </h3>
+                    <div class="card-body ">
+                        @if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model.Reverse().Take(1))
+                            {
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="imgAboutImage">Image:</label>
+                                        <img id="imgAboutImage" src="~/AboutUsImages/@item.Image" height="200px" width="400px">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        <label for="lblAbout">Description:</label>
+                                        <pre style="width: 300px; height: 5pc; overflow-y: scroll;">@item.Description</pre>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group col-md-6">
+                                        @Html.ActionLink("Update", "EditAboutUsDetails", new { id = item.AboutUsID }, htmlAttributes: new { @class = "btn btn-primary" })
+                                        <a href="@Url.Action("Index", "Home")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                    </div>
+
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <a href="@Url.Action("AddAboutUsDetails", "AboutUs")" title="Click here to get List" class="btn btn-primary">Add AboutUs Details</a>
+                                    <a href="@Url.Action("Index", "AboutUs")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+
+                            </div>
+                        }
+                    </div>
+                    <!--widget card ends-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

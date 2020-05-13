@@ -18,9 +18,6 @@ namespace InstaAlbum.Controllers
             return View();
         }
 
-        public ActionResult IsUserIsValidOrNot() 
-        {
-
-        }
+       
     }
 }
