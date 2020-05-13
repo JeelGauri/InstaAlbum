@@ -199,6 +199,9 @@ namespace InstaAlbum.Controllers
             tblCustomer tblCustomer = db.tblCustomers.Find(id);
             db.tblCustomers.Remove(tblCustomer);
             db.SaveChanges();
+            string path = Server.MapPath("~/CustomerProfile/" + tblCustomer.ProfilePic);
+            FileInfo delfile = new FileInfo(path);
+            delfile.Delete();
             return Json(new { success = true , message = "Record deleted successfully"},JsonRequestBehavior.AllowGet);
         }
 
