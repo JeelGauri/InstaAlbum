@@ -19,30 +19,11 @@ namespace InstaAlbum.Controllers
         {
             return View(db.tblCustomers.ToList());
         }
-        // GET: Customer/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblCustomer tblCustomer = db.tblCustomers.Find(id);
-            if (tblCustomer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblCustomer);
-        }
-
-        // GET: Customer/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Customer/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         
         public ActionResult InsertCustomer()

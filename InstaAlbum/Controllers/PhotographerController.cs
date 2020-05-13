@@ -26,20 +26,7 @@ namespace InstaAlbum.Controllers
             return View(tblPhotographers.ToList());
         }
 
-        // GET: Photographer/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblPhotographer tblPhotographer = db.tblPhotographers.Find(id);
-            if (tblPhotographer == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblPhotographer);
-        }
+        
 
         public ActionResult Create()
         {
@@ -47,9 +34,6 @@ namespace InstaAlbum.Controllers
             return View();
         }
 
-        // POST: Photographer/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult InsertPhotographer()
         {
@@ -125,9 +109,6 @@ namespace InstaAlbum.Controllers
             return View(tblPhotographer);
         }
 
-        // POST: Photographer/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult UpdatePhotographer()
         {

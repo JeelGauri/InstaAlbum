@@ -22,30 +22,11 @@ namespace InstaAlbum.Controllers
             return View(db.tblStudioAdmins.ToList());
         }
 
-        // GET: Studio/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblStudioAdmin tblStudioAdmin = db.tblStudioAdmins.Find(id);
-            if (tblStudioAdmin == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblStudioAdmin);
-        }
-
-        // GET: Studio/Create
         public ActionResult AddStudioDetails()
         {
             return View();
         }
 
-        // POST: Studio/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult InsertStudio()
         {
@@ -119,9 +100,6 @@ namespace InstaAlbum.Controllers
             return View(tblStudioAdmin);
         }
 
-        // POST: Studio/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult UpdateStudioDetails()
         {

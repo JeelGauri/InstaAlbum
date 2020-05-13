@@ -41,22 +41,7 @@ namespace InstaAlbum.Controllers
             var customers = db.tblCustomers.Where(c => c.IsActive == true);
             return View(customers.ToList());
         }
-        // GET: Gallery/Details/5
-        public ActionResult Details(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblGallery tblGallery = db.tblGalleries.Find(id);
-            if (tblGallery == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblGallery);
-        }
-
-        // GET: Gallery/Create
+        
         public ActionResult Create()
         {
             ViewBag.CustomerID = new SelectList(db.tblCustomers, "CustomerID", "CustomerName");
@@ -64,9 +49,6 @@ namespace InstaAlbum.Controllers
             return View();
         }
 
-        // POST: Gallery/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         public ActionResult InsertImages()
         {
@@ -182,57 +164,6 @@ namespace InstaAlbum.Controllers
             }
         }
 
-        // GET: Gallery/Edit/5
-        public ActionResult Edit(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblGallery tblGallery = db.tblGalleries.Find(id);
-            if (tblGallery == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CustomerID = new SelectList(db.tblCustomers, "CustomerID", "CustomerName", tblGallery.CustomerID);
-            ViewBag.SubCategoryID = new SelectList(db.tblSubCategories, "SubCategoryID", "SubCategoryName", tblGallery.SubCategoryID);
-            return View(tblGallery);
-        }
-
-        // POST: Gallery/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "GalleryID,SubCategoryID,CustomerID,Image,IsSelected,CreatedDate,UpdatedDate")] tblGallery tblGallery)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(tblGallery).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CustomerID = new SelectList(db.tblCustomers, "CustomerID", "CustomerName", tblGallery.CustomerID);
-            ViewBag.SubCategoryID = new SelectList(db.tblSubCategories, "SubCategoryID", "SubCategoryName", tblGallery.SubCategoryID);
-            return View(tblGallery);
-        }
-
-        // GET: Gallery/Delete/5
-        public ActionResult Delete(long? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            tblGallery tblGallery = db.tblGalleries.Find(id);
-            if (tblGallery == null)
-            {
-                return HttpNotFound();
-            }
-            return View(tblGallery);
-        }
-
-        // POST: Gallery/Delete/5
         [HttpPost]
         public ActionResult DeleteImage(long id)
         {
