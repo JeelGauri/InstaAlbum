@@ -13,5 +13,14 @@ namespace InstaAlbum.Controllers
         {
             return View();
         }
+        public ActionResult Registration()
+        {
+            return View();
+        }
+
+        public ActionResult IsUserIsValidOrNot() 
+        {
+
+        }
     }
 }

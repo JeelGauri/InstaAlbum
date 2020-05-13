@@ -59,10 +59,10 @@
                 <div id="menu">
                     <ul class="menu-list">
                         <li class="has-children active">
-                            <a href="@Url.Action("Index","UserHome")" class="sub-menu-trigger">Home</a>
+                            <a href="@Url.Action(" Index","UserHome")" class="sub-menu-trigger">Home</a>
                         </li>
                         <li class="has-children">
-                            <a href="@Url.Action("About","UserHome")" class="sub-menu-trigger">About Us</a>
+                            <a href="@Url.Action(" About","UserHome")" class="sub-menu-trigger">About Us</a>
                         </li>
                         <li class="has-children">
                             <a href="#" class="sub-menu-trigger">Gallery</a>
@@ -71,7 +71,7 @@
                             <a href="#" class="sub-menu-trigger">Protfolio</a>
                         </li>
                         <li class="has-children">
-                            <a href="@Url.Action("Contact","UserHome")" class="sub-menu-trigger">Contact</a>
+                            <a href="@Url.Action(" Contact","UserHome")" class="sub-menu-trigger">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -92,7 +92,7 @@
             </div>
         </div>
     </div>
- 
+
     <div id="mobile-header">
         <div class="logo-mobile">
             <a href="index.html"><img src="~/userassets/img/logo-small.png" alt="logo"></a>
@@ -101,7 +101,7 @@
     </div>
 
     <div id="body-content">
-            @RenderBody()
+        @RenderBody()
     </div>
 
     <script src="~/userassets/js/jquery-3.5.1.min.js"></script>
@@ -119,13 +119,14 @@
     <script src="~/userassets/vendor/lightgallery/js/lightgallery-plugins.js"></script>
     <script src="~/userassets/js/theme.js"></script>
 
+
     <script>
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyt;csObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
             }, i[r].l = 1 * new Date(); a = s.createElement(o),
                 m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
-        })(window, document, 'script', '../../../www.google-analytics.com/analytics.js', 'ga');
+        })(window, document, 'script', '~/userassets/analytics.js', 'ga');
 
         ga('create', 'UA-89383509-1', 'auto');
         ga('send', 'pageview');
