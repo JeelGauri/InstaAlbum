@@ -1,5 +1,4 @@
-﻿using Microsoft.Ajax.Utilities;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +7,9 @@ namespace InstaAlbum.Models
 {
     public class ManageSessionAndCookie
     {
-        private int CustomerID;
-        private string CustomerName;
-        private string CustomerEmail;
+        private static int CustomerID;
+        private static string CustomerName;
+        private static string CustomerPhNo;
 
         public int m_CustomerID
         {
@@ -20,7 +19,7 @@ namespace InstaAlbum.Models
             }
             set
             {
-                this.CustomerID = value;
+                CustomerID = value;
             }
         }
 
@@ -33,36 +32,38 @@ namespace InstaAlbum.Models
             }
             set
             {
-                this.CustomerName = value;
+                CustomerName = value;
             }
         }
 
-        public string m_CustomerEmail
+        public string m_CustomerPhNo
         {
             get
             {
-                return CustomerEmail;
+                return CustomerPhNo;
             }
             set
             {
-                this.CustomerEmail = value;
+                CustomerPhNo = value;
             }
         }
 
-        ManageSessionAndCookie()
+        public ManageSessionAndCookie()
         {
         }
-        public void IsUserSessionAlive(int customerId,string customerName,string customerEmail)
+        public static void IsUserSessionAlive(int customerId, string customerName, string customerPhNo)
         {
-            m_CustomerID = customerId;
-            m_CustomerName = customerName;
-            m_CustomerEmail = customerEmail;
+            ManageSessionAndCookie manageSessionAndCookie = new ManageSessionAndCookie();
+            manageSessionAndCookie.m_CustomerID = customerId;
+            manageSessionAndCookie.m_CustomerName = customerName;
+            manageSessionAndCookie.m_CustomerPhNo = customerPhNo;
         }
-        public void UserStoreSessionCookie(int customerId, string customerName, string customerEmail)
+        public static void UserStoreSessionCookie(int customerId, string customerName, string customerPhNo)
         {
-            m_CustomerID = customerId;
-            m_CustomerName = customerName;
-            m_CustomerEmail = customerEmail;
+            ManageSessionAndCookie manageSessionAndCookie = new ManageSessionAndCookie();
+            manageSessionAndCookie.m_CustomerID = customerId;
+            manageSessionAndCookie.m_CustomerName = customerName;
+            manageSessionAndCookie.m_CustomerPhNo = customerPhNo;
         }
     }
 }
