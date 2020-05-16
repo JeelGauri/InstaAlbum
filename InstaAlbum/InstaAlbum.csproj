@@ -161,6 +161,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\ManageSessionAndCookie.cs" />
     <Compile Include="Models\tblAboutU.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
@@ -780,7 +781,6 @@
     <Content Include="Views\Studio\AddStudioDetails.cshtml" />
     <Content Include="Views\Studio\EditStudioDetails.cshtml" />
     <Content Include="Views\Studio\Index.cshtml" />
-    <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Shared\_userLayout.cshtml" />
     <Content Include="Views\Home\StudioDetails.cshtml" />
     <Content Include="Views\Home\StudioManagement.cshtml" />
@@ -792,6 +792,8 @@
     <Content Include="Views\Portfolio\Create.cshtml" />
     <Content Include="Views\Portfolio\Edit.cshtml" />
     <Content Include="Views\Portfolio\Index.cshtml" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <Content Include="Views\Login\Registration.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AboutUsImages\" />
