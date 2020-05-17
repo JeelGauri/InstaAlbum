@@ -32,7 +32,7 @@
                 processData: false,
                 success: function (response) {
                     if (response.UserExist === true) {
-                        toastr.warning(
+                        toastr.success(
                             response.message,
                             'Login successfully.',
                             {

@@ -34,13 +34,15 @@ namespace InstaAlbum.Controllers
                     {
                         foreach (tblCustomer cust in data)
                         {
-                            ManageSessionAndCookie sessionAndCookie = new ManageSessionAndCookie();
-                            sessionAndCookie.m_CustomerID = cust.CustomerID;
-                            sessionAndCookie.m_CustomerName = cust.CustomerName;
-                            sessionAndCookie.m_CustomerPhNo = cust.PhoneNumber;
-                            Session["CustomerID"] = sessionAndCookie.m_CustomerID;
-                            Session["CustomerName"] = sessionAndCookie.m_CustomerName;
-                            Session["CustomerPhoneNumber"] = sessionAndCookie.m_CustomerPhNo;
+                            //ManageSessionAndCookie sessionAndCookie = new ManageSessionAndCookie();
+                            Session["CustomerID"] = cust.CustomerID;
+                            Session["CustomerName"] = cust.CustomerName;
+                            Session["CustomerPhoneNumber"] = cust.PhoneNumber;
+
+                            //sessionAndCookie.m_CustomerName = cust.CustomerName;
+                            //sessionAndCookie.m_CustomerPhNo = cust.PhoneNumber;
+
+                            //sessionAndCookie.m_CustomerID = Convert.ToInt32(Session["CustomerID"]);
 
 
                         }

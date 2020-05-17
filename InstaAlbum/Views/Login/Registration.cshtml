@@ -61,7 +61,7 @@
                 url: '/Login/IsClientPhnoExistOrNot',
                 success: function (response) {
                     if (response.success === true) {
-                        toastr.info(response.message, 'Phone Number already exist', { timeOut: 1000 });
+                        toastr.error(response.message, 'Phone Number already exist', { timeOut: 1000 });
                         txtPhno.value = "";
                         txtPhno.focus();
                         return;
@@ -116,7 +116,7 @@
                 processData: false,
                 success: function (response) {
                     if (response.success === true) {
-                        toastr.warning(
+                        toastr.success(
                             response.message,
                             'Registration successfully.',
                             {

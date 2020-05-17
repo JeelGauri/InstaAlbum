@@ -161,7 +161,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\ManageSessionAndCookie.cs" />
     <Compile Include="Models\tblAboutU.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
