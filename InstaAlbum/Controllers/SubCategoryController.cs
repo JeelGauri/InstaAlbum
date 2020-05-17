@@ -18,6 +18,9 @@ namespace InstaAlbum.Controllers
         // GET: SubCategory
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             var tblSubCategories = db.tblSubCategories.Include(t => t.tblParentCategory);
             return View(tblSubCategories.ToList());
         }
@@ -25,6 +28,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult GetSubCat(int id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return Json(db.tblSubCategories.Where(c => c.ParentCatgoryID == id).Select(c => new
             {
                 id = c.SubCategoryID,
@@ -35,6 +41,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertSubCategory()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 tblSubCategory SCat = new tblSubCategory();
@@ -91,6 +100,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult Edit( tblSubCategory tblSubCategory)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (ModelState.IsValid)
             {
                 db.Entry(tblSubCategory).State = EntityState.Modified;
@@ -107,6 +119,9 @@ namespace InstaAlbum.Controllers
        
         public ActionResult DeleteSubCategory(int id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblSubCategory tblSubCategory = db.tblSubCategories.Find(id);
             db.tblSubCategories.Remove(tblSubCategory);
             db.SaveChanges();

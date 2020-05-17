@@ -34,7 +34,7 @@
                     if (response.UserExist === true) {
                         toastr.success(
                             response.message,
-                            'Login successfully.',
+                            'User Login successfully.',
                             {
                                 timeOut: 3000,
                                 fadeOut: 1000,
@@ -46,9 +46,9 @@
                     }
                     else if (response.AdminExist === true)
                     {
-                        toastr.warning(
+                        toastr.success(
                             response.message,
-                            'Login successfully.',
+                            'Admin Login successfully.',
                             {
                                 timeOut: 3000,
                                 fadeOut: 1000,

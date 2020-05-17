@@ -38,17 +38,9 @@ namespace InstaAlbum.Controllers
                     {
                         foreach (tblCustomer cust in data1)
                         {
-                            //ManageSessionAndCookie sessionAndCookie = new ManageSessionAndCookie();
                             Session["CustomerID"] = cust.CustomerID;
                             Session["CustomerName"] = cust.CustomerName;
                             Session["CustomerPhoneNumber"] = cust.PhoneNumber;
-
-                            //sessionAndCookie.m_CustomerName = cust.CustomerName;
-                            //sessionAndCookie.m_CustomerPhNo = cust.PhoneNumber;
-
-                            //sessionAndCookie.m_CustomerID = Convert.ToInt32(Session["CustomerID"]);
-
-
                         }
                         return Json(new { UserExist = true, message = "" }, JsonRequestBehavior.AllowGet);
                     }
@@ -59,6 +51,7 @@ namespace InstaAlbum.Controllers
                             Session["StudioID"] = admin.StudioID;
                             Session["StudioName"] = admin.StudioName;
                             Session["StudioPhoneNo"] = admin.PhoneNo;
+                            Session["StudioLogo"] = admin.StudioLogo;
                         }
                         return Json(new { AdminExist = true, message = "" }, JsonRequestBehavior.AllowGet);
                     }
@@ -141,6 +134,20 @@ namespace InstaAlbum.Controllers
             else
                 return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);
 
+        }
+
+        public ActionResult LogOut()
+        {
+            try
+            {
+                Session.RemoveAll();
+                Session.Abandon();
+                return Json(new { success = true }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false }, JsonRequestBehavior.AllowGet);
+            }
         }
 
     }

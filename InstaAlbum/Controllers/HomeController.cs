@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using InstaAlbum.Models;
 namespace InstaAlbum.Controllers
 {
     public class HomeController : Controller
     {
         public ActionResult Index()
         {
-            if (Session["StudioID"] == null)
-                return RedirectToAction("Login","Login");
-            
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View();
         }
 
         public ActionResult CategoryDetails()
         {
+
             return View();
         }
 

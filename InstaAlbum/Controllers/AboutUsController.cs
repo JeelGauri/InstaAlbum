@@ -14,11 +14,10 @@ namespace InstaAlbum.Controllers
     public class AboutUsController : Controller
     {
         private InstaAlbumEntities db = new InstaAlbumEntities();
-
         // GET: AboutUs
         public ActionResult Index()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             else
                 return View(db.tblAboutUs.ToList());
@@ -27,7 +26,7 @@ namespace InstaAlbum.Controllers
         // GET: AboutUs/Details/5
         public ActionResult Details(int? id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             if (id == null)
             {
@@ -44,7 +43,7 @@ namespace InstaAlbum.Controllers
         // GET: AboutUs/Create
         public ActionResult AddAboutUsDetails()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             if (db.tblAboutUs.ToList().Count() > 0)
@@ -57,7 +56,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertAboutUs()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             try
             {
@@ -114,7 +113,7 @@ namespace InstaAlbum.Controllers
         // GET: AboutUs/Edit/5
         public ActionResult EditAboutUsDetails(int? id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             if (id == null)
             {
@@ -133,7 +132,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult UpdateAboutUsDetails()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             try
             {
@@ -192,7 +191,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             tblAboutU tblAbout = db.tblAboutUs.Find(id);

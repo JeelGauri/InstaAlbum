@@ -18,11 +18,17 @@ namespace InstaAlbum.Controllers
         // GET: ParentCategory
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View(db.tblParentCategories.ToList());
         }
 
         public ActionResult getAllCategory()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return Json(db.tblParentCategories.Select(c => new
             {
                 ParentCategoryID = c.ParentCategoryID,
@@ -33,6 +39,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertParentCategory()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 tblParentCategory newCat = new tblParentCategory();
@@ -91,6 +100,9 @@ namespace InstaAlbum.Controllers
         
         public ActionResult DeleteCategory(int id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblParentCategory tblParentCategory = db.tblParentCategories.Find(id);
             db.tblParentCategories.Remove(tblParentCategory);
             db.SaveChanges();

@@ -22,6 +22,9 @@ namespace InstaAlbum.Controllers
         // GET: Photographer
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             var tblPhotographers = db.tblPhotographers.Include(t => t.tblBranch);
             return View(tblPhotographers.ToList());
         }
@@ -30,6 +33,9 @@ namespace InstaAlbum.Controllers
 
         public ActionResult Create()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             ViewBag.BranchID = new SelectList(db.tblBranches, "BranchID", "BranchName");
             return View();
         }
@@ -37,6 +43,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertPhotographer()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblPhotographer newPhotographer = new tblPhotographer();
             tblBranch newBranch = new tblBranch();
             newPhotographer.PhotographerName = Request.Form["PhotographerName"];
@@ -96,6 +105,9 @@ namespace InstaAlbum.Controllers
         // GET: Photographer/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,6 +124,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult UpdatePhotographer()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             int intPhotoGrapherID = Convert.ToInt32(Request.Form["PhotographerID"]);
             tblPhotographer newPhotographer = db.tblPhotographers.SingleOrDefault(p => p.PhotographerID == intPhotoGrapherID);
             tblBranch newBranch = new tblBranch();
@@ -174,6 +189,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult DeletePhotographer(int id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblPhotographer tblPhotographer = db.tblPhotographers.Find(id);
             string path = Server.MapPath("~/PhotographerProfilePics/" + tblPhotographer.ProfilePic);
             FileInfo delfile = new FileInfo(path);
@@ -194,6 +212,9 @@ namespace InstaAlbum.Controllers
 
         public ActionResult IsEmailExistOrNot(string Email)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (db.tblPhotographers.Any(c => c.Email == Email))
                 return Json(new { success = true, message = "Record Existed" }, JsonRequestBehavior.AllowGet);
             else

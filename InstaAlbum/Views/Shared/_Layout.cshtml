@@ -7,6 +7,35 @@
 <html lang="en">
 <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 <head>
+    <script>
+        function fnLogout() {
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "",
+                url: '/Login/LogOut',
+                success: function (response) {
+                    if (response.success === true)
+                    {
+                        toastr.success(response.message, 'You are logging out!', {
+                            timeOut: 1000, fadeOut: 1000,
+                            onHidden: function () { window.location.href = "/Login/Login"; }
+                        });
+                    }   
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while loging out!.', { timeOut: 1000 });
+                    return;
+                }
+
+            });
+        }
+
+
+    </script>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" name="viewport">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,10 +61,10 @@
     <link rel='stylesheet' type='text/css' href='~/adminassets/bundles/291bbeead57f19651f311362abe809b67adc3fb5.css' />
 
     <link rel='stylesheet' href='~/adminassets/bundles/30bc673ce76f73ecf02568498f6b139269f6e4c7.css' />
-    
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Hind+Vadodara:400,500,600" rel="stylesheet">
     <link rel='stylesheet' href='~/adminassets/css/04cc97dcdd1c8f6e5b9420845f0fac26b54dab84/default/assets/fonts/jost/jost.css' />
     <!--Material Icons-->
@@ -195,23 +224,34 @@
                 </ul>
             </nav>
             <nav class=" ml-auto">
-
+                
                 <ul class="nav align-items-center">
-
+                    <li class="nav-item">
+                        @if (Session["StudioName"] != null)
+                        {
+                            <label class="col-form-label-lg">@Session["StudioName"].ToString()</label>
+                        }
+                    </li>
                     <li class="nav-item dropdown ">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
+                            
                             <div class="avatar avatar-sm ">
-                                <img class="avatar-title rounded-circle bg-dark" src="~/adminassets/img/users/user-3.jpg" alt="">
-
+                                @if (Session["StudioLogo"] != null)
+                                {
+                                    <img class="avatar-title rounded-circle bg-dark" src="~/StudioLogo/@Session["StudioLogo"].ToString()" alt="">
+                                }
+                                else
+                                {
+                                    <img class="avatar-title rounded-circle bg-dark" src="~/userassest/img/users/user-3.jpg" alt="">
+                                }
                             </div>
                         </a>
                         <div class="dropdown-menu  dropdown-menu-right">
 
-                            <a class="dropdown-item" href="#">  Reset Password</a>
-                            <a class="dropdown-item" href="#">  Help </a>
+                            <a href="@Url.Action("Index", "Studio")" class="dropdown-item">Studio Details</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"> Logout</a>
+                            <a class="dropdown-item" href="#" onclick="javascript:fnLogout()">Logout</a>
                         </div>
                     </li>
 
@@ -221,144 +261,7 @@
         </header>
 
 
-        <div class="modal modal-slide-left  fade" id="siteSearchModal" tabindex="-1" role="dialog" aria-labelledby="siteSearchModal"
-             aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-body p-all-0" id="site-search">
-                        <button type="button" class="close light" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <div class="form-dark bg-dark text-white p-t-60 p-b-20 bg-dots">
-                            <h3 class="text-uppercase    text-center  fw-300 "> Search</h3>
-
-                            <div class="container-fluid">
-                                <div class="col-md-10 p-t-10 m-auto">
-                                    <input type="search" placeholder="Search Something"
-                                           class=" search form-control form-control-lg">
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="">
-                            <div class="bg-dark text-muted container-fluid p-b-10 text-center text-overline">
-                                results
-                            </div>
-                            <div class="list-group list  ">
-
-
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm "><img class="avatar-img rounded-circle" src="~/adminassets/img/users/user-3.jpg" alt="user-image"></div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">Eric Chen</div>
-                                        <div class="text-muted">Developer</div>
-                                    </div>
-
-
-                                </div>
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm ">
-                                            <img class="avatar-img rounded-circle"
-                                                 src="~/adminassets/img/users/user-4.jpg" alt="user-image">
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">Sean Valdez</div>
-                                        <div class="text-muted">Marketing</div>
-                                    </div>
-
-
-                                </div>
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm ">
-                                            <img class="avatar-img rounded-circle"
-                                                 src="~/adminassets/img/users/user-8.jpg" alt="user-image">
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">Marie Arnold</div>
-                                        <div class="text-muted">Developer</div>
-                                    </div>
-
-
-                                </div>
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm ">
-                                            <div class="avatar-title bg-dark rounded">
-                                                <i class="mdi mdi-24px mdi-file-pdf"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">SRS Document</div>
-                                        <div class="text-muted">25.5 Mb</div>
-                                    </div>
-
-
-                                </div>
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm ">
-                                            <div class="avatar-title bg-dark rounded">
-                                                <i class="mdi mdi-24px mdi-file-document-box"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">Design Guide.pdf</div>
-                                        <div class="text-muted">9 Mb</div>
-                                    </div>
-
-
-                                </div>
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm ">
-                                            <div class="avatar avatar-sm  ">
-                                                <div class="avatar-title bg-primary rounded">
-                                                    <i class="mdi mdi-24px mdi-code-braces"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">response.json</div>
-                                        <div class="text-muted">15 Kb</div>
-                                    </div>
-
-
-                                </div>
-                                <div class="list-group-item d-flex  align-items-center">
-                                    <div class="m-r-20">
-                                        <div class="avatar avatar-sm ">
-                                            <div class="avatar avatar-sm ">
-                                                <div class="avatar-title bg-info rounded">
-                                                    <i class="mdi mdi-24px mdi-file-excel"></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="">
-                                        <div class="name">June Accounts.xls</div>
-                                        <div class="text-muted">6 Mb</div>
-                                    </div>
-
-
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-
-                </div>
-            </div>
-        </div>
+        
 
         <section class="admin-content">
                 @RenderBody();

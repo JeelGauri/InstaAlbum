@@ -18,18 +18,26 @@ namespace InstaAlbum.Controllers
         // GET: Studio
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
 
             return View(db.tblStudioAdmins.ToList());
         }
 
         public ActionResult AddStudioDetails()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View();
         }
 
         [HttpPost]
         public ActionResult InsertStudio()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 if (ModelState.IsValid)
@@ -88,6 +96,9 @@ namespace InstaAlbum.Controllers
         // GET: Studio/Edit/5
         public ActionResult EditStudioDetails(int? id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -103,6 +114,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult UpdateStudioDetails()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 if (ModelState.IsValid)
@@ -167,6 +181,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblStudioAdmin tblStudioAdmin = db.tblStudioAdmins.Find(id);
             db.tblStudioAdmins.Remove(tblStudioAdmin);
             db.SaveChanges();

@@ -14,11 +14,10 @@ namespace InstaAlbum.Controllers
     public class BannerController : Controller
     {
         private InstaAlbumEntities db = new InstaAlbumEntities();
-
         // GET: Banner
         public ActionResult Index()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             return View(db.tblBanners.ToList());
@@ -29,7 +28,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertBanner()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             try
             {
@@ -96,7 +95,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult DeleteBanner(int id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             tblBanner tblBanner = db.tblBanners.Find(id);

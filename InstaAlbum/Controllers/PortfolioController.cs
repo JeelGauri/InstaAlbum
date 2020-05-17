@@ -18,6 +18,9 @@ namespace InstaAlbum.Controllers
         // GET: Portfolio
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View(db.tblPortfolios.ToList());
         }
 
@@ -26,14 +29,19 @@ namespace InstaAlbum.Controllers
         // GET: Portfolio/Create
         public ActionResult Create()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View();
         }
 
         
         [HttpPost]
         public ActionResult InsertPortfolio()
-        
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 tblPortfolio newPortfolio = new tblPortfolio();
@@ -96,6 +104,9 @@ namespace InstaAlbum.Controllers
         // GET: Portfolio/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -112,6 +123,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult UpdatePortfolio()
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 int PortfolioID = Convert.ToInt32(Request.Form["PortfolioID"]);
@@ -171,6 +185,9 @@ namespace InstaAlbum.Controllers
         // POST: Portfolio/Delete/5
         public ActionResult DeletePortfolio(int id)
         {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblPortfolio tblportfolio = db.tblPortfolios.Find(id);
             db.tblPortfolios.Remove(tblportfolio);
             db.SaveChanges();

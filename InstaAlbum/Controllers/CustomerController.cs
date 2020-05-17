@@ -17,14 +17,14 @@ namespace InstaAlbum.Controllers
         // GET: Customer
         public ActionResult Index()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             return View(db.tblCustomers.ToList());
         }
         public ActionResult Create()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             return View();
@@ -34,7 +34,7 @@ namespace InstaAlbum.Controllers
         
         public ActionResult InsertCustomer()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             try
             {
@@ -98,7 +98,7 @@ namespace InstaAlbum.Controllers
         // GET: Customer/Edit/5
         public ActionResult Edit(int? id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             if (id == null)
@@ -120,7 +120,7 @@ namespace InstaAlbum.Controllers
         
         public ActionResult EditCustomer()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             try
@@ -190,7 +190,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             tblCustomer tblCustomer = db.tblCustomers.Find(id);
@@ -213,7 +213,7 @@ namespace InstaAlbum.Controllers
 
         public ActionResult IsClientEmailExistOrNot(string Email)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             if (db.tblCustomers.Any(c => c.CustomerEmail== Email))

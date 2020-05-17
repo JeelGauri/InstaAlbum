@@ -13,11 +13,10 @@ namespace InstaAlbum.Controllers
     public class BranchController : Controller
     {
         private InstaAlbumEntities db = new InstaAlbumEntities();
-
         // GET: Branch
         public ActionResult Index()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             return View(db.tblBranches.ToList());
@@ -26,7 +25,7 @@ namespace InstaAlbum.Controllers
 
         public ActionResult getAllBranch()
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             return Json(db.tblBranches.Select(x => new
@@ -40,7 +39,7 @@ namespace InstaAlbum.Controllers
        
         public ActionResult Create(tblBranch newBranch)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             if (ModelState.IsValid)
@@ -58,7 +57,7 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult DeleteBranch(int id)
         {
-            if (Session["StudioID"] == null)
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
             tblBranch tblBranch = db.tblBranches.Find(id);
