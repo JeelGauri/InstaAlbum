@@ -28,11 +28,15 @@ namespace InstaAlbum.Controllers
                     string strPhno = Request.Form["PhoneNo"];
                     string strPassword = Request.Form["Password"];
 
-                    var data = db.tblCustomers.Where(c => c.PhoneNumber == strPhno)
+                    var data1 = db.tblCustomers.Where(c => c.PhoneNumber == strPhno)
                                .Where(c => c.Password == strPassword).ToList();
-                    if (data.Count > 0)
+                    
+                    var data2 = db.tblStudioAdmins.Where(a => a.PhoneNo == strPhno)
+                               .Where(c => c.Password == strPassword).ToList();
+
+                    if (data1.Count > 0)
                     {
-                        foreach (tblCustomer cust in data)
+                        foreach (tblCustomer cust in data1)
                         {
                             //ManageSessionAndCookie sessionAndCookie = new ManageSessionAndCookie();
                             Session["CustomerID"] = cust.CustomerID;
@@ -47,6 +51,16 @@ namespace InstaAlbum.Controllers
 
                         }
                         return Json(new { UserExist = true, message = "" }, JsonRequestBehavior.AllowGet);
+                    }
+                    else if(data2.Count > 0)
+                    {
+                        foreach (tblStudioAdmin admin in data2)
+                        {
+                            Session["StudioID"] = admin.StudioID;
+                            Session["StudioName"] = admin.StudioName;
+                            Session["StudioPhoneNo"] = admin.PhoneNo;
+                        }
+                        return Json(new { AdminExist = true, message = "" }, JsonRequestBehavior.AllowGet);
                     }
                     else
                     {

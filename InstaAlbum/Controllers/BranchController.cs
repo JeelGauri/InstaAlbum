@@ -17,12 +17,18 @@ namespace InstaAlbum.Controllers
         // GET: Branch
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View(db.tblBranches.ToList());
         }
 
 
         public ActionResult getAllBranch()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             return Json(db.tblBranches.Select(x => new
             {
                 branchid = x.BranchID,
@@ -34,6 +40,8 @@ namespace InstaAlbum.Controllers
        
         public ActionResult Create(tblBranch newBranch)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
 
             if (ModelState.IsValid)
             {
@@ -50,6 +58,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult DeleteBranch(int id)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblBranch tblBranch = db.tblBranches.Find(id);
             db.tblBranches.Remove(tblBranch);
             db.SaveChanges();

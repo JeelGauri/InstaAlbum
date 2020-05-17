@@ -18,6 +18,9 @@ namespace InstaAlbum.Controllers
         // GET: Banner
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View(db.tblBanners.ToList());
         }
 
@@ -26,6 +29,8 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertBanner()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
             try
             {
                 if (ModelState.IsValid)
@@ -91,6 +96,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult DeleteBanner(int id)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblBanner tblBanner = db.tblBanners.Find(id);
             db.tblBanners.Remove(tblBanner);
             db.SaveChanges();

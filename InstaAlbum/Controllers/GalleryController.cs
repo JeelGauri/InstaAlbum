@@ -22,12 +22,18 @@ namespace InstaAlbum.Controllers
         // GET: Gallery
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             var tblGalleries = db.tblGalleries.Include(t => t.tblCustomer).Include(t => t.tblSubCategory);
             return View(tblGalleries.ToList());
         }
 
        public ActionResult GalleryList(int id)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (id <= 0)
                 return View("GalleryCustomerList");
             var tblGalleries = db.tblGalleries.Where(g => g.CustomerID == id);
@@ -38,12 +44,18 @@ namespace InstaAlbum.Controllers
 
         public ActionResult GalleryCustomerList()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             var customers = db.tblCustomers.Where(c => c.IsActive == true);
             return View(customers.ToList());
         }
         
         public ActionResult Create()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             ViewBag.CustomerID = new SelectList(db.tblCustomers, "CustomerID", "CustomerName");
             ViewBag.SubCategoryID = new SelectList(db.tblSubCategories, "SubCategoryID", "SubCategoryName");
             return View();
@@ -52,6 +64,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult InsertImages()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (ModelState.IsValid)
             {
                 
@@ -117,6 +132,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult getJsonFile()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             int CustomerID = Convert.ToInt32(Request.Form["CustomerID"]);
             int ParentCategoryID = Convert.ToInt32(Request.Form["ParentCategoryID"]);
             int SubCategoryID = Convert.ToInt32(Request.Form["SubCategoryID"]);
@@ -167,6 +185,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult DeleteImage(long id)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblGallery tblGallery = db.tblGalleries.Find(id);
             db.tblGalleries.Remove(tblGallery);
             db.SaveChanges();

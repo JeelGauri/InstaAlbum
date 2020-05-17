@@ -10,6 +10,9 @@ namespace InstaAlbum.Controllers
     {
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login","Login");
+            
             return View();
         }
 

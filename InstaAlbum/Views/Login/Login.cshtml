@@ -44,8 +44,22 @@
                             }
                         );
                     }
+                    else if (response.AdminExist === true)
+                    {
+                        toastr.warning(
+                            response.message,
+                            'Login successfully.',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.href = '/Home/';
+                                }
+                            }
+                        );
+                    }
                     else if (response.UserExist === false) {
-                        toastr.warning('Credential Error', 'Phone Number And Password Doesnt Match Try Again.!!! ', { timeOut: 3000, fadeOut: 1000 });
+                        toastr.warning('Credential Error', 'Phone Number And Password Do not Match Try Again.!!! ', { timeOut: 3000, fadeOut: 1000 });
                         return;
                     }
                 },

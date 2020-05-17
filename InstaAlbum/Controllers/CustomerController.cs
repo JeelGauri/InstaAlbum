@@ -17,10 +17,16 @@ namespace InstaAlbum.Controllers
         // GET: Customer
         public ActionResult Index()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View(db.tblCustomers.ToList());
         }
         public ActionResult Create()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             return View();
         }
 
@@ -28,7 +34,8 @@ namespace InstaAlbum.Controllers
         
         public ActionResult InsertCustomer()
         {
-            ViewBag.message = false;
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
             try
             {
                 if (ModelState.IsValid)
@@ -91,6 +98,9 @@ namespace InstaAlbum.Controllers
         // GET: Customer/Edit/5
         public ActionResult Edit(int? id)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -110,6 +120,9 @@ namespace InstaAlbum.Controllers
         
         public ActionResult EditCustomer()
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             try
             {
                 if (ModelState.IsValid)
@@ -177,6 +190,9 @@ namespace InstaAlbum.Controllers
         [HttpPost]
         public ActionResult Delete(int id)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             tblCustomer tblCustomer = db.tblCustomers.Find(id);
             db.tblCustomers.Remove(tblCustomer);
             db.SaveChanges();
@@ -197,6 +213,9 @@ namespace InstaAlbum.Controllers
 
         public ActionResult IsClientEmailExistOrNot(string Email)
         {
+            if (Session["StudioID"] == null)
+                return RedirectToAction("Login", "Login");
+
             if (db.tblCustomers.Any(c => c.CustomerEmail== Email))
                 return Json(new { success = true, message = "Record Existed" }, JsonRequestBehavior.AllowGet);
             else
