@@ -1,8 +1,9 @@
-﻿@model IEnumerable<InstaAlbum.Models.tblSubCategory>
+﻿@model IEnumerable<InstaAlbum.Models.tblParentCategory>
 @{
-    ViewBag.Title = "SubCategory";
+    ViewBag.Title = "Gallery_Categories";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
+
     <section id="page-header">
         <div class="page-header-image parallax-3 bg-image" style="background-image: url(../../BannerImages/@ViewBag.BannerImage); background-position: 50% 50%;">
             <div class="cover bg-transparent-6-dark"></div>
@@ -12,28 +13,25 @@
         </div>
     </section>
 
-<section id="gallery-list-section">
+<section id="gallery-list-section" class="gl-categories">
     <div class="container-fluid no-padding">
         <div class="isotope-wrap">
             <div class="isotope col-4 gutter-2">
-                <div class="isotope-items-wrap">
+                <div class="isotope-items-wrap gli-alter-2">
                     <div class="grid-sizer"></div>
                     @foreach (var item in Model)
                     {
                         <div class="isotope-item iso-height-1">
-                            <a href="../CategoryWiseImage/@item.SubCategoryID" class="gallery-list-item">
-                                <div class="gl-item-image bg-image" style="background-image: url(../../SubCategoryImages/@item.SubCategoryCoverPhoto); background-position: 50% 50%"></div>
+                            <a class="gallery-list-item" href="../UserHome/SubCategory/@item.ParentCategoryID">
+                                <div class="gl-item-image bg-image" style="background-image: url(../ParentCategoryImages/@item.Image); background-position: 50% 50%"></div>
                                 <div class="gl-item-info">
                                     <div class="gl-item-caption">
-                                        <h2 class="gl-item-title">@item.SubCategoryName</h2>
-                                        <span class="gl-item-category">@item.tblParentCategory.ParentCategoryName</span>
+                                        <h2 class="gl-item-title">@item.ParentCategoryName</h2>
                                     </div>
-                                    <span class="gl-item-count" title="Pictures count"><i class="fa fa-camera"></i> @item.tblGalleries.Count()</span>
                                 </div>
                             </a>
                         </div>
                     }
-
                 </div>
             </div>
         </div>
