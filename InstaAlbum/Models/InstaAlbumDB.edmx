@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="tblAboutUs">
           <Key>
             <PropertyRef Name="AboutUsID" />
@@ -154,7 +154,7 @@
             <PropertyRef Name="ServiceID" />
           </Key>
           <Property Name="ServiceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceName" Type="int" Nullable="false" />
+          <Property Name="ServiceName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" Nullable="false" />
           <Property Name="CreatedDate" Type="date" Nullable="false" />
@@ -448,7 +448,8 @@
             <End Role="tblWebGallery" EntitySet="tblWebGallery" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InstaAlbumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -534,7 +535,7 @@
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
           <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblGallery_tblCustomer" FromRole="tblGallery" ToRole="tblCustomer" />
-          <NavigationProperty Name="tblSubCategory" Relationship="InstaAlbumModel.FK_tblGallery_tblSubCategory" FromRole="tblGallery" ToRole="tblSubCategory" />
+          <NavigationProperty Name="tblSubCategory" Relationship="Self.FK_tblGallery_tblSubCategory" FromRole="tblGallery" ToRole="tblSubCategory" />
         </EntityType>
         <EntityType Name="tblOrder">
           <Key>
@@ -623,7 +624,7 @@
             <PropertyRef Name="ServiceID" />
           </Key>
           <Property Name="ServiceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceName" Type="Int32" Nullable="false" />
+          <Property Name="ServiceName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Image" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
@@ -656,8 +657,8 @@
           <Property Name="SubCategoryName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SubCategoryCoverPhoto" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="tblGalleries" Relationship="Self.FK_tblGallery_tblSubCategory" FromRole="tblSubCategory" ToRole="tblGallery" />
           <NavigationProperty Name="tblParentCategory" Relationship="Self.FK_tblSubCategory_tblParentCategory" FromRole="tblSubCategory" ToRole="tblParentCategory" />
-          <NavigationProperty Name="tblGalleries" Relationship="InstaAlbumModel.FK_tblGallery_tblSubCategory" FromRole="tblSubCategory" ToRole="tblGallery" />
         </EntityType>
         <EntityType Name="tblWebGallery">
           <Key>
@@ -794,6 +795,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tblGallery_tblSubCategory">
+          <End Role="tblSubCategory" Type="Self.tblSubCategory" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tblGallery" Type="Self.tblGallery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tblSubCategory">
+              <PropertyRef Name="SubCategoryID" />
+            </Principal>
+            <Dependent Role="tblGallery">
+              <PropertyRef Name="SubCategoryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tblOrder_tblPackage">
           <End Role="tblPackage" Type="Self.tblPackage" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -890,6 +905,10 @@
             <End Role="tblCustomer" EntitySet="tblCustomers" />
             <End Role="tblSelfiePoint" EntitySet="tblSelfiePoints" />
           </AssociationSet>
+          <AssociationSet Name="FK_tblGallery_tblSubCategory" Association="Self.FK_tblGallery_tblSubCategory">
+            <End Role="tblSubCategory" EntitySet="tblSubCategories" />
+            <End Role="tblGallery" EntitySet="tblGalleries" />
+          </AssociationSet>
           <AssociationSet Name="FK_tblOrder_tblPackage" Association="Self.FK_tblOrder_tblPackage">
             <End Role="tblPackage" EntitySet="tblPackages" />
             <End Role="tblOrder" EntitySet="tblOrders" />
@@ -902,25 +921,7 @@
             <End Role="tblService" EntitySet="tblServices" />
             <End Role="tblWebGallery" EntitySet="tblWebGalleries" />
           </AssociationSet>
-          <AssociationSet Name="FK_tblGallery_tblSubCategory" Association="InstaAlbumModel.FK_tblGallery_tblSubCategory">
-            <End Role="tblSubCategory" EntitySet="tblSubCategories" />
-            <End Role="tblGallery" EntitySet="tblGalleries" />
-          </AssociationSet>
         </EntityContainer>
-        <Association Name="FK_tblGallery_tblSubCategory">
-          <End Type="InstaAlbumModel.tblSubCategory" Role="tblSubCategory" Multiplicity="1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Type="InstaAlbumModel.tblGallery" Role="tblGallery" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblSubCategory">
-              <PropertyRef Name="SubCategoryID" />
-            </Principal>
-            <Dependent Role="tblGallery">
-              <PropertyRef Name="SubCategoryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

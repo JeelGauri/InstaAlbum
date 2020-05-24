@@ -21,7 +21,7 @@ namespace InstaAlbum.Models
         }
     
         public int ServiceID { get; set; }
-        public int ServiceName { get; set; }
+        public string ServiceName { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
         public System.DateTime CreatedDate { get; set; }

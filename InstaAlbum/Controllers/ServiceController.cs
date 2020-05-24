@@ -11,17 +11,21 @@ using InstaAlbum.Models;
 
 namespace InstaAlbum.Controllers
 {
-    public class CustomerController : Controller
+    public class ServiceController : Controller
     {
         private InstaAlbumEntities db = new InstaAlbumEntities();
-        // GET: Customer
+
+        // GET: Service
         public ActionResult Index()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
-            return View(db.tblCustomers.ToList());
+            return View(db.tblServices.ToList());
         }
+
+
+        // GET: Service/Create
         public ActionResult Create()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
@@ -30,23 +34,21 @@ namespace InstaAlbum.Controllers
             return View();
         }
 
+   
         [HttpPost]
-        
-        public ActionResult InsertCustomer()
+        public ActionResult InsertService()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
+
             try
             {
                 if (ModelState.IsValid)
                 {
-                    tblCustomer newCust = new tblCustomer();
-                    newCust.CustomerName = Request.Form["CustomerName"];
-                    newCust.CustomerEmail = Request.Form["CustomerEmail"];
-                    newCust.PhoneNumber = Request.Form["PhoneNo"];
-                    newCust.Password = Request.Form["Password"];
-                    newCust.IsActive = Request.Form["IsActive"] == "true" ? true : false;
-                    newCust.CreatedDate = DateTime.Now;
+                    tblService newservice = new tblService();
+                    newservice.ServiceName = Request.Form["ServiceName"];
+                    newservice.Description = Request.Form["Description"];
+                    newservice.CreatedDate = DateTime.Now;
 
                     if (ModelState.IsValid)
                     {
@@ -72,30 +74,31 @@ namespace InstaAlbum.Controllers
 
                             #region Save And compress file
                             //To save file, use SaveAs method
-                            file.SaveAs(Server.MapPath("~/CustomerProfile/") + fileName);
-                            if (!ImageProcessing.InsertImages(Server.MapPath("~/CustomerProfile/") + fileName))
+                            file.SaveAs(Server.MapPath("~/ServiceImages/") + fileName);
+                            if (!ImageProcessing.InsertImages(Server.MapPath("~/ServiceImages/") + fileName))
                             {
                                 return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
                             }
                             #endregion
                         }
-                        newCust.ProfilePic = fileName;
+                        newservice.Image = fileName;
                     }
-                    db.tblCustomers.Add(newCust);
+                    db.tblServices.Add(newservice);
                     db.SaveChanges();
-                    
+
                 }
             }
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "Record not Inserted" }, JsonRequestBehavior.AllowGet);
             }
-            
+
 
             return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
         }
 
-        // GET: Customer/Edit/5
+
+        // GET: Service/Edit/5
         public ActionResult Edit(int? id)
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
@@ -105,17 +108,17 @@ namespace InstaAlbum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblCustomer tblCustomer = db.tblCustomers.Find(id);
-            if (tblCustomer == null)
+            tblService tblService = db.tblServices.Find(id);
+            if (tblService == null)
             {
                 return HttpNotFound();
             }
-            return View(tblCustomer);
+            return View(tblService);
         }
 
         
         [HttpPost]
-         public ActionResult EditCustomer()
+        public ActionResult EditService()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
@@ -124,12 +127,10 @@ namespace InstaAlbum.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    int CustomerID = Convert.ToInt32(Request.Form["CustomerID"]);
-                    tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == CustomerID);
-                    newCust.CustomerName = Request.Form["CustomerName"];
-                    newCust.CustomerEmail = Request.Form["CustomerEmail"];
-                    newCust.PhoneNumber = Request.Form["PhoneNo"];
-                    newCust.IsActive = Request.Form["IsActive"] == "true" ? true : false;
+                    int ServiceID = Convert.ToInt32(Request.Form["ServiceID"]);
+                    tblService newservice = db.tblServices.SingleOrDefault(c => c.ServiceID == ServiceID);
+                    newservice.ServiceName = Request.Form["ServiceName"];
+                    newservice.Description = Request.Form["Description"];
 
                     if (Request.Files.Count > 0)
                     {
@@ -154,49 +155,50 @@ namespace InstaAlbum.Controllers
 
                         #region Save And compress file
                         //To save file, use SaveAs method
-                        file.SaveAs(Server.MapPath("~/CustomerProfile/") + fileName);
+                        file.SaveAs(Server.MapPath("~/ServiceImages/") + fileName);
 
 
-                        if (!ImageProcessing.InsertImages(Server.MapPath("~/CustomerProfile/") + fileName))
+                        if (!ImageProcessing.InsertImages(Server.MapPath("~/ServiceImages/") + fileName))
                         {
                             return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
                         }
-                        string path = Server.MapPath("~/CustomerProfile/" + newCust.ProfilePic);
-                        if (newCust.ProfilePic != "" && newCust.ProfilePic != null && newCust.ProfilePic.Length > 0)
+                        string path = Server.MapPath("~/ServiceImages/" + newservice.Image);
+                        if (newservice.Image != "" && newservice.Image != null && newservice.Image.Length > 0)
                         {
                             FileInfo delfile = new FileInfo(path);
                             delfile.Delete();
                         }
                         #endregion
-                        newCust.ProfilePic = fileName;
+                        newservice.Image = fileName;
                     }
-                    newCust.UpdatedDate =  DateTime.Now;
-                    db.Entry(newCust).State = EntityState.Modified;
+                    //newservice.UpdatedDate = DateTime.Now;
+                    db.Entry(newservice).State = EntityState.Modified;
                     db.SaveChanges();
                     return Json(new { success = true, message = "Record updated successfully" }, JsonRequestBehavior.AllowGet);
                 }
             }
             catch (Exception ex)
             {
-                throw new Exception("Error occur while updating customer info."+ex.Message);
+                throw new Exception("Error occur while updating Service info." + ex.Message);
             }
             return Json(new { success = false, message = "Error occur while updating record." }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Customer/Delete/5
-        [HttpPost]
+        
+
+        // POST: Service/Delete/5
         public ActionResult Delete(int id)
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
-            tblCustomer tblCustomer = db.tblCustomers.Find(id);
-            db.tblCustomers.Remove(tblCustomer);
+            tblService tblservice = db.tblServices.Find(id);
+            db.tblServices.Remove(tblservice);
             db.SaveChanges();
-            string path = Server.MapPath("~/CustomerProfile/" + tblCustomer.ProfilePic);
+            string path = Server.MapPath("~/ServiceImages/" + tblservice.Image);
             FileInfo delfile = new FileInfo(path);
             delfile.Delete();
-            return Json(new { success = true , message = "Record deleted successfully"},JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)
@@ -207,18 +209,5 @@ namespace InstaAlbum.Controllers
             }
             base.Dispose(disposing);
         }
-
-        public ActionResult IsClientEmailExistOrNot(string Email)
-        {
-            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
-                return RedirectToAction("Login", "Login");
-
-            if (db.tblCustomers.Any(c => c.CustomerEmail== Email))
-                return Json(new { success = true, message = "Record Existed" }, JsonRequestBehavior.AllowGet);
-            else
-                return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);
-
-        }
-
     }
 }
