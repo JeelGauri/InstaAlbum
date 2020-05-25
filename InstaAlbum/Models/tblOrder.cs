@@ -15,7 +15,6 @@ namespace InstaAlbum.Models
     public partial class tblOrder
     {
         public int OrderID { get; set; }
-        public int PackageID { get; set; }
         public int BranchID { get; set; }
         public int CustomerID { get; set; }
         public decimal TotalAmount { get; set; }
@@ -24,6 +23,5 @@ namespace InstaAlbum.Models
     
         public virtual tblBranch tblBranch { get; set; }
         public virtual tblCustomer tblCustomer { get; set; }
-        public virtual tblPackage tblPackage { get; set; }
     }
 }

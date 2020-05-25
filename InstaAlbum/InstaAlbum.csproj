@@ -142,6 +142,7 @@
     <Compile Include="Controllers\StudioController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\UserHomeController.cs" />
+    <Compile Include="Controllers\WebGalleryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -162,10 +163,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblAboutU.cs">
+    <Compile Include="Models\tblAboutUs.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBanner.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblBill.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBooking.cs">
@@ -177,16 +181,13 @@
     <Compile Include="Models\tblCustomer.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblFeedback.cs">
+    <Compile Include="Models\tblExposing.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGallery.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblOrder.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblPackage.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblParentCategory.cs">
@@ -196,9 +197,6 @@
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPortfolio.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblSelfiePoint.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblService.cs">
@@ -798,6 +796,7 @@
     <Content Include="Views\Service\Create.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\WebGallery\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AboutUsImages\" />
@@ -811,6 +810,7 @@
     <Folder Include="PortfolioImages\" />
     <Folder Include="ServiceImages\" />
     <Folder Include="StudioLogo\" />
+    <Folder Include="WebGalleryImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

@@ -14,19 +14,10 @@ namespace InstaAlbum.Models
     
     public partial class tblService
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tblService()
-        {
-            this.tblWebGalleries = new HashSet<tblWebGallery>();
-        }
-    
         public int ServiceID { get; set; }
         public string ServiceName { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
         public System.DateTime CreatedDate { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblWebGallery> tblWebGalleries { get; set; }
     }
 }

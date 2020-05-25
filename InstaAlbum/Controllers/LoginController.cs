@@ -28,11 +28,11 @@ namespace InstaAlbum.Controllers
                     string strPhno = Request.Form["PhoneNo"];
                     string strPassword = Request.Form["Password"];
 
-                    var data1 = db.tblCustomers.Where(c => c.PhoneNumber == strPhno)
-                               .Where(c => c.Password == strPassword).ToList();
+                    var data1 = db.tblCustomers.Where(c => c.PhoneNumber == strPhno.Trim())
+                               .Where(c => c.Password == strPassword.Trim()).Where(c => c.IsActive == true).ToList();
                     
-                    var data2 = db.tblStudioAdmins.Where(a => a.PhoneNo == strPhno)
-                               .Where(c => c.Password == strPassword).ToList();
+                    var data2 = db.tblStudioAdmins.Where(a => a.PhoneNo == strPhno.Trim())
+                               .Where(c => c.Password == strPassword.Trim()).ToList();
 
                     if (data1.Count > 0)
                     {

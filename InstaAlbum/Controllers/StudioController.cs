@@ -183,14 +183,20 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblStudioAdmin tblStudioAdmin = db.tblStudioAdmins.Find(id);
-            db.tblStudioAdmins.Remove(tblStudioAdmin);
-            db.SaveChanges();
-            string path = Server.MapPath("~/StudioLogo/" + tblStudioAdmin.StudioLogo);
-            FileInfo delfile = new FileInfo(path);
-            delfile.Delete();
-            return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblStudioAdmin tblStudioAdmin = db.tblStudioAdmins.Find(id);
+                db.tblStudioAdmins.Remove(tblStudioAdmin);
+                db.SaveChanges();
+                string path = Server.MapPath("~/StudioLogo/" + tblStudioAdmin.StudioLogo);
+                FileInfo delfile = new FileInfo(path);
+                delfile.Delete();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)

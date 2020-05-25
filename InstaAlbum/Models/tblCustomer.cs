@@ -18,10 +18,8 @@ namespace InstaAlbum.Models
         public tblCustomer()
         {
             this.tblBookings = new HashSet<tblBooking>();
-            this.tblFeedbacks = new HashSet<tblFeedback>();
             this.tblGalleries = new HashSet<tblGallery>();
             this.tblOrders = new HashSet<tblOrder>();
-            this.tblSelfiePoints = new HashSet<tblSelfiePoint>();
         }
     
         public int CustomerID { get; set; }
@@ -37,12 +35,8 @@ namespace InstaAlbum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblBooking> tblBookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblFeedback> tblFeedbacks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblGallery> tblGalleries { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblOrder> tblOrders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblSelfiePoint> tblSelfiePoints { get; set; }
     }
 }

@@ -25,19 +25,18 @@ namespace InstaAlbum.Models
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<tblAboutU> tblAboutUs { get; set; }
+        public virtual DbSet<tblAboutUs> tblAboutUs { get; set; }
         public virtual DbSet<tblBanner> tblBanners { get; set; }
+        public virtual DbSet<tblBill> tblBills { get; set; }
         public virtual DbSet<tblBooking> tblBookings { get; set; }
         public virtual DbSet<tblBranch> tblBranches { get; set; }
         public virtual DbSet<tblCustomer> tblCustomers { get; set; }
-        public virtual DbSet<tblFeedback> tblFeedbacks { get; set; }
+        public virtual DbSet<tblExposing> tblExposings { get; set; }
         public virtual DbSet<tblGallery> tblGalleries { get; set; }
         public virtual DbSet<tblOrder> tblOrders { get; set; }
-        public virtual DbSet<tblPackage> tblPackages { get; set; }
         public virtual DbSet<tblParentCategory> tblParentCategories { get; set; }
         public virtual DbSet<tblPhotographer> tblPhotographers { get; set; }
         public virtual DbSet<tblPortfolio> tblPortfolios { get; set; }
-        public virtual DbSet<tblSelfiePoint> tblSelfiePoints { get; set; }
         public virtual DbSet<tblService> tblServices { get; set; }
         public virtual DbSet<tblStudioAdmin> tblStudioAdmins { get; set; }
         public virtual DbSet<tblSubCategory> tblSubCategories { get; set; }

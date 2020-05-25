@@ -121,14 +121,20 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblSubCategory tblSubCategory = db.tblSubCategories.Find(id);
-            db.tblSubCategories.Remove(tblSubCategory);
-            db.SaveChanges();
-            string path = Server.MapPath("~/SubCategoryImages/" + tblSubCategory.SubCategoryCoverPhoto);
-            FileInfo delfile = new FileInfo(path);
-            delfile.Delete();
-            return Json(new { success = true, message = "Record deleted" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblSubCategory tblSubCategory = db.tblSubCategories.Find(id);
+                db.tblSubCategories.Remove(tblSubCategory);
+                db.SaveChanges();
+                string path = Server.MapPath("~/SubCategoryImages/" + tblSubCategory.SubCategoryCoverPhoto);
+                FileInfo delfile = new FileInfo(path);
+                delfile.Delete();
+                return Json(new { success = true, message = "Record deleted" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)

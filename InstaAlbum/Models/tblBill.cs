@@ -12,13 +12,14 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblFeedback
+    public partial class tblBill
     {
-        public int FeedbackID { get; set; }
-        public int CustomerID { get; set; }
-        public string FeedbackMsg { get; set; }
-        public System.DateTime CreatedDate { get; set; }
+        public int BillID { get; set; }
+        public Nullable<int> BookingID { get; set; }
+        public Nullable<decimal> TotalAmount { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
+        public Nullable<System.DateTime> UpdatedDate { get; set; }
     
-        public virtual tblCustomer tblCustomer { get; set; }
+        public virtual tblBooking tblBooking { get; set; }
     }
 }

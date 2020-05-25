@@ -189,14 +189,20 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblCustomer tblCustomer = db.tblCustomers.Find(id);
-            db.tblCustomers.Remove(tblCustomer);
-            db.SaveChanges();
-            string path = Server.MapPath("~/CustomerProfile/" + tblCustomer.ProfilePic);
-            FileInfo delfile = new FileInfo(path);
-            delfile.Delete();
-            return Json(new { success = true , message = "Record deleted successfully"},JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblCustomer tblCustomer = db.tblCustomers.Find(id);
+                db.tblCustomers.Remove(tblCustomer);
+                db.SaveChanges();
+                string path = Server.MapPath("~/CustomerProfile/" + tblCustomer.ProfilePic);
+                FileInfo delfile = new FileInfo(path);
+                delfile.Delete();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)
@@ -207,6 +213,43 @@ namespace InstaAlbum.Controllers
             }
             base.Dispose(disposing);
         }
+
+        public ActionResult ActivateCustomer(int id)
+        {
+            try
+            {
+                tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == id);
+                newCust.UpdatedDate = DateTime.Now;
+                newCust.IsActive = true;
+                db.Entry(newCust).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Customer is activated" }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Error!" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult DeactivateCustomer(int id)
+        {
+            try
+            {
+                tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == id);
+                newCust.UpdatedDate = DateTime.Now;
+                newCust.IsActive = false;
+                db.Entry(newCust).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Customer is Deactivated." }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error!" }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
 
         public ActionResult IsClientEmailExistOrNot(string Email)
         {

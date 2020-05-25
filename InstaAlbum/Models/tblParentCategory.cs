@@ -17,7 +17,6 @@ namespace InstaAlbum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblParentCategory()
         {
-            this.tblBookings = new HashSet<tblBooking>();
             this.tblSubCategories = new HashSet<tblSubCategory>();
         }
     
@@ -26,8 +25,6 @@ namespace InstaAlbum.Models
         public string Image { get; set; }
         public System.DateTime CreatedDate { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblBooking> tblBookings { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblSubCategory> tblSubCategories { get; set; }
     }

@@ -14,6 +14,12 @@ namespace InstaAlbum.Models
     
     public partial class tblPhotographer
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tblPhotographer()
+        {
+            this.tblExposings = new HashSet<tblExposing>();
+        }
+    
         public int PhotographerID { get; set; }
         public int BranchID { get; set; }
         public string PhotographerName { get; set; }
@@ -24,10 +30,13 @@ namespace InstaAlbum.Models
         public string ProfilePic { get; set; }
         public string Address { get; set; }
         public string CameraName { get; set; }
+        public bool IsActive { get; set; }
+        public Nullable<bool> IsFreelancer { get; set; }
         public System.DateTime CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public Nullable<bool> IsActive { get; set; }
     
         public virtual tblBranch tblBranch { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tblExposing> tblExposings { get; set; }
     }
 }

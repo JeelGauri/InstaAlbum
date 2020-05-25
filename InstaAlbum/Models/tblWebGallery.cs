@@ -15,11 +15,8 @@ namespace InstaAlbum.Models
     public partial class tblWebGallery
     {
         public int WebGalleryID { get; set; }
-        public int ServiceID { get; set; }
         public string Image { get; set; }
         public string Description { get; set; }
         public System.DateTime CreatedDate { get; set; }
-    
-        public virtual tblService tblService { get; set; }
     }
 }

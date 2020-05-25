@@ -18,7 +18,6 @@ namespace InstaAlbum.Models
         public tblBranch()
         {
             this.tblOrders = new HashSet<tblOrder>();
-            this.tblPackages = new HashSet<tblPackage>();
             this.tblPhotographers = new HashSet<tblPhotographer>();
         }
     
@@ -30,8 +29,6 @@ namespace InstaAlbum.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblOrder> tblOrders { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblPackage> tblPackages { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblPhotographer> tblPhotographers { get; set; }
     }
