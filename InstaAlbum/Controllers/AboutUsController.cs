@@ -32,12 +32,12 @@ namespace InstaAlbum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblAboutU tblAboutU = db.tblAboutUs.Find(id);
-            if (tblAboutU == null)
+            tblAboutUs tblAboutUs = db.tblAboutUs.Find(id);
+            if (tblAboutUs == null)
             {
                 return HttpNotFound();
             }
-            return View(tblAboutU);
+            return View(tblAboutUs);
         }
 
         // GET: AboutUs/Create
@@ -60,7 +60,7 @@ namespace InstaAlbum.Controllers
                 return RedirectToAction("Login", "Login");
             try
             {
-                tblAboutU newAbout = new tblAboutU();
+                tblAboutUs newAbout = new tblAboutUs();
                 newAbout.Description = Request.Form["Description"];
 
                 if (ModelState.IsValid)
@@ -119,12 +119,12 @@ namespace InstaAlbum.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            tblAboutU tblAboutU = db.tblAboutUs.Find(id);
-            if (tblAboutU == null)
+            tblAboutUs tblAboutUs = db.tblAboutUs.Find(id);
+            if (tblAboutUs == null)
             {
                 return HttpNotFound();
             }
-            return View(tblAboutU);
+            return View(tblAboutUs);
         }
 
 
@@ -137,7 +137,7 @@ namespace InstaAlbum.Controllers
             try
             {
                 int AboutUsID = Convert.ToInt32(Request.Form["AboutUsID"]);
-                tblAboutU newAbout = db.tblAboutUs.SingleOrDefault(s => s.AboutUsID == AboutUsID);
+                tblAboutUs newAbout = db.tblAboutUs.SingleOrDefault(s => s.AboutUsID == AboutUsID);
                 newAbout.Description = Request.Form["Description"];
 
                 if (ModelState.IsValid)
@@ -193,14 +193,20 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblAboutU tblAbout = db.tblAboutUs.Find(id);
-            db.tblAboutUs.Remove(tblAbout);
-            db.SaveChanges();
-            string path = Server.MapPath("~/AboutUsImages/" + tblAbout.Image);
-            FileInfo delfile = new FileInfo(path);
-            delfile.Delete();
-            return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblAboutUs tblAbout = db.tblAboutUs.Find(id);
+                db.tblAboutUs.Remove(tblAbout);
+                db.SaveChanges();
+                string path = Server.MapPath("~/AboutUsImages/" + tblAbout.Image);
+                FileInfo delfile = new FileInfo(path);
+                delfile.Delete();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)

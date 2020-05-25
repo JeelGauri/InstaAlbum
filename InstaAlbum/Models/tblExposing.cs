@@ -12,14 +12,17 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblSelfiePoint
+    public partial class tblExposing
     {
-        public int SelfiePointID { get; set; }
-        public int CustomerID { get; set; }
-        public string Image { get; set; }
-        public System.DateTime CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public int ExposeID { get; set; }
+        public int BookingID { get; set; }
+        public int PhotographerID { get; set; }
+        public string Description { get; set; }
+        public string Location { get; set; }
+        public Nullable<bool> IsCompleted { get; set; }
+        public Nullable<System.DateTime> CreatedDate { get; set; }
     
-        public virtual tblCustomer tblCustomer { get; set; }
+        public virtual tblBooking tblBooking { get; set; }
+        public virtual tblPhotographer tblPhotographer { get; set; }
     }
 }

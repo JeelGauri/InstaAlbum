@@ -138,9 +138,11 @@
     <Compile Include="Controllers\ParentCategoryController.cs" />
     <Compile Include="Controllers\PhotographerController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
+    <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\StudioController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
     <Compile Include="Controllers\UserHomeController.cs" />
+    <Compile Include="Controllers\WebGalleryController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -161,10 +163,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblAboutU.cs">
+    <Compile Include="Models\tblAboutUs.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBanner.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblBill.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBooking.cs">
@@ -176,16 +181,13 @@
     <Compile Include="Models\tblCustomer.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblFeedback.cs">
+    <Compile Include="Models\tblExposing.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblGallery.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblOrder.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblPackage.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblParentCategory.cs">
@@ -195,9 +197,6 @@
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPortfolio.cs">
-      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\tblSelfiePoint.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblService.cs">
@@ -356,6 +355,16 @@
     <Content Include="adminassets\js\ec3a4394b4f2945a7195fdaf324c8daf52d5eabe\crisp\assets\js\googlemaps-data.js" />
     <Content Include="adminassets\js\widget-data.js" />
     <Content Include="adminassets\vendor\trumbowyg\trumbowyg.min.js" />
+    <Content Include="Models\InstaAlbumDB.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
+      <LastGenOutput>InstaAlbumDB.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\InstaAlbumDB.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
+      <LastGenOutput>InstaAlbumDB.cs</LastGenOutput>
+    </Content>
     <Content Include="obj\Debug\InstaAlbum.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\InstaAlbum.dll" />
     <Content Include="obj\Debug\InstaAlbum.pdb" />
@@ -680,16 +689,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\InstaAlbumDB.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
-      <LastGenOutput>InstaAlbumDB.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\InstaAlbumDB.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
-      <LastGenOutput>InstaAlbumDB.cs</LastGenOutput>
-    </Content>
     <Content Include="ParentCategoryImages\bday.jpg" />
     <Content Include="ParentCategoryImages\kids.jpg" />
     <Content Include="ParentCategoryImages\wedding.jpg" />
@@ -701,13 +700,6 @@
     <Content Include="www.tinymce.com\pricing.html" />
     <Content Include="adminassets\img\guides\random-06.svg.readme" />
     <Content Include="adminassets\img\login.svg.readme" />
-    <EntityDeploy Include="Models\InstaAlbumDB.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>InstaAlbumDB.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\InstaAlbumDB.edmx.diagram">
-      <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
-    </Content>
     <Content Include="userassets\vendor\bootstrap\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="userassets\vendor\bootstrap\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="userassets\vendor\bootstrap\fonts\glyphicons-halflings-regular.woff" />
@@ -729,6 +721,13 @@
     <Content Include="obj\Debug\InstaAlbum.csproj.CopyComplete" />
     <Content Include="obj\Debug\InstaAlbum.csproj.CoreCompileInputs.cache" />
     <Content Include="obj\Debug\InstaAlbum.csprojAssemblyReference.cache" />
+    <EntityDeploy Include="Models\InstaAlbumDB.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>InstaAlbumDB.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\InstaAlbumDB.edmx.diagram">
+      <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -793,7 +792,11 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Registration.cshtml" />
-    <Content Include="Views\UserHome\GalleryCategories.cshtml" />
+    <Content Include="Views\UserHome\Gallery_Categories.cshtml" />
+    <Content Include="Views\Service\Create.cshtml" />
+    <Content Include="Views\Service\Edit.cshtml" />
+    <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\WebGallery\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AboutUsImages\" />
@@ -805,7 +808,9 @@
     <Folder Include="obj\Release\" />
     <Folder Include="PhotographerProfilePics\" />
     <Folder Include="PortfolioImages\" />
+    <Folder Include="ServiceImages\" />
     <Folder Include="StudioLogo\" />
+    <Folder Include="WebGalleryImages\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

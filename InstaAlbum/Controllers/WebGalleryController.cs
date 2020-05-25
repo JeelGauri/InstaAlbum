@@ -11,52 +11,54 @@ using InstaAlbum.Models;
 
 namespace InstaAlbum.Controllers
 {
-    public class ParentCategoryController : Controller
+    public class WebGalleryController : Controller
     {
         private InstaAlbumEntities db = new InstaAlbumEntities();
 
-        // GET: ParentCategory
+        // GET: WebGallery
         public ActionResult Index()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
-            return View(db.tblParentCategories.ToList());
+            return View(db.tblWebGalleries.ToList());
         }
 
-        public ActionResult getAllCategory()
+        
+
+        // GET: WebGallery/Create
+        public ActionResult Create()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
-            return Json(db.tblParentCategories.Select(c => new
-            {
-                ParentCategoryID = c.ParentCategoryID,
-                ParentCategoryName = c.ParentCategoryName
-            }).ToList(), JsonRequestBehavior.AllowGet);
+            return View();
         }
 
+        
         [HttpPost]
-        public ActionResult InsertParentCategory()
+        public ActionResult InsertImages()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
-            try
+            if (ModelState.IsValid)
             {
-                tblParentCategory newCat = new tblParentCategory();
-                newCat.ParentCategoryName = Request.Form["ParentCategoryName"];
 
-                if (ModelState.IsValid)
+
+                if (Request.Files.Count > 0)
                 {
                     int fileSize = 0;
                     string fileName = string.Empty;
                     string mimeType = string.Empty;
                     System.IO.Stream fileContent;
 
-                    if (Request.Files.Count > 0)
+                    for (int i = 0; i < Request.Files.Count; i++)
                     {
-                        HttpPostedFileBase file = Request.Files[0];
+                        tblWebGallery NewWebgallery = new tblWebGallery();
+                        NewWebgallery.Description = Request.Form["Description"];
+
+                        HttpPostedFileBase file = Request.Files[i];
 
                         fileSize = file.ContentLength;
                         fileName = file.FileName;
@@ -68,53 +70,51 @@ namespace InstaAlbum.Controllers
                         {
                             return Json(new { Formatwarning = true, message = "Profile pic format must be JPEG or JPG or PNG." }, JsonRequestBehavior.AllowGet);
                         }
+                        //WebImage img = new WebImage(file.InputStream);
 
                         #region Save And compress file
-                        //To save file, use SaveAs method
-                        file.SaveAs(Server.MapPath("~/ParentCategoryImages/") + fileName);
-                        if (!ImageProcessing.InsertImages(Server.MapPath("~/ParentCategoryImages/") + fileName))
+                        file.SaveAs(Server.MapPath("~/WebGalleryImages/") + fileName);
+                        if (!ImageProcessing.InsertImages(Server.MapPath("~/WebGalleryImages/") + fileName))
                         {
                             return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
                         }
                         #endregion
+
+                        NewWebgallery.Image = fileName;
+                        NewWebgallery.CreatedDate = DateTime.Now;
+                        db.tblWebGalleries.Add(NewWebgallery);
+                        db.SaveChanges();
                     }
-                    newCat.Image = fileName;
-
-                    newCat.CreatedDate = DateTime.Now;
-                    db.tblParentCategories.Add(newCat);
-                    db.SaveChanges();
                 }
-            }
-            catch(Exception ex)
-            {
-                return Json(new { success = false, message = "Record Not inserted" }, JsonRequestBehavior.AllowGet);
-            }
 
+                return Json(new { success = true, message = "Record inserted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            else
+                return Json(new { success = false, message = "Record not inserted" }, JsonRequestBehavior.AllowGet);
 
-            return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
         }
 
-       
-        // POST: ParentCategory/Delete/5
-        [HttpPost]
         
-        public ActionResult DeleteCategory(int id)
+
+        // POST: WebGallery/Delete/5
+        public ActionResult DeleteImage(int id)
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
             try
             {
-                tblParentCategory tblParentCategory = db.tblParentCategories.Find(id);
-                db.tblParentCategories.Remove(tblParentCategory);
+                tblWebGallery tblwebgallery = db.tblWebGalleries.Find(id);
+                db.tblWebGalleries.Remove(tblwebgallery);
                 db.SaveChanges();
-                string path = Server.MapPath("~/ParentCategoryImages/" + tblParentCategory.Image);
+                string path = Server.MapPath("~/WebGalleryImages/" + tblwebgallery.Image);
                 FileInfo delfile = new FileInfo(path);
                 delfile.Delete();
-                return Json(new { success = true, message = "Record deleted" }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = true, message = "Image is deleted." }, JsonRequestBehavior.AllowGet);
+
             }
             catch(Exception ex)
             {
-                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "Image is not deleted."+ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 

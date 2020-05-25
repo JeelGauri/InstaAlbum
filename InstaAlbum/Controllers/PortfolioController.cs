@@ -187,14 +187,20 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblPortfolio tblportfolio = db.tblPortfolios.Find(id);
-            db.tblPortfolios.Remove(tblportfolio);
-            db.SaveChanges();
-            string path = Server.MapPath("~/PortfolioImages/" + tblportfolio.Image);
-            FileInfo delfile = new FileInfo(path);
-            delfile.Delete();
-            return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblPortfolio tblportfolio = db.tblPortfolios.Find(id);
+                db.tblPortfolios.Remove(tblportfolio);
+                db.SaveChanges();
+                string path = Server.MapPath("~/PortfolioImages/" + tblportfolio.Image);
+                FileInfo delfile = new FileInfo(path);
+                delfile.Delete();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
 
         }
 

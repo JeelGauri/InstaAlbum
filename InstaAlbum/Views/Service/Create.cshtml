@@ -1,0 +1,135 @@
+﻿@model InstaAlbum.Models.tblService
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<script>
+  
+    function fnInsertRecord() {
+
+        var txtServiceName = document.getElementById("txtServiceName");
+        var txtDescription = document.getElementById("txtDescription");
+
+        if (txtServiceName.value == null || txtServiceName.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter Service name', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtDescription.value == null || txtDescription.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter Description', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+
+        var formData = new FormData();
+        var file = document.getElementById("inputProfile").files[0];
+        formData.append("imageFile", file);
+        formData.append("ServiceName", txtServiceName.value);
+        formData.append("Description", txtDescription.value);
+
+        $.ajax({
+               type: "POST",
+                url: '/Service/InsertService',
+                data: formData,
+                dataType: 'json',
+                contentType: false,
+                processData: false,
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(
+                            response.message,
+                            'Record is inserted',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    window.location.href = "/Service/";
+                                }
+                            }
+                        );
+                    }
+                    else if (response.Formatwarning === true) {
+                        toastr.warning(
+                            response.message,
+                            'Picture format error',
+                            {
+                                timeOut: 3000,
+                                fadeOut: 1000,
+                                onHidden: function () {
+                                    return;
+                                }
+                            }
+                        );
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    return;
+                }
+
+            });
+    }
+
+</script>
+
+<div class="bg-dark bg-dots m-b-30">
+    <div class="container">
+        <div class="row p-b-60 p-t-60">
+
+            <div class="col-lg-8 text-center mx-auto text-white p-b-30">
+                <div class="m-b-10">
+                    <div class="avatar avatar-lg ">
+                        <h1 class="mdi mdi-settings"></h1>
+                    </div>
+                </div>
+                <h3>Service Details </h3>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<section class="pull-up">
+    <div class="container">
+        <div class="row ">
+            <div class="col-lg-8 mx-auto  mt-2">
+                <div class="card py-3 m-b-30">
+                    <div class="card-body">
+
+                        <h3 class="">Service Info</h3>
+
+                        <div class="card-body ">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="txtServiceName">Service Name:</label>
+                                    <input type="text" required id="txtServiceName" placeholder="Enter Service Name" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputProfile">Image</label>
+                                    <input type="file" class="form-control" id="inputProfile">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="txtDescription">Description</label>
+                                    <textarea type="text" required id="txtDescription" placeholder="Enter Description" class="form-control"></textarea>
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <input type="submit" value="Submit" onclick="javascript:fnInsertRecord()" class="btn btn-primary" />
+                                    <a href="@Url.Action("Index", "Service")" title="Click here to get List" class="btn btn-success">Cancel</a>
+                                </div>
+                         </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</section>

@@ -46,6 +46,74 @@
 
         });
     }
+
+    function fnDeactivateUser(CustomerID)
+    {
+        $.ajax({
+            async: true,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: "{'id':'" + CustomerID + "'}",
+            url: '/Customer/DeactivateCustomer',
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Customer is Deactivated',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.reload();
+                            }
+                        }
+                    );
+                }
+                else {
+                    toastr.info(response.message, 'Customer is not Deactivated', { timeOut: 3000 });
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while Deactivating Customer.', { timeOut: 3000 });
+            }
+
+        });
+    }
+
+    function fnActivateUser(CustomerID)
+    {
+        $.ajax({
+            async: true,
+            type: 'POST',
+            dataType: 'JSON',
+            contentType: 'application/json; charset=utf-8',
+            data: "{'id':'" + CustomerID + "'}",
+            url: '/Customer/ActivateCustomer',
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Customer is Activated!',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.reload();
+                            }
+                        }
+                    );
+                }
+                else {
+                    toastr.info(response.message, 'Customer is Activated!', { timeOut: 3000 });
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while Activate Customer.', { timeOut: 3000 });
+            }
+
+        });
+    }
 </script>
 
 <div class="bg-dark bg-dots m-b-30">
@@ -85,6 +153,7 @@
                                     <th>IsActive</th>
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
+                                    <th>Activate or Deactivate</th>
                                     <th>Edit</th>
                                     <th>Delete</th>
                                 </tr>
@@ -114,6 +183,16 @@
                                         </td>
                                         <td>
                                             @Html.DisplayFor(modelItem => item.UpdatedDate)
+                                        </td>
+                                        <td>
+                                            @if (item.IsActive == true)
+                                            {
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" title="Click here to Deactivate Customer" value="De-Activate" onclick="javascript: fnDeactivateUser(@item.CustomerID)"/>
+                                            }
+                                            else
+                                            {
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success" title="Click here to Activate Customer" value="Activate" onclick="javascript:fnActivateUser(@item.CustomerID)"/>
+                                            }
                                         </td>
                                         <td>
                                             @Html.ActionLink("Update", "Edit", new { id = item.CustomerID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" })

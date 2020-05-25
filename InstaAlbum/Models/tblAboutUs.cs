@@ -12,7 +12,7 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblAboutU
+    public partial class tblAboutUs
     {
         public int AboutUsID { get; set; }
         public string Image { get; set; }

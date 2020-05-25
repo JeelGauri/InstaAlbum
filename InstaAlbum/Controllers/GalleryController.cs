@@ -112,6 +112,7 @@ namespace InstaAlbum.Controllers
                             return Json(new { success = false, message = "Error occur while uploading image." }, JsonRequestBehavior.AllowGet);
                         }
                         #endregion
+
                         NewGallery.Image = fileName;
                         NewGallery.CreatedDate = DateTime.Now;
                         NewGallery.IsSelected = false;
@@ -187,14 +188,20 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblGallery tblGallery = db.tblGalleries.Find(id);
-            db.tblGalleries.Remove(tblGallery);
-            db.SaveChanges();
-            string path = Server.MapPath("~/Gallery/" + tblGallery.Image);
-            FileInfo delfile = new FileInfo(path);
-            delfile.Delete();
-            return Json(new { success = true, message = "Image is deleted."}, JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblGallery tblGallery = db.tblGalleries.Find(id);
+                db.tblGalleries.Remove(tblGallery);
+                db.SaveChanges();
+                string path = Server.MapPath("~/Gallery/" + tblGallery.Image);
+                FileInfo delfile = new FileInfo(path);
+                delfile.Delete();
+                return Json(new { success = true, message = "Image is deleted." }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Image is not deleted." }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)

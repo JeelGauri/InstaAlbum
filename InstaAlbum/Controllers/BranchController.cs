@@ -59,11 +59,17 @@ namespace InstaAlbum.Controllers
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
-
-            tblBranch tblBranch = db.tblBranches.Find(id);
-            db.tblBranches.Remove(tblBranch);
-            db.SaveChanges();
-            return Json(new { success = true, message = "Record deleted" }, JsonRequestBehavior.AllowGet);
+            try
+            {
+                tblBranch tblBranch = db.tblBranches.Find(id);
+                db.tblBranches.Remove(tblBranch);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch(Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         protected override void Dispose(bool disposing)
