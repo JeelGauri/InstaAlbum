@@ -36,6 +36,36 @@
     <link rel="stylesheet" href="~/userassets/css/helper.css">
     <link rel="stylesheet" href="~/userassets/css/theme.css">
     <link rel="stylesheet" href="~/userassets/css/demo-dark-style.css">
+
+    <script>
+        function fnLogout() {
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "",
+                url: '/Login/LogOut',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(response.message, 'You are logging out!',
+                        {
+                            timeOut: 1000, fadeOut: 1000,
+                            onHidden: function () { window.location.href = "/UserHome/"; }
+                        });
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while loging out!.', { timeOut: 1000 });
+                    return;
+                }
+
+            });
+        }
+
+
+    </script>
 </head>
 <body class="temp-uppercase temp-grayscale animsition">
 
@@ -47,50 +77,77 @@
 
         <div class="header-close" title="Close">×</div>
         <div class="logo-small">
-            <a href="index.html"><img src="~/userassets/img/logo3.png" title="Home" alt="logo"></a>
+            <a href="@Url.Action("Index","UserHome")"><img src="~/userassets/img/logo3.png" title="Home" alt="logo"></a>
         </div>
         <span class="header-menu-icon" title="Open Menu"><i class="fa fa-bars"></i></span>
         <a href="#" class="header-contact-icon" title="Contact Me"><i class="fa fa-envelope"></i></a>
         <div class="header-inner">
             <div class="header-top">
                 <div class="logo-big">
-                    <a href="index.html"><img src="~/userassets/img/logo3.png" title="Home" alt="logo"></a>
+                    <a href="@Url.Action("Index","UserHome")"><img src="~/userassets/img/logo3.png" title="Home" alt="logo"></a>
                 </div>
             </div>
             <div class="header-middle">
                 <div id="menu">
                     <ul class="menu-list">
                         <li class="has-children">
-                            <a href="@Url.Action("Index","UserHome")" >Home</a>
+                            <a href="@Url.Action("Index","UserHome")">Home</a>
                         </li>
                         <li class="has-children">
-                            <a href="@Url.Action("About","UserHome")" >About Us</a>
+                            <a href="@Url.Action("About","UserHome")">About Us</a>
                         </li>
                         <li class="has-children">
-                            <a href="#" class="sub-menu-trigger">Gallery</a>
+                            <a href="@Url.Action("Gallery","UserHome")">Gallery</a>
                         </li>
                         <li class="has-children">
-                            <a href="#" class="sub-menu-trigger">Protfolio</a>
+                            <a href="@Url.Action("Protfolio","UserHome")">Protfolio</a>
                         </li>
                         <li class="has-children">
-                            <a href="@Url.Action("Contact","UserHome")" >Contact</a>
+                            <a href="@Url.Action("Contact","UserHome")">Contact</a>
                         </li>
+                        @if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
+                        {
+                            <li class="has-children">
+                                <a href="@Url.Action("Login","Login")">LogIn</a>
+                            </li>
+                            <li class="has-children">
+                                <a href="@Url.Action("GalleryCategories", "UserHome")" style="visibility:hidden">Photo Selection</a>
+                            </li>
+                            <li class="has-children">
+                                <a href="@Url.Action("Feedback", "UserHome")" style="visibility:hidden">Feedback</a>
+                            </li>
+                            <li class="has-children">
+                                <a onclick="javascript:fnLogout()" style="visibility:hidden">LogOut</a>
+                            </li>
 
+                        }
+                        else
+                        {
+                            <li class="has-children">
+                                <a href="@Url.Action("Login","Login")" style="visibility:hidden">LogIn</a>
+                            </li>
+                            <li class="has-children">
+                                <a href="@Url.Action("GalleryCategories", "UserHome")">Photo Selection</a>
+                            </li>
+                            <li class="has-children">
+                                <a href="@Url.Action("Feedback", "UserHome")">Feedback</a>
+                            </li>
+                            <li class="has-children">
+                                <a href="#" onclick="javascript:fnLogout()">Logout</a>
+                            </li>
+
+                        }
                     </ul>
                 </div>
             </div>
             <div class="header-bottom">
                 <div class="follow-me-buttons">
                     <ul>
-                        <li><a href="#" title="Follow me on Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                        @*<li><a href="#" title="Follow me on Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
                         <li><a href="#" title="Follow me on Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#" title="Follow me on Instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
+                        <li><a href="#" title="Follow me on Instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>*@
                         <li><a href="mailto:info@your-email.com" title="Email Me" target="_blank"><i class="fa fa-envelope"></i></a></li>
                     </ul>
-                </div>
-                <div class="copyright">
-                    Copyright © 2016 <br>
-                    <a target="_blank" href="https://themeforest.net/user/themetorium/portfolio?ref=Themetorium">Themetorium</a>
                 </div>
             </div>
         </div>

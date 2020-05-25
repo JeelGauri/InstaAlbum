@@ -68,7 +68,7 @@
                     }
                 },
                 error: function () {
-                    toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 3000 });
+                    toastr.error('Error occur', 'Error occur while deleting record.', { timeOut: 1000 });
                     return;
                 }
 
@@ -83,19 +83,19 @@
         var txtPassword = document.getElementById("txtPassword");
 
         if (txtClientName.value == null || txtClientName.value.length <= 0) {
-            toastr.warning('Input Error', 'Please enter client name', { timeOut: 3000, fadeOut: 1000 });
+            toastr.warning('Input Error', 'Please enter client name', { timeOut: 1000, fadeOut: 1000 });
             return;
         }
         if (txtEmail.value == null || txtEmail.value.length <= 0) {
-            toastr.warning('Input Error', 'Please enter client Email', { timeOut: 3000, fadeOut: 1000 });
+            toastr.warning('Input Error', 'Please enter client Email', { timeOut: 1000, fadeOut: 1000 });
             return;
         }
         if (txtPhoneNumber.value == null || txtPhoneNumber.value.length <= 0) {
-            toastr.warning('Input Error', 'Please enter client phone number', { timeOut: 3000, fadeOut: 1000 });
+            toastr.warning('Input Error', 'Please enter client phone number', { timeOut: 1000, fadeOut: 1000 });
             return;
         }
         if (txtPassword.value == null || txtPassword.value.length <= 0) {
-            toastr.warning('Input Error', 'Please enter password', { timeOut: 3000, fadeOut: 1000 });
+            toastr.warning('Input Error', 'Please enter password', { timeOut: 1000, fadeOut: 1000 });
             return;
         }
 
@@ -120,7 +120,7 @@
                             response.message,
                             'Registration successfully.',
                             {
-                                timeOut: 3000,
+                                timeOut: 1000,
                                 fadeOut: 1000,
                                 onHidden: function () {
                                     window.location.href = "/Login/Login";
@@ -133,7 +133,7 @@
                             response.message,
                             'Picture format error',
                             {
-                                timeOut: 3000,
+                                timeOut: 1000,
                                 fadeOut: 1000,
                                 onHidden: function () {
                                     return;
@@ -143,7 +143,7 @@
                     }
                 },
                 error: function () {
-                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                    toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 1000 });
                     return;
                 }
 

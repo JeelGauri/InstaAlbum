@@ -7,19 +7,20 @@
 <script>
     function fnGetSelectedImages()
     {
-        var imageID = new Array();
+        var checkedimageID = new Array();
 
         // iterate all checkboxes and obtain their checked values, unchecked values are not pushed into array
         $('input[type=checkbox]').each(function () {
-            this.checked ? imageID.push($(this).val()) : null;
+            this.checked ? checkedimageID.push($(this).val()) : null;
         });
+        
 
         // assume urldata is your web method to delete multiple records
         $.ajax({
             type: "POST",
             contentType: "application/json; charset=utf-8",
             url: "/UserHome/SaveSelectedImages/",
-            data: JSON.stringify({ Id: imageID }), // used to convert array into proper JSON format
+            data: JSON.stringify({ Id: checkedimageID }), // used to convert array into proper JSON format
             dataType: "json",
             success: function (response)
             {
@@ -39,7 +40,7 @@
                 }
             },
             error: function (result) {
-                toastr.error('Error occur', 'Error occur while saving images.', { timeOut: 3000 });
+                toastr.error('Error occur', 'Error occur while saving images.', { timeOut: 1000 });
                 return;
             }
         });
@@ -76,27 +77,27 @@
 
                     @foreach (var item in Model)
                     {
-                        <div class="isotope-item iso-height-1 ">
-                            @if (item.IsSelected == true)
-                            {
-                                <input type="checkbox" checked value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
-                            }
-                            else
-                            {
-                                <input type="checkbox" value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
-                            }
+                <div class="isotope-item iso-height-1 ">
+                    @if (item.IsSelected == true)
+                    {
+                        <input type="checkbox" checked value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
+                    }
+                    else
+                    {
+                        <input type="checkbox" value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
+                    }
 
-                            <a href="../../Gallery/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../../Gallery/@item.Image" data-sub-html="<h4>Image Description</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>">
-                                <div class="gs-item-image bg-image" style="background-image: url(../../Gallery/@item.Image); background-position: 50% 50%"></div>
+                    <a href="../../Gallery/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../../Gallery/@item.Image" data-sub-html="<h4>Image Description</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>">
+                        <div class="gs-item-image bg-image" style="background-image: url(../../Gallery/@item.Image); background-position: 50% 50%"></div>
 
-                                <div class="gs-item-cover">
-                                    <div class="gs-item-info">
-                                        <span class="s-icon"><i class="fa fa-search"></i></span>
+                        <div class="gs-item-cover">
+                            <div class="gs-item-info">
+                                <span class="s-icon"><i class="fa fa-search"></i></span>
 
-                                    </div>
-                                </div>
-                            </a>
+                            </div>
                         </div>
+                    </a>
+                </div>
                     }
                 </div>
                 <center>

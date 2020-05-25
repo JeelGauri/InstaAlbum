@@ -11,11 +11,11 @@
         var txtPassword = document.getElementById("txtPassword");
 
         if (txtPhoneNumber.value == null || txtPhoneNumber.value.length <= 0) {
-            toastr.warning('Input Error', 'Please Enter Phone Number', { timeOut: 3000, fadeOut: 1000 });
+            toastr.warning('Input Error', 'Please Enter Phone Number', { timeOut: 1000, fadeOut: 1000 });
             return;
         }
         if (txtPassword.value == null || txtPassword.value.length <= 0) {
-            toastr.warning('Input Error', 'Please Enter Password', { timeOut: 3000, fadeOut: 1000 });
+            toastr.warning('Input Error', 'Please Enter Password', { timeOut: 1000, fadeOut: 1000 });
             return;
         }
 
@@ -36,7 +36,7 @@
                             response.message,
                             'User Login successfully.',
                             {
-                                timeOut: 3000,
+                                timeOut: 1000,
                                 fadeOut: 1000,
                                 onHidden: function () {
                                     window.location.href = '/UserHome/Index';
@@ -50,7 +50,7 @@
                             response.message,
                             'Admin Login successfully.',
                             {
-                                timeOut: 3000,
+                                timeOut: 1000,
                                 fadeOut: 1000,
                                 onHidden: function () {
                                     window.location.href = '/Home/';
@@ -59,12 +59,12 @@
                         );
                     }
                     else if (response.UserExist === false) {
-                        toastr.warning('Credential Error', 'Phone Number And Password Do not Match Try Again.!!! ', { timeOut: 3000, fadeOut: 1000 });
+                        toastr.warning('Credential Error', 'Phone Number And Password Do not Match Try Again.!!! ', { timeOut: 1000, fadeOut: 1000 });
                         return;
                     }
                 },
                 error: function () {
-                    toastr.error('Error occur', 'Error occur.', { timeOut: 3000 });
+                    toastr.error('Error occur', 'Error occur.', { timeOut: 1000 });
                     return;
                 }
 

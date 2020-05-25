@@ -1,17 +1,17 @@
 ﻿@model IEnumerable<InstaAlbum.Models.tblParentCategory>
 @{
-    ViewBag.Title = "Gallery_Categories";
+    ViewBag.Title = "GalleryCategories";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
 
-    <section id="page-header">
-        <div class="page-header-image parallax-3 bg-image" style="background-image: url(../../BannerImages/@ViewBag.BannerImage); background-position: 50% 50%;">
-            <div class="cover bg-transparent-6-dark"></div>
-        </div>
-        <div class="page-header-caption fade-out-scroll-3 parallax-4">
-            <h1 class="page-header-title font-alter-1"></h1>
-        </div>
-    </section>
+<section id="page-header">
+    <div class="page-header-image parallax-3 bg-image" style="background-image: url(../../BannerImages/@ViewBag.BannerImage); background-position: 50% 50%;">
+        <div class="cover bg-transparent-6-dark"></div>
+    </div>
+    <div class="page-header-caption fade-out-scroll-3 parallax-4">
+        <h1 class="page-header-title font-alter-1"></h1>
+    </div>
+</section>
 
 <section id="gallery-list-section" class="gl-categories">
     <div class="container-fluid no-padding">
@@ -37,5 +37,4 @@
         </div>
     </div>
 </section>
-
 

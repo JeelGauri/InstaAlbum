@@ -15,60 +15,26 @@ namespace InstaAlbum.Controllers
         private InstaAlbumEntities db = new InstaAlbumEntities();
         public ActionResult Index()
         {
-            if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {
                 return View(db.tblBanners.ToList());
-            }
+            
         }
         public ActionResult Contact()
         {
-            if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {
                 return View();
-            }
         }
         public ActionResult About()
         {
-            if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {
                 return View();
-            }
         }
         public ActionResult Gallery()
         {
-            if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {
                 return View();
-            }
         }
         public ActionResult Protfolio()
         {
-            if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {
                 return View();
-            }
         }
-        public ActionResult Gallery_Categories()
+        public ActionResult GalleryCategories()
         {
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
             {
@@ -86,24 +52,27 @@ namespace InstaAlbum.Controllers
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
                 return RedirectToAction("Login", "Login");
 
-           
+            if (id <= 0 || id == null)
+            {
+                return RedirectToAction("GalleryCategories", "UserHome");
+            }
             ViewBag.BannerImage = getRandomBanner();
             return View(db.tblSubCategories.Where(sc => sc.ParentCatgoryID == id).ToList());
         }
         public ActionResult CategoryWiseImage(int id)
         {
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
+            
                 return RedirectToAction("Login", "Login");
-            }
-            else
+            if (id <= 0 || id == null)
             {
-                
-                ViewBag.BannerImage = getRandomBanner();
-                int CustomerID = Convert.ToInt32(Session["CustomerID"]);
-                var data = db.tblGalleries.Where(g => g.SubCategoryID == id).Where(g => g.CustomerID == CustomerID);
-                return View(data.ToList());
+                return RedirectToAction("SubCategory", "UserHome");
             }
+            ViewBag.BannerImage = getRandomBanner();
+            int CustomerID = Convert.ToInt32(Session["CustomerID"]);
+            var data = db.tblGalleries.Where(g => g.SubCategoryID == id).Where(g => g.CustomerID == CustomerID);
+            return View(data.ToList());
+            
         }
         public string getRandomBanner()
         {
@@ -132,8 +101,6 @@ namespace InstaAlbum.Controllers
                 return View();
             }
         }
-
-
         public void ChangeImageSelected(int id)
         {
             tblGallery objGallery = new tblGallery();

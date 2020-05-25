@@ -793,7 +793,7 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Registration.cshtml" />
-    <Content Include="Views\UserHome\Gallery_Categories.cshtml" />
+    <Content Include="Views\UserHome\GalleryCategories.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AboutUsImages\" />
