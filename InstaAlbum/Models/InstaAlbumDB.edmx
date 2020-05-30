@@ -40,6 +40,7 @@
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="BookingDescription" Type="nvarchar(max)" />
           <Property Name="FunctionDate" Type="smalldatetime" />
+          <Property Name="IsExposed" Type="bit" />
           <Property Name="CreatedDate" Type="smalldatetime" />
           <Property Name="UpdatedDate" Type="smalldatetime" />
         </EntityType>
@@ -429,6 +430,7 @@
           <NavigationProperty Name="tblBills" Relationship="Self.FK_tblBill_tblBooking" FromRole="tblBooking" ToRole="tblBill" />
           <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblBooking_tblCustomer" FromRole="tblBooking" ToRole="tblCustomer" />
           <NavigationProperty Name="tblExposings" Relationship="Self.FK_tblExposing_tblBooking" FromRole="tblBooking" ToRole="tblExposing" />
+          <Property Name="IsExposed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblBranch">
           <Key>
@@ -826,6 +828,7 @@
           <EntitySetMapping Name="tblBookings">
             <EntityTypeMapping TypeName="InstaAlbumModel.tblBooking">
               <MappingFragment StoreEntitySet="tblBooking">
+                <ScalarProperty Name="IsExposed" ColumnName="IsExposed" />
                 <ScalarProperty Name="BookingID" ColumnName="BookingID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="BookingDescription" ColumnName="BookingDescription" />

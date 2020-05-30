@@ -797,6 +797,12 @@
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\WebGallery\Index.cshtml" />
+    <Content Include="Views\tblBookings\Create.cshtml" />
+    <Content Include="Views\tblBookings\Delete.cshtml" />
+    <Content Include="Views\tblBookings\Details.cshtml" />
+    <Content Include="Views\tblBookings\Edit.cshtml" />
+    <Content Include="Views\tblBookings\Index.cshtml" />
+    <Content Include="Views\Customer\BookingDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AboutUsImages\" />
