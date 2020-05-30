@@ -89,7 +89,7 @@ namespace InstaAlbum.Controllers
                     }
 
                 }
-                //newAbout.CreatedDate = DateTime.Now;
+                newPortfolio.CreatedDate = DateTime.Now;
                 db.tblPortfolios.Add(newPortfolio);
                 db.SaveChanges();
             }
