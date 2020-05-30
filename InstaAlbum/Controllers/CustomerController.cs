@@ -214,42 +214,30 @@ namespace InstaAlbum.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult ActivateCustomer(int id)
+        public ActionResult ActivateDeactivateCustomer()
         {
             try
             {
+                int id = Convert.ToInt32(Request.Form["id"]);
+                int Flag = Convert.ToInt32(Request.Form["flag"]);
                 tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == id);
                 newCust.UpdatedDate = DateTime.Now;
-                newCust.IsActive = true;
+                if (Flag >= 1)
+                    newCust.IsActive = true;
+                else
+                    newCust.IsActive = false;
                 db.Entry(newCust).State = EntityState.Modified;
                 db.SaveChanges();
-                return Json(new { success = true, message = "Customer is activated" }, JsonRequestBehavior.AllowGet);
-
-            }
-            catch(Exception ex)
-            {
-                return Json(new { success = false, message = "Error!" }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public ActionResult DeactivateCustomer(int id)
-        {
-            try
-            {
-                tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == id);
-                newCust.UpdatedDate = DateTime.Now;
-                newCust.IsActive = false;
-                db.Entry(newCust).State = EntityState.Modified;
-                db.SaveChanges();
-                return Json(new { success = true, message = "Customer is Deactivated." }, JsonRequestBehavior.AllowGet);
-
+                if(Flag >= 1)
+                    return Json(new { Act = true, message = "Customer is activated" }, JsonRequestBehavior.AllowGet);
+                else 
+                    return Json(new { DeAct = true, message = "Customer is de-activated" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Error!" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Error = false, message = "Error!"+ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
-
 
         public ActionResult IsClientEmailExistOrNot(string Email)
         {

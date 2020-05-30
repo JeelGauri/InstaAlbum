@@ -47,20 +47,25 @@
         });
     }
 
-    function fnDeactivateUser(CustomerID)
+    function fnActivateDeactivateUser(CustomerID,ADAFlag)
     {
+        var formData = new FormData;
+        formData.append("id", CustomerID);
+        formData.append("flag", ADAFlag);
+
         $.ajax({
-            async: true,
-            type: 'POST',
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
-            data: "{'id':'" + CustomerID + "'}",
-            url: '/Customer/DeactivateCustomer',
+            type: "POST",
+            url: '/Customer/ActivateDeactivateCustomer',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (response) {
-                if (response.success === true) {
+                if (response.Act === true)
+                {
                     toastr.success(
                         response.message,
-                        'Customer is Deactivated',
+                        'Customer is Activated!',
                         {
                             timeOut: 1000,
                             fadeOut: 1000,
@@ -70,31 +75,10 @@
                         }
                     );
                 }
-                else {
-                    toastr.info(response.message, 'Customer is not Deactivated', { timeOut: 3000 });
-                }
-            },
-            error: function () {
-                toastr.error('Error occur', 'Error occur while Deactivating Customer.', { timeOut: 3000 });
-            }
-
-        });
-    }
-
-    function fnActivateUser(CustomerID)
-    {
-        $.ajax({
-            async: true,
-            type: 'POST',
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
-            data: "{'id':'" + CustomerID + "'}",
-            url: '/Customer/ActivateCustomer',
-            success: function (response) {
-                if (response.success === true) {
+                else if (response.DeAct === true) {
                     toastr.success(
                         response.message,
-                        'Customer is Activated!',
+                        'Customer is De-Activated!',
                         {
                             timeOut: 1000,
                             fadeOut: 1000,
@@ -154,7 +138,7 @@
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
                                     <th>Activate or Deactivate</th>
-                                    <th>Edit</th>
+                                    <th>Edit/<br/>Expose</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
@@ -187,15 +171,16 @@
                                         <td>
                                             @if (item.IsActive == true)
                                             {
-                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" title="Click here to Deactivate Customer" value="De-Activate" onclick="javascript: fnDeactivateUser(@item.CustomerID)"/>
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" title="Click here to Deactivate Customer" value="De-Activate" onclick="javascript: fnActivateDeactivateUser(@item.CustomerID,0)"/>
                                             }
                                             else
                                             {
-                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success" title="Click here to Activate Customer" value="Activate" onclick="javascript:fnActivateUser(@item.CustomerID)"/>
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success" title="Click here to Activate Customer" value="Activate" onclick="javascript:fnActivateDeactivateUser(@item.CustomerID,1)"/>
                                             }
                                         </td>
                                         <td>
                                             @Html.ActionLink("Update", "Edit", new { id = item.CustomerID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" })
+                                            <input type="submit" id="btnExpose" class="btn btn-sm m-b-15 ml-2 mr-2 btn-primary" value="Approve Book"/>
                                         </td>
                                         <td>
                                             <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" onclick="return ConfirmationDialog(@Html.DisplayFor(modelItem => item.CustomerID))" value="Delete" />
