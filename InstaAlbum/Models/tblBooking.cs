@@ -27,6 +27,7 @@ namespace InstaAlbum.Models
         public Nullable<System.DateTime> FunctionDate { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public Nullable<bool> IsExposed { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblBill> tblBills { get; set; }

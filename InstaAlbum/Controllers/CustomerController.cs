@@ -22,6 +22,31 @@ namespace InstaAlbum.Controllers
 
             return View(db.tblCustomers.ToList());
         }
+
+        public ActionResult BookingDetails(int id = 0)
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var tblBookings = db.tblBookings.Include(t => t.tblCustomer);
+            return View(tblBookings.Where(c => c.CustomerID == id).ToList());
+        }
+
+        public ActionResult ExposeDetails(int id = 0)
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var expose = db.tblExposings.Include(t => t.tblPhotographer).Include(t => t.tblBooking);
+            return View(expose.Where(b => b.BookingID == id).ToList());
+        }
+
         public ActionResult Create()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
@@ -205,6 +230,48 @@ namespace InstaAlbum.Controllers
             }
         }
 
+
+        [HttpPost]
+        public ActionResult DeleteBooking(int id)
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+            try
+            {
+                tblBooking booking = db.tblBookings.Find(id);
+                db.tblBookings.Remove(booking);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DeleteExpose(int id)
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+            try
+            {
+                tblExposing exposing = db.tblExposings.Find(id);
+                tblBooking booking = db.tblBookings.SingleOrDefault(b => b.BookingID == exposing.BookingID); 
+                booking.IsExposed = false;
+                booking.UpdatedDate = DateTime.Now;
+                db.Entry(booking).State = EntityState.Modified;
+
+                db.tblExposings.Remove(exposing);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -214,43 +281,118 @@ namespace InstaAlbum.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult ActivateCustomer(int id)
+        public ActionResult ActivateDeactivateCustomer()
         {
             try
             {
+                int id = Convert.ToInt32(Request.Form["id"]);
+                int Flag = Convert.ToInt32(Request.Form["flag"]);
                 tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == id);
                 newCust.UpdatedDate = DateTime.Now;
-                newCust.IsActive = true;
+                if (Flag >= 1)
+                    newCust.IsActive = true;
+                else
+                    newCust.IsActive = false;
                 db.Entry(newCust).State = EntityState.Modified;
                 db.SaveChanges();
-                return Json(new { success = true, message = "Customer is activated" }, JsonRequestBehavior.AllowGet);
-
-            }
-            catch(Exception ex)
-            {
-                return Json(new { success = false, message = "Error!" }, JsonRequestBehavior.AllowGet);
-            }
-        }
-
-        public ActionResult DeactivateCustomer(int id)
-        {
-            try
-            {
-                tblCustomer newCust = db.tblCustomers.SingleOrDefault(c => c.CustomerID == id);
-                newCust.UpdatedDate = DateTime.Now;
-                newCust.IsActive = false;
-                db.Entry(newCust).State = EntityState.Modified;
-                db.SaveChanges();
-                return Json(new { success = true, message = "Customer is Deactivated." }, JsonRequestBehavior.AllowGet);
-
+                if(Flag >= 1)
+                    return Json(new { Act = true, message = "Customer is activated" }, JsonRequestBehavior.AllowGet);
+                else 
+                    return Json(new { DeAct = true, message = "Customer is de-activated" }, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
-                return Json(new { success = false, message = "Error!" }, JsonRequestBehavior.AllowGet);
+                return Json(new { Error = false, message = "Error!"+ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
 
+        public ActionResult ApproveBooking()
+        {
+            try
+            {
+                int CustomerID = Convert.ToInt32(Request.Form["CustomerID"]);
+                string BookingDescription = Request.Form["BookingDescription"];
+                DateTime FunctionDate = Convert.ToDateTime(Request.Form["FunctionDate"]);
+
+                tblBooking booking = new tblBooking();
+                booking.CustomerID = CustomerID;
+                booking.BookingDescription = BookingDescription;
+                booking.FunctionDate = FunctionDate;
+                booking.CreatedDate = DateTime.Now;
+                booking.IsExposed = false;
+                db.tblBookings.Add(booking);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Booking Approved Successfully"}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error!" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult Exposing()
+        {
+            try
+            {
+                int BookingID = Convert.ToInt32(Request.Form["BookingID"]);
+                int PhotographerID = Convert.ToInt32(Request.Form["PhotographerID"]);
+                string BookingDescription = Request.Form["BookingDescription"];
+                string Address = Request.Form["Address"];
+
+                tblExposing exposing = new tblExposing();
+                tblBooking booking = db.tblBookings.SingleOrDefault(b => b.BookingID == BookingID);
+
+                exposing.BookingID = BookingID;
+                exposing.PhotographerID = PhotographerID;
+                if (BookingDescription.Trim().Equals("1"))
+                {
+                    exposing.Description = booking.BookingDescription;
+                    booking.IsExposed = true;
+                }
+                else
+                    exposing.Description = BookingDescription;
+                
+                exposing.Location = Address;
+                exposing.CreatedDate = DateTime.Now;
+                
+                db.tblExposings.Add(exposing);
+                db.Entry(booking).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true, message = "Event exposed successfully." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Error!" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public ActionResult ChangeIsCompletedStatus()
+        {
+            try
+            {
+                int id = Convert.ToInt32(Request.Form["id"]);
+                int IsCompletedStatus = Convert.ToInt32(Request.Form["Status"]);
+                
+                tblExposing exposing = db.tblExposings.SingleOrDefault(c => c.ExposeID == id);
+
+                if(IsCompletedStatus == 1)
+                    exposing.IsCompleted = true;
+
+                if (IsCompletedStatus == 0)
+                    exposing.IsCompleted = false;
+
+                db.Entry(exposing).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Error = false, message = "Error!" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
         public ActionResult IsClientEmailExistOrNot(string Email)
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)

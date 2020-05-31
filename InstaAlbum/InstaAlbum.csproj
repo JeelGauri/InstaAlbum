@@ -214,7 +214,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="AboutUsImages\Diwali.jpg" />
     <Content Include="adminassets\bundles\00ead7bf437d4d0441c71b23b2b18a8c60d2f878.js" />
     <Content Include="adminassets\bundles\0c7f689226d921e2f97d53f464d0d5cf7c055c00.js" />
     <Content Include="adminassets\bundles\13fc3abb600e389b43865b1fa1697fc8f5ebf063.css" />
@@ -336,6 +335,7 @@
     <Content Include="adminassets\img\users\user-8.jpg" />
     <Content Include="adminassets\img\users\user-9.jpg" />
     <Content Include="adminassets\img\users\users.png" />
+    <Content Include="adminassets\img\whatsapplogo.png" />
     <Content Include="adminassets\js\0a5bddf151b3e53b46779e47e1fa1a524ff8b771\crisp\assets\js\dashboard-03.js" />
     <Content Include="adminassets\js\152c7a4f3dfc275bc70979fda9f58fdac2b2f962\crisp\assets\vendor\tinymce\tinymce.min.js" />
     <Content Include="adminassets\js\1bb271d0301755c0c386385bd8779dda372c5608\crisp\assets\js\dashboard-04.js" />
@@ -640,7 +640,6 @@
     <Content Include="userassets\img\misc\page-header-bg-2.jpg" />
     <Content Include="userassets\img\misc\page-header-bg-3.jpg" />
     <Content Include="userassets\img\misc\page-header-bg-5.jpg" />
-    <Content Include="userassets\img\theme.png" />
     <Content Include="userassets\img\video-bg\video-bg-1.jpg" />
     <Content Include="userassets\js\jquery-3.5.1.min.js" />
     <Content Include="userassets\js\theme.js" />
@@ -773,6 +772,7 @@
     <Content Include="Views\UserHome\Category.cshtml" />
     <Content Include="Views\UserHome\CategoryWiseImage.cshtml" />
     <Content Include="Views\UserHome\Contact.cshtml" />
+    <Content Include="Views\UserHome\Feedback.cshtml" />
     <Content Include="Views\UserHome\Gallery.cshtml" />
     <Content Include="Views\UserHome\Index.cshtml" />
     <Content Include="Views\UserHome\Protfolio.cshtml" />
@@ -793,13 +793,21 @@
     <Content Include="Views\Portfolio\Index.cshtml" />
     <Content Include="Views\Login\Login.cshtml" />
     <Content Include="Views\Login\Registration.cshtml" />
-    <Content Include="Views\UserHome\GalleryCategories.cshtml" />
-    <Content Include="Views\WebGallery\Index.cshtml" />
+    <Content Include="Views\UserHome\Gallery_Categories.cshtml" />
     <Content Include="Views\Service\Create.cshtml" />
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
+    <Content Include="Views\WebGallery\Index.cshtml" />
+    <Content Include="Views\tblBookings\Create.cshtml" />
+    <Content Include="Views\tblBookings\Delete.cshtml" />
+    <Content Include="Views\tblBookings\Details.cshtml" />
+    <Content Include="Views\tblBookings\Edit.cshtml" />
+    <Content Include="Views\tblBookings\Index.cshtml" />
+    <Content Include="Views\Customer\BookingDetails.cshtml" />
+    <Content Include="Views\Customer\ExposeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="AboutUsImages\" />
     <Folder Include="App_Data\" />
     <Folder Include="BannerImages\" />
     <Folder Include="CustomerProfile\" />

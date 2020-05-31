@@ -47,20 +47,25 @@
         });
     }
 
-    function fnDeactivateUser(CustomerID)
+    function fnActivateDeactivateUser(CustomerID,ADAFlag)
     {
+        var formData = new FormData();
+        formData.append("id", CustomerID);
+        formData.append("flag", ADAFlag);
+
         $.ajax({
-            async: true,
-            type: 'POST',
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
-            data: "{'id':'" + CustomerID + "'}",
-            url: '/Customer/DeactivateCustomer',
+            type: "POST",
+            url: '/Customer/ActivateDeactivateCustomer',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (response) {
-                if (response.success === true) {
+                if (response.Act === true)
+                {
                     toastr.success(
                         response.message,
-                        'Customer is Deactivated',
+                        'Customer is Activated!',
                         {
                             timeOut: 1000,
                             fadeOut: 1000,
@@ -70,31 +75,10 @@
                         }
                     );
                 }
-                else {
-                    toastr.info(response.message, 'Customer is not Deactivated', { timeOut: 3000 });
-                }
-            },
-            error: function () {
-                toastr.error('Error occur', 'Error occur while Deactivating Customer.', { timeOut: 3000 });
-            }
-
-        });
-    }
-
-    function fnActivateUser(CustomerID)
-    {
-        $.ajax({
-            async: true,
-            type: 'POST',
-            dataType: 'JSON',
-            contentType: 'application/json; charset=utf-8',
-            data: "{'id':'" + CustomerID + "'}",
-            url: '/Customer/ActivateCustomer',
-            success: function (response) {
-                if (response.success === true) {
+                else if (response.DeAct === true) {
                     toastr.success(
                         response.message,
-                        'Customer is Activated!',
+                        'Customer is De-Activated!',
                         {
                             timeOut: 1000,
                             fadeOut: 1000,
@@ -114,6 +98,71 @@
 
         });
     }
+
+    function fnSaveCustomerID(CustomerID)
+    {
+        $("#hdnCustomerID").val(CustomerID);
+    }
+
+    function fnInsertBookingDetails()
+    {
+        var intCustomerID = $("#hdnCustomerID").val();
+        if (intCustomerID == null || intCustomerID.length <= 0)
+        {
+            toastr.warning('Input Error', 'Customer ID can not be blank!', { timeOut: 1000, fadeOut: 1000 });
+            return;
+        }
+
+        var strBookingDescription = $("#txtBookingDescription").val();
+        if (strBookingDescription == null || strBookingDescription.length <= 0) {
+            toastr.warning('Input Error', 'Please insert booking description!', { timeOut: 1000, fadeOut: 1000 });
+            document.getElementById("txtBookingDescription").focus();
+            return;
+        }
+
+        var strFunctionDate = $("#txtFunctionDate").val();
+        if (strFunctionDate == null || strFunctionDate.length <= 0) {
+            toastr.warning('Input Error', 'Please insert function date !', { timeOut: 1000, fadeOut: 1000 });
+            document.getElementById("txtFunctionDate").focus();
+            return;
+        }
+
+        var formData = new FormData();
+        formData.append("CustomerID", intCustomerID);
+        formData.append("BookingDescription", strBookingDescription);
+        formData.append("FunctionDate", strFunctionDate);
+
+        $.ajax({
+            type: "POST",
+            url: '/Customer/ApproveBooking',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Booking is approves. Check it by clicking on customer name!',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.reload();
+                            }
+                        }
+                    );
+                }
+                else {
+                    toastr.warning('controller Error', 'Something went wrong!', { timeOut: 1000, fadeOut: 1000 });
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while approve booking.', { timeOut: 3000 });
+            }
+
+        });
+    }
 </script>
 
 <div class="bg-dark bg-dots m-b-30">
@@ -128,8 +177,6 @@
                 </div>
                 <h3>Customer Details </h3>
             </div>
-
-
         </div>
     </div>
 </div>
@@ -154,7 +201,7 @@
                                     <th>Created Date</th>
                                     <th>Updated Date</th>
                                     <th>Activate or Deactivate</th>
-                                    <th>Edit</th>
+                                    <th>Edit/<br/>Expose</th>
                                     <th>Delete</th>
                                 </tr>
                             </thead>
@@ -166,8 +213,10 @@
                                             <a target="_blank" href="~/CustomerProfile/@item.ProfilePic"><img src="~/CustomerProfile/@item.ProfilePic" height="50px" width="50px" /></a>
                                         </td>
                                         <td>
-                                            @Html.DisplayFor(modelItem => item.CustomerName)
-                                        </td>
+                                            <a href="@Url.Action("BookingDetails/"+@item.CustomerID+"", "Customer")" data-toggle="tooltip" data-placement="top" title="Click Here To View Event Details">
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </a>
+                                        </td>                                           
                                         <td>
                                             @Html.DisplayFor(modelItem => item.CustomerEmail)
                                         </td>
@@ -187,15 +236,16 @@
                                         <td>
                                             @if (item.IsActive == true)
                                             {
-                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" title="Click here to Deactivate Customer" value="De-Activate" onclick="javascript: fnDeactivateUser(@item.CustomerID)"/>
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" title="Click here to Deactivate Customer" value="De-Activate" onclick="javascript: fnActivateDeactivateUser(@item.CustomerID,0)"/>
                                             }
                                             else
                                             {
-                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success" title="Click here to Activate Customer" value="Activate" onclick="javascript:fnActivateUser(@item.CustomerID)"/>
+                                                <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-success" title="Click here to Activate Customer" value="Activate" onclick="javascript:fnActivateDeactivateUser(@item.CustomerID,1)"/>
                                             }
                                         </td>
                                         <td>
                                             @Html.ActionLink("Update", "Edit", new { id = item.CustomerID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" })
+                                            <input type="submit" data-toggle="modal" data-target="#exampleModal" onclick="fnSaveCustomerID(@item.CustomerID)" class="btn btn-sm m-b-15 ml-2 mr-2 btn-primary" value="Approve Book"/>
                                         </td>
                                         <td>
                                             <input type="submit" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger" onclick="return ConfirmationDialog(@Html.DisplayFor(modelItem => item.CustomerID))" value="Delete" />
@@ -206,6 +256,42 @@
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+     aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog  modal-dialog-align-top-left" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Booking Details</h5>
+                <button type="button" class="close" data-dismiss="modal"
+                        aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputText">Booking Description:</label>
+                        <input type="hidden" id="hdnCustomerID"/>
+                        <textarea required id="txtBookingDescription" placeholder="Enter Booking Description" class="form-control" ></textarea>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <label for="inputText">Function Date:</label>
+                        <input type="date" required id="txtFunctionDate" placeholder="Enter Function Date" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                        Close
+                    </button>
+                    <input type="submit" id="btnInsertBookingDetails" value="Submit" class="btn btn-primary" onclick="fnInsertBookingDetails()" />
                 </div>
             </div>
         </div>

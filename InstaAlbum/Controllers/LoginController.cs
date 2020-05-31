@@ -79,6 +79,7 @@ namespace InstaAlbum.Controllers
                     newCust.CustomerEmail = Request.Form["CustomerEmail"];
                     newCust.PhoneNumber = Request.Form["PhoneNo"];
                     newCust.Password = Request.Form["Password"];
+                    newCust.IsActive = false;
                     newCust.CreatedDate = DateTime.Now;
 
                     if (ModelState.IsValid)

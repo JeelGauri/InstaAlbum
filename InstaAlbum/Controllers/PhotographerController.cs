@@ -29,7 +29,18 @@ namespace InstaAlbum.Controllers
             return View(tblPhotographers.ToList());
         }
 
-        
+        public ActionResult getAllPhotographers()
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
+            return Json(db.tblPhotographers.Select(c => new
+            {
+                ID = c.PhotographerID,
+                Name = c.PhotographerName
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
 
         public ActionResult Create()
         {
