@@ -182,6 +182,11 @@
                             }
                         );
                     }
+                    else
+                    {
+                        toastr.error('Error occur', response.message, { timeOut: 3000 });
+                        return;
+                    }
                 },
             error: function () {
                     toastr.error('Error occur', 'Error occur while creating file.', { timeOut: 3000 });

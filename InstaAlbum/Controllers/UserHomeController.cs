@@ -42,7 +42,6 @@ namespace InstaAlbum.Controllers
             }
             else
             {
-                
                 ViewBag.BannerImage = getRandomBanner();
                 return View(db.tblParentCategories.ToList());
             }
@@ -52,7 +51,7 @@ namespace InstaAlbum.Controllers
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
                 return RedirectToAction("Login", "Login");
 
-            if (id <= 0 || id == null)
+            if (id <= 0)
             {
                 return RedirectToAction("GalleryCategories", "UserHome");
             }
@@ -64,7 +63,7 @@ namespace InstaAlbum.Controllers
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
             
                 return RedirectToAction("Login", "Login");
-            if (id <= 0 || id == null)
+            if (id <= 0 )
             {
                 return RedirectToAction("SubCategory", "UserHome");
             }

@@ -78,26 +78,26 @@
 
                     @foreach (var item in Model)
                     {
-                <div class="isotope-item iso-height-1 ">
-                    @if (item.IsSelected == true)
-                    {
-                        <input type="checkbox" checked value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
-                    }
-                    else
-                    {
-                        <input type="checkbox" value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
-                    }
+                        <div class="isotope-item iso-height-1 ">
+                        @if (item.IsSelected == true)
+                        {
+                            <input type="checkbox" checked value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
+                        }
+                        else
+                        {
+                            <input type="checkbox" value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
+                        }
 
-                    <a href="../../Gallery/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../../Gallery/@item.Image">
-                        <div class="gs-item-image bg-image" style="background-image: url(../../Gallery/@item.Image); background-position: 50% 50%"></div>
+                        <a href="../../Gallery/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../../Gallery/@item.Image">
+                            <div class="gs-item-image bg-image" style="background-image: url(../../Gallery/@item.Image); background-position: 50% 50%"></div>
 
-                        <div class="gs-item-cover">
-                            <div class="gs-item-info">
-                                <span class="s-icon"><i class="fa fa-search"></i></span>
+                            <div class="gs-item-cover">
+                                <div class="gs-item-info">
+                                    <span class="s-icon"><i class="fa fa-search"></i></span>
 
+                                </div>
                             </div>
-                        </div>
-                    </a>
+                        </a>
                 </div>
                     }
                 </div>

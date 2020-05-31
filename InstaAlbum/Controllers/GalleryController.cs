@@ -70,7 +70,6 @@ namespace InstaAlbum.Controllers
             if (ModelState.IsValid)
             {
                 
-
                 if (Request.Files.Count > 0)
                 {
                     int fileSize = 0;
@@ -179,7 +178,7 @@ namespace InstaAlbum.Controllers
             }
             catch(Exception ex)
             {
-                return Json(new { success = false, message = "File is not created." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "File is not created."+ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 
