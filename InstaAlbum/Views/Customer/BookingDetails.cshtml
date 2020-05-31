@@ -231,7 +231,7 @@
                                         <th>Function Date</th>
                                         <th>Created Date</th>
                                         <th>Updated Date</th>
-                                        <th>Edit/<br />Expose</th>
+                                        <th>Expose</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
@@ -258,8 +258,6 @@
                                                 @Html.DisplayFor(modelItem => item.UpdatedDate)
                                             </td>
                                             <td>
-                                                @Html.ActionLink("Update", "Edit", new { id = item.CustomerID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" })
-                                                <br />
                                                 @if (item.IsExposed == true)
                                                 {
                                                      @Html.ActionLink("View Expose Details", "ExposeDetails", new { id = item.BookingID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-danger" })
