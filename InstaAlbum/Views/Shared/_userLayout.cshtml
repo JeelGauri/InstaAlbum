@@ -111,26 +111,13 @@
                                 <a href="@Url.Action("Login","Login")">LogIn</a>
                             </li>
                             <li class="has-children">
-                                <a href="@Url.Action("GalleryCategories", "UserHome")" style="visibility:hidden">Photo Selection</a>
+                                <a href="@Url.Action("Registration","Login")">Registration</a>
                             </li>
-                            <li class="has-children">
-                                <a href="@Url.Action("Feedback", "UserHome")" style="visibility:hidden">Feedback</a>
-                            </li>
-                            <li class="has-children">
-                                <a onclick="javascript:fnLogout()" style="visibility:hidden">LogOut</a>
-                            </li>
-
                         }
                         else
                         {
                             <li class="has-children">
-                                <a href="@Url.Action("Login","Login")" style="visibility:hidden">LogIn</a>
-                            </li>
-                            <li class="has-children">
                                 <a href="@Url.Action("GalleryCategories", "UserHome")">Photo Selection</a>
-                            </li>
-                            <li class="has-children">
-                                <a href="@Url.Action("Feedback", "UserHome")">Feedback</a>
                             </li>
                             <li class="has-children">
                                 <a href="#" onclick="javascript:fnLogout()">Logout</a>
@@ -144,8 +131,8 @@
                 <div class="follow-me-buttons">
                     <ul>
                         @*<li><a href="#" title="Follow me on Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="#" title="Follow me on Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="#" title="Follow me on Instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>*@
+                            <li><a href="#" title="Follow me on Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                            <li><a href="#" title="Follow me on Instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>*@
                         <li><a href="mailto:info@your-email.com" title="Email Me" target="_blank"><i class="fa fa-envelope"></i></a></li>
                     </ul>
                 </div>
@@ -155,7 +142,7 @@
 
     <div id="mobile-header">
         <div class="logo-mobile">
-            <a href="index.html"><img src="~/userassets/img/logo-small.png" alt="logo"></a>
+            <a href="index.html"><img src="~/userassets/img/logo3.png" alt="logo"></a>
         </div>
         <div class="mobile-menu-trigger"><span></span></div>
     </div>
@@ -179,6 +166,7 @@
     <script src="~/userassets/vendor/lightgallery/js/lightgallery-plugins.js"></script>
     <script src="~/userassets/js/theme.js"></script>
 
+    
 
     <script>
         (function (i, s, o, g, r, a, m) {

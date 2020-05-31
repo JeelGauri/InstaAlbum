@@ -1,55 +1,40 @@
-﻿
+﻿@model IEnumerable<InstaAlbum.Models.tblWebGallery>
 @{
     ViewBag.Title = "Gallery";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
-<style>
-    .checkbox {
-        width: 23px;
-        height: 21px;
-        background: transparent url(http://i.stack.imgur.com/S4p2R.png ) no-repeat 0 50%
-    }
 
-    .checked {
-        background: transparent url(http://i.stack.imgur.com/S4p2R.png ) no-repeat 80% 50%
-    }
+<section id="gallery-single-section">
+    <div class="container-fluid no-padding">
+        <div class="isotope-wrap">
+            <div class="isotope col-4 gutter-2">
+                <div id="gallery" class="isotope-items-wrap lightgallery cover-color">
+                    <div class="grid-sizer"></div>
+                    @foreach (var item in Model)
+                    {
+                        <div class="isotope-item iso-height-1 ">
+                            <a href="../WebGalleryImages/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../WebGalleryImages/@item.Image" data-sub-html="<h4>Image Description</h4><p>@item.Description</p>">
+                                <div class="gs-item-image bg-image" style="background-image: url(../WebGalleryImages/@item.Image); background-position: 50% 50%"></div>
 
-</style>
-<script>
-    $(".checkbox").click(function () {
-        $(this).toggleClass('checked')
-    });
-</script>
+                                <div class="gs-item-cover">
+                                    <div class="gs-item-info">
+                                        <span class="s-icon"><i class="fa fa-search"></i></span>
 
-    <section id="gallery-single-section">
-        <div class="container-fluid no-padding">
-            <div class="isotope-wrap">
-                 <div class="isotope col-4 gutter-2">
-                     <div id="gallery" class="isotope-items-wrap lightgallery cover-color">
-                         <div class="grid-sizer"></div>
-                         <div class="isotope-item iso-height-1 ">
-                             <input type="checkbox" id="chkimg_"/> <label class="">click to select</label>
-                             <a href="../userassets/img/gallery/gallery-single/grid/big/gallery-single-big-1.jpg" class="gallery-single-item lg-trigger" data-exthumbnail="../userassets/img/gallery/gallery-single/grid/thumb/gallery-single-thumb-1.jpg" data-sub-html="<h4>Image Description</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>">
-                                 <div class="gs-item-image bg-image" style="background-image: url(../userassets/img/gallery/gallery-single/grid/gallery-single-1.jpg); background-position: 50% 50%"></div>
-
-                                 <div class="gs-item-cover">
-                                     <div class="gs-item-info">
-                                         <span class="s-icon"><i class="fa fa-search"></i></span>
-
-                                     </div>
-                                 </div>
-                             </a>
-                         </div>
-                     </div>
-                    <!-- End isotope items wrap -->
-
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    }
                 </div>
-                <!-- End isotope -->
+                <!-- End isotope items wrap -->
 
-            </div> <!-- /.isotope-wrap -->
+            </div>
+            <!-- End isotope -->
 
-        </div> <!-- /.container -->
-    </section>
+        </div> <!-- /.isotope-wrap -->
+
+    </div> <!-- /.container -->
+</section>
 
 
 

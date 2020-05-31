@@ -1,65 +1,25 @@
-﻿
+﻿@model IEnumerable<InstaAlbum.Models.tblAboutUs>
 @{
     ViewBag.Title = "About";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
 
-    <section id="about-me-section">
+<section id="about-me-section">
 
-        <!-- ======================
+    <!-- ======================
     ///// Begin split box /////
     based on: http://www.minimit.com/articles/solutions-tutorials/bootstrap-3-responsive-columns-of-same-height
     ======================= -->
-        <div class="split-box about-me">
-            <div class="container-fluid">
-                <div class="row">
+    
+    <div class="split-box what-i-do">
+        <div class="container-fluid">
+            <div class="row">
+                @foreach (var item in Model)
+                {
                     <div class="row-lg-height">
 
                         <!-- Column -->
-                        <div class="col-lg-6 col-lg-height split-box-image no-padding bg-image" style="background-image: url(../userassets/img/misc/me-1.jpg); background-position: 50% 50%;">
-                            <div class="sbi-height padding-height-100"></div>
-                        </div> 
-                        <div class="col-lg-6 col-lg-height col-lg-middle no-padding">
-
-                            <!-- Begin split box content
-                        =============================
-                        * Use class "shifted-left" or "shifted-right" to enable shifted content (do not use for long content).
-                        -->
-                            <div class="split-box-content shifted-left">
-                                <h1 class="about-me-title">Who I am?</h1>
-                                <div class="about-me-sub">Artist &amp; Photographer</div>
-
-                                <div class="about-me-text">
-                                    <p>Hi, my name is Martin Vegas. I am an artist and photographer. Sollicitudin diam vitae, amet lacus donec eu, donec vulputate duis nullam nulla, suscipit nulla orci, ornare maecenas eget gravida. Curae sollicitudin lobortis.</p>
-                                </div>
-
-                                <!-- Begin follow me buttons -->
-                                <div class="follow-me-buttons margin-top-30">
-                                    <ul>
-                                        <li><a href="#" title="Follow me on Facebook" target="_blank"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#" title="Follow me on Twitter" target="_blank"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#" title="Follow me on Instagram" target="_blank"><i class="fa fa-instagram"></i></a></li>
-                                        <li><a href="mailto:info@your-email.com" title="Email Me" target="_blank"><i class="fa fa-envelope"></i></a></li>
-                                    </ul>
-                                </div>
-                                <!-- End follow me buttons -->
-
-                            </div>
-                            <!-- End split box content -->
-
-                        </div> <!-- /.col -->
-
-                    </div> <!-- /.row-height -->
-                </div> <!-- /.row -->
-            </div> <!-- /.container -->
-        </div>
-        <div class="split-box what-i-do">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="row-lg-height">
-
-                        <!-- Column -->
-                        <div class="col-lg-6 col-lg-push-6 col-lg-height split-box-image no-padding bg-image" style="background-image: url(../userassets/img/misc/me-2.jpg); background-position: 50% 50%;">
+                        <div class="col-lg-6 col-lg-push-6 col-lg-height split-box-image no-padding bg-image" style="background-image: url(/AboutUsImages/@item.Image); background-position: 50% 50%;">
 
                             <div class="sbi-height padding-height-100"></div>
 
@@ -69,98 +29,26 @@
 
 
                             <div class="split-box-content shifted-right">
-                                <h1 class="about-me-title">What I Do?</h1>
-                                <div class="about-me-sub">A little bit of my work</div>
+                                <h1 class="about-me-title">About Us</h1>
+                                <div class="about-me-sub">A little bit of Our work</div>
 
                                 <div class="about-me-text">
-                                    <p>Pellentesque nec convallis nisi, in mollis nulla. Aliquam eget elit risus. Quisque vitae commodo libero, eu efficitur ligula. Cras vulputate arcu id interdum pretium. Cras eu blandit massa, at semper est. Curabitur id blandit purus. Curabitur egestas, lacus quis facilisis tempor.</p>
+                                    <p>@item.Description</p>
                                 </div>
-                                <a href="gallery-list-categories.html" class="btn btn-primary margin-top-20">View My Work</a>
-                                <a href="@Url.Action("Contact","UserHome")" class="btn btn-dark-bordered margin-top-20">Contact Us</a>
+                                @*<a href="gallery-list-categories.html" class="btn btn-primary margin-top-20">View My Work</a>*@
+                                <a href="@Url.Action("Contact", "UserHome")" class="btn btn-primary margin-top-20">Contact Us</a>
                             </div>
                             <!-- End split box content -->
 
                         </div> <!-- /.col -->
 
                     </div> <!-- /.row-height -->
+                }
                 </div> <!-- /.row -->
-            </div> <!-- /.container -->
-        </div>
-        <div class="split-box happy-clients">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="row-lg-height">
+        </div> <!-- /.container -->
+    </div>
+    
+    <!-- End split box -->
 
-                        <!-- Column -->
-                        <div class="col-lg-6 col-lg-height col-lg-middle no-padding bg-dark-2">
-
-                            <!-- Begin clients carousel -->
-                            <div class="clients-carousel">
-
-                                <div class="owl-carousel owl-mousewheel" data-items="4" data-margin="30" data-dots="false" data-loop="true" data-autoplay="true" data-tablet-landscape="3" data-tablet-portrait="4" data-mobile-landscape="3" data-mobile-portrait="2">
-
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-1-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-2-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-3-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-4-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-5-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-6-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-                                    <!-- Begin carousel item -->
-                                    <a href="#" class="client-image" title="Happy Client">
-                                        <img src="../userassets/img/clients/client-7-light.png" alt="image">
-                                    </a>
-                                    <!-- End carousel item -->
-
-                                </div>
-                                <!-- End content carousel -->
-
-                            </div>
-                            <!-- End clients carousel -->
-
-                        </div> <!-- /.col -->
-                        <!-- Column -->
-                        <div class="col-lg-6 col-lg-height col-lg-middle no-padding">
-
-                            <!-- Begin split box content -->
-                            <div class="split-box-content text-center">
-                                <h1 class="about-me-title">Happy Clients</h1>
-
-                                <div class="about-me-text">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus inventore consectetur dolores eius, enim totam eligendi tempore cupiditate molestias eveniet suscipit quasi quas eaque mollitia velit sunt sed, adipisci optio. :)</p>
-                                </div>
-                            </div>
-                            <!-- End split box content -->
-
-                        </div> <!-- /.col -->
-                    </div> <!-- /.row-height -->
-                </div> <!-- /.row -->
-            </div> <!-- /.container -->
-        </div>
-        <!-- End split box -->
-
-    </section>
+</section>
 

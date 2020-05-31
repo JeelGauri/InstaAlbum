@@ -31,8 +31,8 @@ Table of Contents
 
 $('body').append(" \
    <div class='style-switcher'> \
-      <img class='light-img' src='assets/img/demo-only/light-style.png'> \
-      <img class='dark-img' src='assets/img/demo-only/dark-style.png'> \
+	<img class= 'light-img' src ='/userassets/img/theme.png'> \
+	<img class='dark-img' src='/userassets/img/theme.png'> \
    </div>");
 
 $(".style-switcher").on("click",function() {

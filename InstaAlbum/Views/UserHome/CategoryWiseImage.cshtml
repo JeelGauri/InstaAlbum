@@ -8,10 +8,11 @@
     function fnGetSelectedImages()
     {
         var checkedimageID = new Array();
+        var UnCheckedimageID = new Array();
 
         // iterate all checkboxes and obtain their checked values, unchecked values are not pushed into array
         $('input[type=checkbox]').each(function () {
-            this.checked ? checkedimageID.push($(this).val()) : null;
+            this.checked ? checkedimageID.push($(this).val()) : UnCheckedimageID.push($(this).val());
         });
         
 
@@ -20,7 +21,7 @@
             type: "POST",
             contentType: "application/json; charset=utf-8",
             url: "/UserHome/SaveSelectedImages/",
-            data: JSON.stringify({ Id: checkedimageID }), // used to convert array into proper JSON format
+            data: JSON.stringify({ CheckedID: checkedimageID, UnCheckedID: UnCheckedimageID }), // used to convert array into proper JSON format
             dataType: "json",
             success: function (response)
             {
@@ -87,7 +88,7 @@
                         <input type="checkbox" value="@item.GalleryID" id="@item.GalleryID" /> <label class="">click to select</label>
                     }
 
-                    <a href="../../Gallery/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../../Gallery/@item.Image" data-sub-html="<h4>Image Description</h4><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>">
+                    <a href="../../Gallery/@item.Image" class="gallery-single-item lg-trigger" data-exthumbnail="../../Gallery/@item.Image">
                         <div class="gs-item-image bg-image" style="background-image: url(../../Gallery/@item.Image); background-position: 50% 50%"></div>
 
                         <div class="gs-item-cover">

@@ -24,11 +24,11 @@ namespace InstaAlbum.Controllers
         }
         public ActionResult About()
         {
-                return View();
+                return View(db.tblAboutUs.ToList());
         }
         public ActionResult Gallery()
         {
-                return View();
+                return View(db.tblWebGalleries.ToList());
         }
         public ActionResult Protfolio()
         {
@@ -90,17 +90,6 @@ namespace InstaAlbum.Controllers
             catch (Exception ex) { }
             return file;
         }
-        public ActionResult Feedback()
-        {
-            if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
-            {
-                return RedirectToAction("Login", "Login");
-            }
-            else
-            {
-                return View();
-            }
-        }
         public void ChangeImageSelected(int id)
         {
             tblGallery objGallery = new tblGallery();
@@ -111,15 +100,31 @@ namespace InstaAlbum.Controllers
             db.Entry(objGallery).State = EntityState.Modified;
             db.SaveChanges();
         }
-        public ActionResult SaveSelectedImages(List<int> Id)
+        public void ChangeImageUnSelected(int id)
+        {
+            tblGallery objGallery = new tblGallery();
+            objGallery = db.tblGalleries.SingleOrDefault(g => g.GalleryID == id);
+
+            objGallery.UpdatedDate = DateTime.Now;
+            objGallery.IsSelected = false;
+            db.Entry(objGallery).State = EntityState.Modified;
+            db.SaveChanges();
+        }
+        public ActionResult SaveSelectedImages(List<int> CheckedID, List<int> UnCheckedID)
         {
             try
             {
                 // iterate through input list and pass to process method
-                for (int i = 0; i < Id.Count; i++)
+                for (int i = 0; i < CheckedID.Count; i++)
                 {
-                    if(Id[i] > 0)
-                        ChangeImageSelected(Id[i]);  
+                    if(CheckedID[i] > 0)
+                        ChangeImageSelected(CheckedID[i]);  
+                }
+
+                for (int i = 0; i < UnCheckedID.Count; i++)
+                {
+                    if (UnCheckedID[i] > 0)
+                        ChangeImageUnSelected(UnCheckedID[i]);
                 }
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }
