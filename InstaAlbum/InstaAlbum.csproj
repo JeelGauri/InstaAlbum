@@ -335,6 +335,7 @@
     <Content Include="adminassets\img\users\user-8.jpg" />
     <Content Include="adminassets\img\users\user-9.jpg" />
     <Content Include="adminassets\img\users\users.png" />
+    <Content Include="adminassets\img\whatsapplogo.png" />
     <Content Include="adminassets\js\0a5bddf151b3e53b46779e47e1fa1a524ff8b771\crisp\assets\js\dashboard-03.js" />
     <Content Include="adminassets\js\152c7a4f3dfc275bc70979fda9f58fdac2b2f962\crisp\assets\vendor\tinymce\tinymce.min.js" />
     <Content Include="adminassets\js\1bb271d0301755c0c386385bd8779dda372c5608\crisp\assets\js\dashboard-04.js" />
@@ -803,6 +804,7 @@
     <Content Include="Views\tblBookings\Edit.cshtml" />
     <Content Include="Views\tblBookings\Index.cshtml" />
     <Content Include="Views\Customer\BookingDetails.cshtml" />
+    <Content Include="Views\Customer\ExposeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="AboutUsImages\" />

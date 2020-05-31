@@ -262,7 +262,7 @@
                                                 <br />
                                                 @if (item.IsExposed == true)
                                                 {
-                                                    <a href="#" class="btn btn-sm m-b-15 ml-2 mr-2 btn-danger">Send Location</a>
+                                                     @Html.ActionLink("View Expose Details", "ExposeDetails", new { id = item.BookingID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-danger" })
                                                 }
                                                 else
                                                 {

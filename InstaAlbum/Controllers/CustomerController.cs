@@ -35,6 +35,18 @@ namespace InstaAlbum.Controllers
             return View(tblBookings.Where(c => c.CustomerID == id).ToList());
         }
 
+        public ActionResult ExposeDetails(int id = 0)
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+
+            if (id <= 0)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            var expose = db.tblExposings.Include(t => t.tblPhotographer).Include(t => t.tblBooking);
+            return View(expose.Where(b => b.BookingID == id).ToList());
+        }
+
         public ActionResult Create()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
@@ -236,6 +248,30 @@ namespace InstaAlbum.Controllers
                 return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public ActionResult DeleteExpose(int id)
+        {
+            if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
+                return RedirectToAction("Login", "Login");
+            try
+            {
+                tblExposing exposing = db.tblExposings.Find(id);
+                tblBooking booking = db.tblBookings.SingleOrDefault(b => b.BookingID == exposing.BookingID); 
+                booking.IsExposed = false;
+                booking.UpdatedDate = DateTime.Now;
+                db.Entry(booking).State = EntityState.Modified;
+
+                db.tblExposings.Remove(exposing);
+                db.SaveChanges();
+                return Json(new { success = true, message = "Record deleted successfully" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Record not deleted" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -284,6 +320,7 @@ namespace InstaAlbum.Controllers
                 booking.BookingDescription = BookingDescription;
                 booking.FunctionDate = FunctionDate;
                 booking.CreatedDate = DateTime.Now;
+                booking.IsExposed = false;
                 db.tblBookings.Add(booking);
                 db.SaveChanges();
                 return Json(new { success = true, message = "Booking Approved Successfully"}, JsonRequestBehavior.AllowGet);
@@ -327,6 +364,32 @@ namespace InstaAlbum.Controllers
             catch (Exception ex)
             {
                 return Json(new { success = false, message = "Error!" + ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+        public ActionResult ChangeIsCompletedStatus()
+        {
+            try
+            {
+                int id = Convert.ToInt32(Request.Form["id"]);
+                int IsCompletedStatus = Convert.ToInt32(Request.Form["Status"]);
+                
+                tblExposing exposing = db.tblExposings.SingleOrDefault(c => c.ExposeID == id);
+
+                if(IsCompletedStatus == 1)
+                    exposing.IsCompleted = true;
+
+                if (IsCompletedStatus == 0)
+                    exposing.IsCompleted = false;
+
+                db.Entry(exposing).State = EntityState.Modified;
+                db.SaveChanges();
+                return Json(new { success = true}, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { Error = false, message = "Error!" + ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
         

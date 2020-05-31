@@ -218,7 +218,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblExposing_tblBooking">
-          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="1" />
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="tblExposing" Type="Self.tblExposing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblBooking">

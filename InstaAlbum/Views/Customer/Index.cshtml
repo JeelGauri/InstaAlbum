@@ -213,7 +213,9 @@
                                             <a target="_blank" href="~/CustomerProfile/@item.ProfilePic"><img src="~/CustomerProfile/@item.ProfilePic" height="50px" width="50px" /></a>
                                         </td>
                                         <td>
-                                            <a href="@Url.Action("BookingDetails/"+@item.CustomerID+"", "Customer")">@Html.DisplayFor(modelItem => item.CustomerName)</a>
+                                            <a href="@Url.Action("BookingDetails/"+@item.CustomerID+"", "Customer")" data-toggle="tooltip" data-placement="top" title="Click Here To View Event Details">
+                                                @Html.DisplayFor(modelItem => item.CustomerName)
+                                            </a>
                                         </td>                                           
                                         <td>
                                             @Html.DisplayFor(modelItem => item.CustomerEmail)
