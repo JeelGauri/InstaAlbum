@@ -1,133 +1,142 @@
-﻿
-
+﻿@model IEnumerable<InstaAlbum.Models.tblStudioAdmin>
 @{
     ViewBag.Title = "Contact";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
+<script>
 
-    <section id="contact-section" class="split-box">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="row-lg-height full-height-vh">
+    function fnInsertRecord() {
 
-                    <!-- Column -->
-                    <div class="col-lg-6 col-lg-height col-lg-middle bg-image" style="background-image: url(../userassets/img/misc/misc-4.jpg); background-position: 50% 50%;">
+        var txtCustomerName = document.getElementById("txtName");
+        var txtCustomerEmail = document.getElementById("txtEmail");
+        var txtSubject = document.getElementById("txtSubject");
+        var txtMessage = document.getElementById("txtMsg");
+        
+        if (txtCustomerName.value == null || txtCustomerName.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter Your name', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtCustomerEmail.value == null || txtCustomerEmail.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter Your Email', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtSubject.value == null || txtSubject.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter the Subject', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        if (txtMessage.value == null || txtMessage.value.length <= 0) {
+            toastr.warning('Input Error', 'Please enter Message', { timeOut: 3000, fadeOut: 1000 });
+            return;
+        }
+        
+        var formData = new FormData();
+        formData.append("CustomerName", txtCustomerName.value);
+        formData.append("CustomerEmail", txtCustomerEmail.value);
+        formData.append("Subject", txtSubject.value);
+        formData.append("Message", txtMessage.value);
 
-                        <!-- Element cover -->
-                        <div class="cover"></div>
+        $.ajax({
+            type: "POST",
+            url: '/UserHome/InsertQuery',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false,
+            success: function (response) {
+                if (response.success === true) {
+                    toastr.success(
+                        response.message,
+                        'Record is inserted',
+                        {
+                            timeOut: 1000,
+                            fadeOut: 1000,
+                            onHidden: function () {
+                                window.location.reload();
+                            }
+                        }
+                    );
+                }
+            },
+            error: function () {
+                toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
+                return;
+            }
 
-                        <!-- Begin split box content -->
-                        <div class="split-box-content text-left no-padding-left no-padding-right">
+        });
+    }
 
-                            <!-- Begin contact info -->
-                            <div class="contact-info-wrap">
+</script>
+<section id="contact-section" class="split-box">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row-lg-height full-height-vh">
+                <div class="col-lg-6 col-lg-height col-lg-middle bg-image" style="background-image: url(../userassets/img/misc/misc-4.jpg); background-position: 50% 50%;">
+                    <div class="cover"></div>
+                    <div class="split-box-content text-left no-padding-left no-padding-right">
+                        <div class="contact-info-wrap">
+                            @foreach (var item in Model)
+                            {
                                 <div class="contact-info">
-                                    <p><i class="fa fa-home"></i> address: 121 King Street, Melbourne, Australia</p>
-                                    <p><i class="fa fa-phone"></i> phone: +123 456 789 000</p>
-                                    <p><i class="fa fa-envelope"></i> email: <a href="mailto:company@email.com" target="_blank">company@email.com</a></p>
+                                    <p><i class="fa fa-home"></i> address: @item.Address </p>
+                                    <p><i class="fa fa-phone"></i> phone: @item.PhoneNo</p>
+                                    <p><i class="fa fa-envelope"></i> email: <a href="mailto:instaalbum@gmail.com" target="_blank">@item.Email</a></p>
+                                    <p><i class="fa fa-tasks"></i> opening hour: @item.OpeningHours</p>
+                                    <p><i class="fa fa-times"></i> closing hour: @item.ClosingHours</p>
+                                    <iframe height="300" id="gmap_canvas" src="https://maps.google.com/maps?q=@item.Map&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
                                 </div>
-
-                                <!-- Begin social buttons -->
-                                <div class="social-buttons margin-top-20">
-                                    <ul>
-                                        <li><a href="#" class="btn btn-social-min btn-dark-bordered btn-rounded-full" target="_blank" title="Follow me on facebook"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#" class="btn btn-social-min btn-dark-bordered btn-rounded-full" target="_blank" title="Follow me on twitter"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#" class="btn btn-social-min btn-dark-bordered btn-rounded-full" target="_blank" title="Follow me on dribbble"><i class="fa fa-dribbble"></i></a></li>
-                                        <li><a href="#" class="btn btn-social-min btn-dark-bordered btn-rounded-full" target="_blank" title="Follow me on behance"><i class="fa fa-behance"></i></a></li>
-                                        <li><a href="#" class="btn btn-social-min btn-dark-bordered btn-rounded-full" target="_blank" title="Follow me on youtube"><i class="fa fa-youtube"></i></a></li>
-                                    </ul>
-                                </div>
-                                <!-- End social buttons -->
-
-                            </div>
-                            <!-- End contact info -->
-
+                            }
                         </div>
-                        <!-- End split box content -->
-
-                    </div> <!-- /.col -->
-                    <!-- Column -->
-                    <div class="col-lg-6 col-lg-height col-lg-middle no-padding">
-
-                        <!-- Begin split box content -->
-                        <div class="split-box-content">
-
-                            <!-- Begin contact form
-                        ========================= -->
-                            <form id="contact-form">
-                                <div class="contact-form-inner text-left">
-
-                                    <div class="contact-form-info">
-                                        <h1 class="contact-form-title font-alter-1">Get In Touch</h1>
-                                        <p></p>
-                                    </div>
-
-                                    <!-- Begin hidden required fields (https://github.com/agragregra/uniMail) -->
-                                    <input type="hidden" name="project_name" value="yourwebsiteaddress.com"> <!-- Change value to your site name -->
-                                    <input type="hidden" name="admin_email" value="your@email.com"> <!-- Change value to your valid email address (where a message will be sent) -->
-                                    <input type="hidden" name="form_subject" value="Message from yourwebsiteaddress.com"> <!-- Change value to your own message subject -->
-                                    <!-- End Hidden Required Fields -->
-
-                                    <div class="row">
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="text" id="txtName" class="form-control" name="name" placeholder="Your Name" required>
-                                            </div>
-                                        </div>
-                                        <div class="col-lg-6">
-                                            <div class="form-group">
-                                                <input type="email" id="txtEmail" class="form-control" name="email" placeholder="Your Email" required>
-                                            </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-lg-height col-lg-middle no-padding">
+                    <div class="split-box-content">
+                        <form id="contact-form">
+                            <div class="contact-form-inner text-left">
+                                <div class="contact-form-info">
+                                    <h1 class="contact-form-title font-alter-1">Get In Touch</h1>
+                                    <p></p>
+                                </div>
+                                <input type="hidden" name="project_name" value="yourwebsiteaddress.com">
+                                <input type="hidden" name="admin_email" value="your@email.com">
+                                <input type="hidden" name="form_subject" value="Message from yourwebsiteaddress.com">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="text" id="txtName" class="form-control" name="name" placeholder="Your Name" required>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <input type="text" id="txtSubject" class="form-control" name="subject" placeholder="Subject" required>
-                                            </div>
+                                    <div class="col-lg-6">
+                                        <div class="form-group">
+                                            <input type="email" id="txtEmail" class="form-control" name="email" placeholder="Your Email" required>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="form-group">
-                                                <textarea class="form-control" id="txtMsg" name="message" rows="4" placeholder="Your Message" required></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="small text-gray"><em>* All fields are required!</em></div>
-
-                                </div> <!-- /.contact-form-inner -->
-
+                                </div>
                                 <div class="row">
                                     <div class="col-lg-12">
-                                        <button type="submit" id="btnContact" class="btn btn-primary btn-lg btn-block margin-top-40">Send Message</button>
+                                        <div class="form-group">
+                                            <input type="text" id="txtSubject" class="form-control" name="subject" placeholder="Subject" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </form>
-                            <!-- End contact form -->
-
-                        </div>
-                        <!-- End split box content -->
-
-                    </div> <!-- /.col -->
-                </div> <!-- /.row-height -->
-            </div> <!-- /.row -->
-
-            <div class="row">
-                <div class="col-lg-12 no-padding">
-
-                    <!-- Begin custom Google Map
-                =============================
-                * Tutorial: https://developers.google.com/maps/documentation/javascript/tutorial
-                * Styles: https://snazzymaps.com/
-                -->
-                    <div id="map"></div>
-                    <!-- End custom Google Map -->
-
-                </div> <!-- /.col -->
-            </div> <!-- /.row -->
-
-        </div> <!-- /.container -->
-    </section>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="form-group">
+                                            <textarea class="form-control" id="txtMsg" name="message" rows="4" placeholder="Your Message" required></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="small text-gray"><em>* All fields are required!</em></div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <button type="submit" id="btnContact" onclick="javascript:fnInsertRecord()" class="btn btn-primary btn-lg btn-block margin-top-40">Send Message</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 

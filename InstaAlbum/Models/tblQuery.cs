@@ -12,12 +12,13 @@ namespace InstaAlbum.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tblBill
+    public partial class tblQuery
     {
-        public int BillID { get; set; }
-        public Nullable<int> BookingID { get; set; }
-        public Nullable<decimal> TotalAmount { get; set; }
-        public Nullable<System.DateTime> CreatedDate { get; set; }
-        public Nullable<System.DateTime> UpdatedDate { get; set; }
+        public int QueryID { get; set; }
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string Subject { get; set; }
+        public string Message { get; set; }
+        public System.DateTime CreatedDate { get; set; }
     }
 }

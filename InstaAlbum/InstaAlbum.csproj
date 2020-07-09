@@ -163,7 +163,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>InstaAlbumDB.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblAboutUs.cs">
+    <Compile Include="Models\sysdiagram.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblAboutU.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBanner.cs">
@@ -197,6 +200,9 @@
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblPortfolio.cs">
+      <DependentUpon>InstaAlbumDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tblQuery.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblService.cs">
@@ -370,6 +376,7 @@
     <Content Include="obj\Debug\InstaAlbum.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\InstaAlbum.dll" />
     <Content Include="obj\Debug\InstaAlbum.pdb" />
+    <Content Include="userassets\analytics.js" />
     <Content Include="userassets\css\demo-dark-style.css" />
     <Content Include="userassets\css\helper.css" />
     <Content Include="userassets\css\theme.css" />
@@ -800,6 +807,12 @@
     <Content Include="Views\Service\Edit.cshtml" />
     <Content Include="Views\Service\Index.cshtml" />
     <Content Include="Views\WebGallery\Index.cshtml" />
+    <Content Include="Views\tblBookings\Create.cshtml" />
+    <Content Include="Views\tblBookings\Delete.cshtml" />
+    <Content Include="Views\tblBookings\Details.cshtml" />
+    <Content Include="Views\tblBookings\Edit.cshtml" />
+    <Content Include="Views\tblBookings\Index.cshtml" />
+    <Content Include="Views\UserHome\SingleProtfolio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -3,8 +3,35 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
+    <script>
+        function fnLogout() {
+
+            $.ajax({
+                async: true,
+                type: 'POST',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: "",
+                url: '/Login/LogOut',
+                success: function (response) {
+                    if (response.success === true) {
+                        toastr.success(response.message, 'You are logging out!',
+                            {
+                                timeOut: 1000, fadeOut: 1000,
+                                onHidden: function () { window.location.href = "/UserHome/"; }
+                            });
+                    }
+                },
+                error: function () {
+                    toastr.error('Error occur', 'Error occur while loging out!.', { timeOut: 1000 });
+                    return;
+                }
+
+            });
+        }
 
 
+    </script>
 <section id="gallery-list-section" class="gallery-list-slideshow">
     <div class="container-fluid no-padding bg-dark">
 
@@ -23,7 +50,15 @@
                         @item.BannerDescription
                     </p>
                     <div class="margin-top-30">
-                        <a href="@Url.Action("Login","Login")" class="btn btn-primary margin-top-5">LogIn</a>
+                        @if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
+                        {
+                            <a href="@Url.Action("Login","Login")" class="btn btn-primary margin-top-5">LogIn</a>
+                        }
+                        else
+                        {
+                            <a href="#" onclick="javascript:fnLogout()" class="btn btn-primary margin-top-5">Logout</a>
+                        }
+
                         <a href="@Url.Action("Contact","UserHome")" class="btn btn-white-bordered margin-top-5">Contact Me</a>
                     </div>
                 </div>

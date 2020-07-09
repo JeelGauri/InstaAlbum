@@ -1,0 +1,56 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblPortfolio>
+@{
+    ViewBag.Title = "SingleProtfolio";
+    Layout = "~/Views/Shared/_userLayout.cshtml";
+}
+<section id="blog-single-cection">
+    <div class="container-fluid max-width-1400">
+        <div class="blog-single-wrap">
+            <div class="row">
+                <div class="col-md-8">
+                    @foreach (var item in Model)
+                    {
+                        <article class="blog-single-post">
+                            <div class="blog-single-image bg-image" style="background-image: url(../../PortfolioImages/@item.Image);"></div>
+                            <div class="blog-single-post-heading">
+                                <h1 class="blog-single-post-title">5 Reasons You Should Fall In Love With Photography</h1>
+                                <div class="blog-single-post-category"><a href="#">@item.PortfolioName</a></div>
+                            </div>
+                            <div class="blog-single-post-inner">
+                                <div class="blog-single-attributes">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <div class="blog-single-meta-wrap">
+                                                <a href="#" class="author-avatar pull-left bg-image" style="background-image: url(~/PortfolioImages/@item.Image);"></a>
+                                                <div class="blog-single-meta">
+                                                    <div class="article-time-cat">
+                                                        <span class="article-time">@item.CreatedDate</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <ul class="blog-single-links list-unstyled list-inline">
+                                                <li>
+                                                    <a href="#blog-post-comments" class="blog-single-comment-count sm-scroll" title="Read the comments"><i class="fa fa-comment-o"></i> 9</a>
+                                                </li>
+                                                <li>
+                                                    <div class="blog-single-views-count" title="Post Views"><i class="fa fa-eye"></i> 924</div>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="post-content lightgallery">
+                                    <p class="lead">@item.Description</p>
+                                    <br>
+                                </div>
+                            </div>
+                        </article>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

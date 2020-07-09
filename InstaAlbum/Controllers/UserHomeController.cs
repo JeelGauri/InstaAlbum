@@ -15,12 +15,35 @@ namespace InstaAlbum.Controllers
         private InstaAlbumEntities db = new InstaAlbumEntities();
         public ActionResult Index()
         {
-                return View(db.tblBanners.ToList());
+             return View(db.tblBanners.ToList());
             
         }
         public ActionResult Contact()
         {
-                return View();
+            
+            return View(db.tblStudioAdmins.ToList());
+        }
+        public ActionResult InsertQuery()
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    tblQuery newQuery = new tblQuery();
+                    newQuery.CustomerName = Request.Form["CustomerName"];
+                    newQuery.CustomerEmail = Request.Form["CustomerEmail"];
+                    newQuery.Subject = Request.Form["Subject"];
+                    newQuery.Message = Request.Form["Message"];
+                    newQuery.CreatedDate = DateTime.Now;
+                    db.tblQueries.Add(newQuery);
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Record not Inserted" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { success = true, message = "Record inserted" }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult About()
         {
@@ -32,7 +55,15 @@ namespace InstaAlbum.Controllers
         }
         public ActionResult Protfolio()
         {
-                return View();
+                return View(db.tblPortfolios.ToList());
+        }
+        public ActionResult SingleProtfolio(int id)
+        {
+            if (id <= 0 || id == null)
+            {
+                return RedirectToAction("Protfolio", "UserHome");
+            }
+            return View(db.tblPortfolios.Where(sp => sp.PortfolioID == id).ToList());
         }
         public ActionResult GalleryCategories()
         {
@@ -85,8 +116,6 @@ namespace InstaAlbum.Controllers
                 Random R = new Random();
                 file = rgFiles.ElementAt(R.Next(0, rgFiles.Count())).Name;
             }
-            // probably should only catch specific exceptions
-            // throwable by the above methods.
             catch (Exception ex) { }
             return file;
         }

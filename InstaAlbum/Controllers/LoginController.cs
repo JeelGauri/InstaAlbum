@@ -136,7 +136,6 @@ namespace InstaAlbum.Controllers
                 return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);
 
         }
-
         public ActionResult LogOut()
         {
             try
@@ -150,6 +149,5 @@ namespace InstaAlbum.Controllers
                 return Json(new { success = false }, JsonRequestBehavior.AllowGet);
             }
         }
-
     }
 }

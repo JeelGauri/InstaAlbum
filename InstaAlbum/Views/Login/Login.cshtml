@@ -82,14 +82,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <input type="text" id="txtPhoneNumber" placeholder="Enter Phone Number" class="form-control" required />
+                            <input type="text" id="txtPhoneNumber" placeholder="Enter Phone Number" class="form-control" />
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <input type="password" class="form-control" id="txtPassword" placeholder="Enter password" required />
+                            <input type="password" class="form-control" id="txtPassword" placeholder="Enter password" />
                         </div>
                     </div>
                 </div>
@@ -100,9 +100,13 @@
                     <button type="submit" onclick="javascript:fnCheckUserExistsOrNot()" class="btn btn-primary btn-lg btn-block margin-top-40">Login</button>
                 </div>
                 <div class="col-lg-6">
-                    <button type="submit" onclick="@Url.Action("Index","UserHome")" class="btn btn-primary btn-lg btn-block margin-top-40">Cancle</button>
+                    <a href="@Url.Action("Index","UserHome")" class="btn btn-primary btn-lg btn-block margin-top-40">Cancle</a>
                 </div>
             </div>
+            <br />
+            <center>
+                <a href="@Url.Action("Registration","Login")" title="Click here to Register!!!">Register Here..!!!</a>
+            </center>
         </div>
     </form>
 </section>

@@ -17,7 +17,6 @@ namespace InstaAlbum.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tblBooking()
         {
-            this.tblBills = new HashSet<tblBill>();
             this.tblExposings = new HashSet<tblExposing>();
         }
     
@@ -25,12 +24,10 @@ namespace InstaAlbum.Models
         public int CustomerID { get; set; }
         public string BookingDescription { get; set; }
         public Nullable<System.DateTime> FunctionDate { get; set; }
+        public Nullable<bool> IsExposed { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
-        public Nullable<bool> IsExposed { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tblBill> tblBills { get; set; }
         public virtual tblCustomer tblCustomer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tblExposing> tblExposings { get; set; }

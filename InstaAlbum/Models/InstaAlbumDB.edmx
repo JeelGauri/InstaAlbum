@@ -4,7 +4,17 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="InstaAlbumModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="tblAboutUs">
           <Key>
             <PropertyRef Name="AboutUsID" />
@@ -51,8 +61,8 @@
           <Property Name="BranchID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="BranchName" Type="varchar" MaxLength="30" Nullable="false" />
           <Property Name="Address" Type="varchar(max)" Nullable="false" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblCustomer">
           <Key>
@@ -65,8 +75,8 @@
           <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="ProfilePic" Type="varchar" MaxLength="200" />
           <Property Name="IsActive" Type="bit" Nullable="false" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblExposing">
           <Key>
@@ -89,8 +99,8 @@
           <Property Name="CustomerID" Type="int" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="IsSelected" Type="bit" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblOrder">
           <Key>
@@ -110,7 +120,7 @@
           <Property Name="ParentCategoryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ParentCategoryName" Type="nvarchar" MaxLength="50" />
           <Property Name="Image" Type="varchar" MaxLength="500" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="tblPhotographer">
           <Key>
@@ -140,6 +150,17 @@
           <Property Name="SmallDescription" Type="nvarchar" MaxLength="100" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Image" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tblQuery">
+          <Key>
+            <PropertyRef Name="QueryID" />
+          </Key>
+          <Property Name="QueryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerEmail" Type="varchar(max)" Nullable="false" />
+          <Property Name="Subject" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Message" Type="varchar(max)" Nullable="false" />
           <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
         </EntityType>
         <EntityType Name="tblService">
@@ -150,7 +171,7 @@
           <Property Name="ServiceName" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" Nullable="false" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
         </EntityType>
         <EntityType Name="tblStudioAdmin">
           <Key>
@@ -167,8 +188,8 @@
           <Property Name="OpeningHours" Type="varchar" MaxLength="30" />
           <Property Name="ClosingHours" Type="varchar" MaxLength="30" />
           <Property Name="Map" Type="varchar(max)" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
-          <Property Name="UpdatedDate" Type="smalldatetime" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
+          <Property Name="UpdatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblSubCategory">
           <Key>
@@ -178,7 +199,7 @@
           <Property Name="ParentCatgoryID" Type="int" />
           <Property Name="SubCategoryName" Type="nvarchar" MaxLength="50" />
           <Property Name="SubCategoryCoverPhoto" Type="varchar" MaxLength="200" />
-          <Property Name="CreatedDate" Type="smalldatetime" />
+          <Property Name="CreatedDate" Type="date" />
         </EntityType>
         <EntityType Name="tblWebGallery">
           <Key>
@@ -187,22 +208,8 @@
           <Property Name="WebGalleryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Image" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="Description" Type="varchar(max)" Nullable="false" />
-          <Property Name="CreatedDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="CreatedDate" Type="date" Nullable="false" />
         </EntityType>
-        <Association Name="FK_tblBill_tblBooking">
-          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tblBill" Type="Self.tblBill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblBooking">
-              <PropertyRef Name="BookingID" />
-            </Principal>
-            <Dependent Role="tblBill">
-              <PropertyRef Name="BookingID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblBooking_tblCustomer">
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -330,6 +337,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="InstaAlbumModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblAboutUs" EntityType="Self.tblAboutUs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBanner" EntityType="Self.tblBanner" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblBill" EntityType="Self.tblBill" Schema="dbo" store:Type="Tables" />
@@ -342,14 +350,11 @@
           <EntitySet Name="tblParentCategory" EntityType="Self.tblParentCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPhotographer" EntityType="Self.tblPhotographer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblPortfolio" EntityType="Self.tblPortfolio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblQuery" EntityType="Self.tblQuery" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblService" EntityType="Self.tblService" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblStudioAdmin" EntityType="Self.tblStudioAdmin" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblSubCategory" EntityType="Self.tblSubCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tblWebGallery" EntityType="Self.tblWebGallery" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_tblBill_tblBooking" Association="Self.FK_tblBill_tblBooking">
-            <End Role="tblBooking" EntitySet="tblBooking" />
-            <End Role="tblBill" EntitySet="tblBill" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblBooking_tblCustomer" Association="Self.FK_tblBooking_tblCustomer">
             <End Role="tblCustomer" EntitySet="tblCustomer" />
             <End Role="tblBooking" EntitySet="tblBooking" />
@@ -387,11 +392,22 @@
             <End Role="tblSubCategory" EntitySet="tblSubCategory" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="InstaAlbumModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="tblAboutUs">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tblAboutU">
           <Key>
             <PropertyRef Name="AboutUsID" />
           </Key>
@@ -417,7 +433,6 @@
           <Property Name="TotalAmount" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="tblBooking" Relationship="Self.FK_tblBill_tblBooking" FromRole="tblBill" ToRole="tblBooking" />
         </EntityType>
         <EntityType Name="tblBooking">
           <Key>
@@ -427,12 +442,11 @@
           <Property Name="CustomerID" Type="Int32" Nullable="false" />
           <Property Name="BookingDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="FunctionDate" Type="DateTime" Precision="0" />
+          <Property Name="IsExposed" Type="Boolean" />
           <Property Name="CreatedDate" Type="DateTime" Precision="0" />
           <Property Name="UpdatedDate" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="tblBills" Relationship="Self.FK_tblBill_tblBooking" FromRole="tblBooking" ToRole="tblBill" />
           <NavigationProperty Name="tblCustomer" Relationship="Self.FK_tblBooking_tblCustomer" FromRole="tblBooking" ToRole="tblCustomer" />
           <NavigationProperty Name="tblExposings" Relationship="Self.FK_tblExposing_tblBooking" FromRole="tblBooking" ToRole="tblExposing" />
-          <Property Name="IsExposed" Type="Boolean" />
         </EntityType>
         <EntityType Name="tblBranch">
           <Key>
@@ -546,6 +560,17 @@
           <Property Name="Image" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
+        <EntityType Name="tblQuery">
+          <Key>
+            <PropertyRef Name="QueryID" />
+          </Key>
+          <Property Name="QueryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CustomerEmail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Subject" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Message" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
+        </EntityType>
         <EntityType Name="tblService">
           <Key>
             <PropertyRef Name="ServiceID" />
@@ -595,20 +620,6 @@
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="CreatedDate" Type="DateTime" Nullable="false" Precision="0" />
         </EntityType>
-        <Association Name="FK_tblBill_tblBooking">
-          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="0..1">
-            <OnDelete Action="Cascade" />
-          </End>
-          <End Role="tblBill" Type="Self.tblBill" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tblBooking">
-              <PropertyRef Name="BookingID" />
-            </Principal>
-            <Dependent Role="tblBill">
-              <PropertyRef Name="BookingID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_tblBooking_tblCustomer">
           <End Role="tblCustomer" Type="Self.tblCustomer" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -624,7 +635,9 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_tblExposing_tblBooking">
-          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="1" />
+          <End Role="tblBooking" Type="Self.tblBooking" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
           <End Role="tblExposing" Type="Self.tblExposing" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="tblBooking">
@@ -734,7 +747,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="InstaAlbumEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="tblAboutUs1" EntityType="InstaAlbumModel.tblAboutUs" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tblAboutUs" EntityType="Self.tblAboutU" />
           <EntitySet Name="tblBanners" EntityType="Self.tblBanner" />
           <EntitySet Name="tblBills" EntityType="Self.tblBill" />
           <EntitySet Name="tblBookings" EntityType="Self.tblBooking" />
@@ -746,14 +760,11 @@
           <EntitySet Name="tblParentCategories" EntityType="Self.tblParentCategory" />
           <EntitySet Name="tblPhotographers" EntityType="Self.tblPhotographer" />
           <EntitySet Name="tblPortfolios" EntityType="Self.tblPortfolio" />
+          <EntitySet Name="tblQueries" EntityType="Self.tblQuery" />
           <EntitySet Name="tblServices" EntityType="Self.tblService" />
           <EntitySet Name="tblStudioAdmins" EntityType="Self.tblStudioAdmin" />
           <EntitySet Name="tblSubCategories" EntityType="Self.tblSubCategory" />
           <EntitySet Name="tblWebGalleries" EntityType="Self.tblWebGallery" />
-          <AssociationSet Name="FK_tblBill_tblBooking" Association="Self.FK_tblBill_tblBooking">
-            <End Role="tblBooking" EntitySet="tblBookings" />
-            <End Role="tblBill" EntitySet="tblBills" />
-          </AssociationSet>
           <AssociationSet Name="FK_tblBooking_tblCustomer" Association="Self.FK_tblBooking_tblCustomer">
             <End Role="tblCustomer" EntitySet="tblCustomers" />
             <End Role="tblBooking" EntitySet="tblBookings" />
@@ -797,8 +808,19 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="InstaAlbumModelStoreContainer" CdmEntityContainer="InstaAlbumEntities">
-          <EntitySetMapping Name="tblAboutUs1">
-            <EntityTypeMapping TypeName="InstaAlbumModel.tblAboutUs">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="InstaAlbumModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblAboutUs">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblAboutU">
               <MappingFragment StoreEntitySet="tblAboutUs">
                 <ScalarProperty Name="AboutUsID" ColumnName="AboutUsID" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
@@ -830,11 +852,11 @@
           <EntitySetMapping Name="tblBookings">
             <EntityTypeMapping TypeName="InstaAlbumModel.tblBooking">
               <MappingFragment StoreEntitySet="tblBooking">
-                <ScalarProperty Name="IsExposed" ColumnName="IsExposed" />
                 <ScalarProperty Name="BookingID" ColumnName="BookingID" />
                 <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
                 <ScalarProperty Name="BookingDescription" ColumnName="BookingDescription" />
                 <ScalarProperty Name="FunctionDate" ColumnName="FunctionDate" />
+                <ScalarProperty Name="IsExposed" ColumnName="IsExposed" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
                 <ScalarProperty Name="UpdatedDate" ColumnName="UpdatedDate" />
               </MappingFragment>
@@ -942,6 +964,18 @@
                 <ScalarProperty Name="SmallDescription" ColumnName="SmallDescription" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Image" ColumnName="Image" />
+                <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblQueries">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblQuery">
+              <MappingFragment StoreEntitySet="tblQuery">
+                <ScalarProperty Name="QueryID" ColumnName="QueryID" />
+                <ScalarProperty Name="CustomerName" ColumnName="CustomerName" />
+                <ScalarProperty Name="CustomerEmail" ColumnName="CustomerEmail" />
+                <ScalarProperty Name="Subject" ColumnName="Subject" />
+                <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="CreatedDate" ColumnName="CreatedDate" />
               </MappingFragment>
             </EntityTypeMapping>
