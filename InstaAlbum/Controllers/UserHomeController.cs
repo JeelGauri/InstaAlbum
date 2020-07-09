@@ -73,7 +73,6 @@ namespace InstaAlbum.Controllers
             }
             else
             {
-                
                 ViewBag.BannerImage = getRandomBanner();
                 return View(db.tblParentCategories.ToList());
             }
@@ -83,7 +82,7 @@ namespace InstaAlbum.Controllers
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
                 return RedirectToAction("Login", "Login");
 
-            if (id <= 0 || id == null)
+            if (id <= 0)
             {
                 return RedirectToAction("GalleryCategories", "UserHome");
             }
@@ -95,7 +94,7 @@ namespace InstaAlbum.Controllers
             if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
             
                 return RedirectToAction("Login", "Login");
-            if (id <= 0 || id == null)
+            if (id <= 0 )
             {
                 return RedirectToAction("SubCategory", "UserHome");
             }
@@ -143,17 +142,22 @@ namespace InstaAlbum.Controllers
         {
             try
             {
-                // iterate through input list and pass to process method
-                for (int i = 0; i < CheckedID.Count; i++)
+                if (CheckedID.Count > 0)
                 {
-                    if(CheckedID[i] > 0)
-                        ChangeImageSelected(CheckedID[i]);  
+                    for (int i = 0; i < CheckedID.Count; i++)
+                    {
+                        if (CheckedID[i] > 0)
+                            ChangeImageSelected(CheckedID[i]);
+                    }
                 }
-
-                for (int i = 0; i < UnCheckedID.Count; i++)
+                
+                if (UnCheckedID.Count > 0)
                 {
-                    if (UnCheckedID[i] > 0)
-                        ChangeImageUnSelected(UnCheckedID[i]);
+                    for (int i = 0; i < UnCheckedID.Count; i++)
+                    {
+                        if (UnCheckedID[i] > 0)
+                            ChangeImageUnSelected(UnCheckedID[i]);
+                    }
                 }
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }

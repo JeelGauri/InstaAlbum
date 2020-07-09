@@ -70,7 +70,6 @@ namespace InstaAlbum.Controllers
             if (ModelState.IsValid)
             {
                 
-
                 if (Request.Files.Count > 0)
                 {
                     int fileSize = 0;
@@ -143,22 +142,26 @@ namespace InstaAlbum.Controllers
             try
             {
                 
-
-                //7.
                 var data = db.tblGalleries.Where(g => g.CustomerID == CustomerID)
                             .Where(g => g.SubCategoryID == SubCategoryID)
                             .Where(g => g.IsSelected == true)
                             .ToDictionary(g => g.GalleryID,g => g.Image).ToList();
 
 
+                if(data.Count < 0)
+                    return Json(new { success = false, message = "No images are selected for given categories! Inform customer to select images first." }, JsonRequestBehavior.AllowGet);
 
                 string json = new JavaScriptSerializer().Serialize(data);
+                
+                if (!Directory.Exists(Server.MapPath("~/App_Data/")))
+                    Directory.CreateDirectory(Server.MapPath("~/App_Data/"));
+
                 string path = Server.MapPath("~/App_Data/");
                 Random random = new Random();
                 string Num = "";
                 for(int i=0;i<4;i++)
                 {
-                    Num += random.Next(1, 20).ToString();
+                    Num += random.Next(1, 9).ToString();
                 }
                 // Write that JSON to txt file,  
                 System.IO.File.WriteAllText(path + Num +"_"+DateTime.Now.ToString("d-M-yyyy")+".json", json);
@@ -179,7 +182,7 @@ namespace InstaAlbum.Controllers
             }
             catch(Exception ex)
             {
-                return Json(new { success = false, message = "File is not created." }, JsonRequestBehavior.AllowGet);
+                return Json(new { success = false, message = "File is not created."+ex.Message }, JsonRequestBehavior.AllowGet);
             }
         }
 

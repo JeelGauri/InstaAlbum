@@ -149,7 +149,7 @@
                 toastr.warning('Input Error', 'Please enter address!', { timeOut: 1000, fadeOut: 1000 });
                 txtAddress.focus();
                 return;
-            }
+            }           
             else
                 formData.append("Address", txtAddress.val());
         }
@@ -230,8 +230,7 @@
                                         <th>Deascription</th>
                                         <th>Function Date</th>
                                         <th>Created Date</th>
-                                        <th>Updated Date</th>
-                                        <th>Edit/<br />Expose</th>
+                                        <th>Expose</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
@@ -255,11 +254,6 @@
                                                 @Html.DisplayFor(modelItem => item.CreatedDate)
                                             </td>
                                             <td>
-                                                @Html.DisplayFor(modelItem => item.UpdatedDate)
-                                            </td>
-                                            <td>
-                                                @Html.ActionLink("Update", "Edit", new { id = item.CustomerID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-success" })
-                                                <br />
                                                 @if (item.IsExposed == true)
                                                 {
                                                      @Html.ActionLink("View Expose Details", "ExposeDetails", new { id = item.BookingID }, htmlAttributes: new { @class = "btn btn-sm m-b-15 ml-2 mr-2 btn-danger" })
@@ -344,7 +338,7 @@
                                                                                                                              2. Click on Share button. You will get your link.<br/> 
                                                                                                                              3. Paste Link here in given text box</a></label>
                         <br/>
-                        <label class="col-form-label-sm" style="color:blue"><a target="_blank" href="https://maps.google.com">Search Address</a></label>
+                        <label class="col-form-label-sm" style="color:blue"><a target="_blank       " href="https://maps.google.com">Search Address</a></label>
 </div>
                 </div>
                 <div class="modal-footer">

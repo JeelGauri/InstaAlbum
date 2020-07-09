@@ -118,7 +118,10 @@
                                     {
                                     <tr>
                                         <td>
-                                            <a target="_blank" href="https://api.whatsapp.com/send?phone=@item.tblPhotographer.PhoneNo&text=@item.Location&source=@item.tblBooking.FunctionDate&data=&app_absent=">
+                                            <a target="_blank" href="https://api.whatsapp.com/send?phone=@item.tblPhotographer.PhoneNo&text=@item.Location
+                                                                                                                                            Event Date: @Convert.ToString(string.Format("{0:dd/MM/yyyy}", item.tblBooking.FunctionDate)) 
+                                                                                                                                            Event: @item.Description
+                                                                                                                                            Client: @item.tblBooking.tblCustomer.CustomerName&data=&app_absent=">
                                                 <img src="~/adminassets/img/whatsapplogo.png" height="25px" width="25px"/>
                                             </a>
                                         </td>

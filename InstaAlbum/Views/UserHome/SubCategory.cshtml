@@ -28,7 +28,9 @@
                                         <h2 class="gl-item-title">@item.SubCategoryName</h2>
                                         <span class="gl-item-category">@item.tblParentCategory.ParentCategoryName</span>
                                     </div>
-                                    <span class="gl-item-count" title="Pictures count"><i class="fa fa-camera"></i> @item.tblGalleries.Count()</span>
+                                    <span class="gl-item-count" title="Pictures count"><i class="fa fa-camera"></i> 
+                                        @item.tblGalleries.Where(S => S.tblCustomer.CustomerID == Convert.ToInt32(Session["CustomerID"])).Where(S => S.tblSubCategory.ParentCatgoryID == item.ParentCatgoryID).Count()
+                                    </span>
                                 </div>
                             </a>
                         </div>
