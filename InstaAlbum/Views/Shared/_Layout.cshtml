@@ -106,15 +106,15 @@
                 </li>
 
                 <li class="menu-item">
-                    <a href="@Url.Action("Index", "Customer")" class="menu-link" title="Click to see Customers">
+                    <a href="@Url.Action("Index", "Customer")" class="menu-link" title="Click to see Customer">
                         <span class="menu-label">
                             <span class="menu-name">
-                                Customers
+                                Customer
                             </span>
                         </span>
                         <span class="menu-icon">
 
-                            <i class="icon-placeholder mdi mdi-account-multiple mdi-24px"></i>
+                            <i class="icon-placeholder mdi mdi-account-group mdi-24px"></i>
                         </span>
                     </a>
                     <!--submenu-->
@@ -122,7 +122,39 @@
                 </li>
 
                 <li class="menu-item">
-                    <a href="~/Views/Home/Gallery.cshtml" class="menu-link">
+                    <a href="@Url.Action("Index", "Photographer")" class="menu-link" title="Click to see Photographer">
+                        <span class="menu-label">
+                            <span class="menu-name">
+                                Photographer
+                            </span>
+                        </span>
+                        <span class="menu-icon">
+
+                            <i class="icon-placeholder mdi mdi-camera-account mdi-24px"></i>
+                        </span>
+                    </a>
+                    <!--submenu-->
+
+                </li>
+
+                <li class="menu-item">
+                    <a href="@Url.Action("Index", "ParentCategory")" class="menu-link" title="Click to see Category">
+                        <span class="menu-label">
+                            <span class="menu-name">
+                                Category
+                            </span>
+                        </span>
+                        <span class="menu-icon">
+
+                            <i class="icon-placeholder mdi mdi-format-list-bulleted-type mdi-24px"></i>
+                        </span>
+                    </a>
+                    <!--submenu-->
+
+                </li>
+
+                <li class="menu-item">
+                    <a href="@Url.Action("GalleryCustomerList", "Gallery")" class="menu-link" title="Click to see Gallery">
                         <span class="menu-label">
                             <span class="menu-name">
                                 Gallery
@@ -130,7 +162,7 @@
                         </span>
                         <span class="menu-icon">
 
-                            <i class="icon-placeholder mdi  mdi-folder-multiple-image mdi-24px"></i>
+                            <i class="icon-placeholder mdi mdi-image-multiple mdi-24px"></i>
                         </span>
                     </a>
                     <!--submenu-->
@@ -138,10 +170,26 @@
                 </li>
 
                 <li class="menu-item">
-                    <a href="~/Views/Home/StudioAbout.cshtml" class="menu-link">
+                    <a href="@Url.Action("Index", "Service")" class="menu-link" title="Click to see Services">
                         <span class="menu-label">
                             <span class="menu-name">
-                                Descriptopn
+                                Services
+                            </span>
+                        </span>
+                        <span class="menu-icon">
+
+                            <i class="icon-placeholder mdi mdi-settings mdi-24px"></i>
+                        </span>
+                    </a>
+                    <!--submenu-->
+
+                </li>
+
+                <li class="menu-item">
+                    <a href="@Url.Action("Index", "Portfolio")" class="menu-link" title="Click to see Portfoilo">
+                        <span class="menu-label">
+                            <span class="menu-name">
+                                Portfolio
                             </span>
                         </span>
                         <span class="menu-icon">
@@ -154,53 +202,20 @@
                 </li>
 
                 <li class="menu-item">
-                    <a href="~/Views/Home/Portfolio.cshtml" class="menu-link">
+                    <a href="javascript:fnLogout()" class="menu-link" title="Click to Logout">
                         <span class="menu-label">
                             <span class="menu-name">
-                                Portfolio
+                                 Logout
                             </span>
                         </span>
                         <span class="menu-icon">
 
-                            <i class="icon-placeholder mdi mdi-tooltip-text mdi-24px"></i>
+                            <i class="icon-placeholder mdi mdi-logout mdi-24px"></i>
                         </span>
                     </a>
                     <!--submenu-->
 
                 </li>
-
-                <li class="menu-item">
-                    <a href="~/Views/Home/Organization.cshtml" class="menu-link">
-                        <span class="menu-label">
-                            <span class="menu-name">
-                                Organization
-                            </span>
-                        </span>
-                        <span class="menu-icon">
-
-                            <i class="icon-placeholder mdi mdi-bank mdi-24px"></i>
-                        </span>
-                    </a>
-                    <!--submenu-->
-
-                </li>
-
-                <li class="menu-item">
-                    <a href="~/Views/Home/Appointment.cshtml" class="menu-link">
-                        <span class="menu-label">
-                            <span class="menu-name">
-                                Appointment
-                            </span>
-                        </span>
-                        <span class="menu-icon">
-
-                            <i class="icon-placeholder mdi mdi-plus-box mdi-24px"></i>
-                        </span>
-                    </a>
-                    <!--submenu-->
-
-                </li>
-
 
             </ul>
 
@@ -251,7 +266,7 @@
 
                             <a href="@Url.Action("Index", "Studio")" class="dropdown-item">Studio Details</a>
                             <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#" onclick="javascript:fnLogout()">Logout</a>
+                            <a class="dropdown-item" href="javascript:fnLogout()">Logout</a>
                         </div>
                     </li>
 

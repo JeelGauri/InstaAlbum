@@ -227,12 +227,12 @@ namespace InstaAlbum.Controllers
             base.Dispose(disposing);
         }
 
-        public ActionResult IsEmailExistOrNot(string Email)
+        public ActionResult IsEmailExistOrNot(string Phno)
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)
                 return RedirectToAction("Login", "Login");
 
-            if (db.tblPhotographers.Any(c => c.Email == Email))
+            if (db.tblPhotographers.Any(c => c.PhoneNo == Phno))
                 return Json(new { success = true, message = "Record Existed" }, JsonRequestBehavior.AllowGet);
             else
                 return Json(new { success = false, message = "Record Not Existed" }, JsonRequestBehavior.AllowGet);

@@ -113,17 +113,22 @@ namespace InstaAlbum.Controllers
         {
             try
             {
-                // iterate through input list and pass to process method
-                for (int i = 0; i < CheckedID.Count; i++)
+                if (CheckedID.Count > 0)
                 {
-                    if(CheckedID[i] > 0)
-                        ChangeImageSelected(CheckedID[i]);  
+                    for (int i = 0; i < CheckedID.Count; i++)
+                    {
+                        if (CheckedID[i] > 0)
+                            ChangeImageSelected(CheckedID[i]);
+                    }
                 }
-
-                for (int i = 0; i < UnCheckedID.Count; i++)
+                
+                if (UnCheckedID.Count > 0)
                 {
-                    if (UnCheckedID[i] > 0)
-                        ChangeImageUnSelected(UnCheckedID[i]);
+                    for (int i = 0; i < UnCheckedID.Count; i++)
+                    {
+                        if (UnCheckedID[i] > 0)
+                            ChangeImageUnSelected(UnCheckedID[i]);
+                    }
                 }
                 return Json(new { success = true }, JsonRequestBehavior.AllowGet);
             }

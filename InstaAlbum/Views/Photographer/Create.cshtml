@@ -8,15 +8,15 @@
 <script>
 
     $(document).ready(function () {
-        var txtEmail = document.getElementById("txtEmail");
-        $("#txtEmail").blur(function () {
+        var txtPhno = document.getElementById("txtPhno");
+        $("#txtPhno").blur(function () {
 
             $.ajax({
                 async: true,
                 type: 'POST',
                 dataType: 'JSON',
                 contentType: 'application/json; charset=utf-8',
-                data: "{'Email':'" + txtEmail.value + "'}",
+                data: "{'txtPhno':'" + txtPhno.value + "'}",
                 url: '/Photographer/IsEmailExistOrNot',
                 success: function (response) {
                     if (response.success === true) {
@@ -140,7 +140,7 @@
                             timeOut: 1000,
                             fadeOut: 1000,
                             onHidden: function () {
-                                window.location.reload();
+                                window.location.href='/Photographer/';
                             }
                         }
                     );

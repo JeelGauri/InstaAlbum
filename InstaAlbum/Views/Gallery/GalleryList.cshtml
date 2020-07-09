@@ -98,6 +98,11 @@
         var formData = new FormData();
 
         var ins = document.getElementById('inputProfile').files.length;
+        if (ins <= 0) {
+            toastr.warning('Input Error!', 'Please select images.', { timeOut: 3000 });
+            return;
+        }
+
         for (var x = 0; x < ins; x++) {
             formData.append("imageFile", document.getElementById('inputProfile').files[x]);
         }
@@ -155,6 +160,19 @@
     function fnDownloadJson() {
         var ddlParentCategory = $("#ddlParentCategory2");
         var ddlSubCategory = $("#ddlSubCategory2");
+
+        if (parseInt(ddlParentCategory.val()) <= 0) {
+            toastr.warning('Input Error', 'Please Select Parent Category', { timeOut: 3000 });
+            ddlParentCategory.focus();
+            return;
+        }
+
+        if (parseInt(ddlSubCategory.val()) <= 0) {
+            toastr.warning('Input Error', 'Please Select Sub Category', { timeOut: 3000 });
+            ddlSubCategory.focus();
+            return;
+        }
+
         var _customerID = @ViewBag.CustomerID;
         var formData = new FormData();
         formData.append("CustomerID", _customerID);
@@ -162,7 +180,7 @@
         formData.append("SubCategoryID", ddlSubCategory.val());
 
          $.ajax({
-               type: "POST",
+                type: "POST",
                 url: '/Gallery/getJsonFile',
                 data: formData,
                 dataType: 'json',
@@ -184,11 +202,11 @@
                     }
                     else
                     {
-                        toastr.error('Error occur', response.message, { timeOut: 3000 });
+                        toastr.warning('Error occur', response.message, { timeOut: 3000 });
                         return;
                     }
                 },
-            error: function () {
+                error: function () {
                     toastr.error('Error occur', 'Error occur while creating file.', { timeOut: 3000 });
                     return;
                 }

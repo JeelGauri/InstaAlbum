@@ -230,7 +230,6 @@
                                         <th>Deascription</th>
                                         <th>Function Date</th>
                                         <th>Created Date</th>
-                                        <th>Updated Date</th>
                                         <th>Expose</th>
                                         <th>Delete</th>
                                     </tr>
@@ -253,9 +252,6 @@
                                             </td>
                                             <td>
                                                 @Html.DisplayFor(modelItem => item.CreatedDate)
-                                            </td>
-                                            <td>
-                                                @Html.DisplayFor(modelItem => item.UpdatedDate)
                                             </td>
                                             <td>
                                                 @if (item.IsExposed == true)

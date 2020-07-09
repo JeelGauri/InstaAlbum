@@ -9,7 +9,8 @@
     {
         var checkedimageID = new Array();
         var UnCheckedimageID = new Array();
-
+        checkedimageID.push(0);
+        UnCheckedimageID.push(0);
         // iterate all checkboxes and obtain their checked values, unchecked values are not pushed into array
         $('input[type=checkbox]').each(function () {
             this.checked ? checkedimageID.push($(this).val()) : UnCheckedimageID.push($(this).val());
