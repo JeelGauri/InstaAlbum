@@ -138,6 +138,7 @@
     <Compile Include="Controllers\ParentCategoryController.cs" />
     <Compile Include="Controllers\PhotographerController.cs" />
     <Compile Include="Controllers\PortfolioController.cs" />
+    <Compile Include="Controllers\QueriesController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\StudioController.cs" />
     <Compile Include="Controllers\SubCategoryController.cs" />
@@ -166,7 +167,7 @@
     <Compile Include="Models\sysdiagram.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tblAboutU.cs">
+    <Compile Include="Models\tblAboutUs.cs">
       <DependentUpon>InstaAlbumDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tblBanner.cs">
@@ -812,6 +813,9 @@
     <Content Include="Views\tblBookings\Edit.cshtml" />
     <Content Include="Views\tblBookings\Index.cshtml" />
     <Content Include="Views\UserHome\SingleProtfolio.cshtml" />
+    <Content Include="Views\Queries\Index.cshtml" />
+    <Content Include="Views\Customer\BookingDetails.cshtml" />
+    <Content Include="Views\Customer\ExposeDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

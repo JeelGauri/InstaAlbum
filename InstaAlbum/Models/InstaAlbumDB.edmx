@@ -407,7 +407,7 @@
           <Property Name="version" Type="Int32" />
           <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
-        <EntityType Name="tblAboutU">
+        <EntityType Name="tblAboutUs">
           <Key>
             <PropertyRef Name="AboutUsID" />
           </Key>
@@ -748,7 +748,7 @@
         </Association>
         <EntityContainer Name="InstaAlbumEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
-          <EntitySet Name="tblAboutUs" EntityType="Self.tblAboutU" />
+          <EntitySet Name="tblAboutUs1" EntityType="InstaAlbumModel.tblAboutUs" />
           <EntitySet Name="tblBanners" EntityType="Self.tblBanner" />
           <EntitySet Name="tblBills" EntityType="Self.tblBill" />
           <EntitySet Name="tblBookings" EntityType="Self.tblBooking" />
@@ -819,8 +819,8 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="tblAboutUs">
-            <EntityTypeMapping TypeName="InstaAlbumModel.tblAboutU">
+          <EntitySetMapping Name="tblAboutUs1">
+            <EntityTypeMapping TypeName="InstaAlbumModel.tblAboutUs">
               <MappingFragment StoreEntitySet="tblAboutUs">
                 <ScalarProperty Name="AboutUsID" ColumnName="AboutUsID" />
                 <ScalarProperty Name="Image" ColumnName="Image" />

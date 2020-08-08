@@ -6,7 +6,7 @@
     <edmx:Diagrams>
       <Diagram DiagramId="1d0364cac99e48029e88a329dd0df8cf" Name="Diagram1">
         <EntityTypeShape EntityType="InstaAlbumModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblAboutU" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblAboutUs" Width="1.5" PointX="8.375" PointY="11.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InstaAlbumModel.tblBanner" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InstaAlbumModel.tblBill" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="InstaAlbumModel.tblBooking" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />

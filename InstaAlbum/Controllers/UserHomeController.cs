@@ -1,4 +1,5 @@
 ﻿using InstaAlbum.Models;
+using Microsoft.Ajax.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -74,7 +75,22 @@ namespace InstaAlbum.Controllers
             else
             {
                 ViewBag.BannerImage = getRandomBanner();
-                return View(db.tblParentCategories.ToList());
+                List<tblParentCategory> PCat = new List<tblParentCategory>();
+                int CustomerID = Convert.ToInt32(Session["CustomerID"]);
+                var SGalList = db.tblGalleries.Where(G => G.CustomerID == CustomerID).DistinctBy(G => G.tblSubCategory.SubCategoryID).ToList();
+                List<int> PCatIDs = new List<int>();
+                foreach(tblGallery item in SGalList)
+                {
+                    var SCat = db.tblSubCategories.SingleOrDefault(SC => SC.SubCategoryID == item.SubCategoryID);
+                    PCatIDs.Add(Convert.ToInt32(SCat.ParentCatgoryID));
+                }
+                foreach(int item in PCatIDs)
+                {
+                    tblParentCategory objPcat = new tblParentCategory();
+                    objPcat = db.tblParentCategories.SingleOrDefault(PC => PC.ParentCategoryID == item);
+                    PCat.Add(objPcat);
+                }
+                return View(PCat.ToList());
             }
         }
         public ActionResult SubCategory(int id)
@@ -87,7 +103,15 @@ namespace InstaAlbum.Controllers
                 return RedirectToAction("GalleryCategories", "UserHome");
             }
             ViewBag.BannerImage = getRandomBanner();
-            return View(db.tblSubCategories.Where(sc => sc.ParentCatgoryID == id).ToList());
+            List<tblSubCategory> SCat = new List<tblSubCategory>();
+            int CustomerID = Convert.ToInt32(Session["CustomerID"]);
+            var SGalList = db.tblGalleries.Where(G => G.CustomerID == CustomerID).DistinctBy(G => G.tblSubCategory.SubCategoryID).ToList();
+            foreach(tblGallery item in SGalList)
+            {
+                var SC = db.tblSubCategories.SingleOrDefault(S => S.SubCategoryID == item.SubCategoryID);
+                SCat.Add(SC);
+            }
+            return View(SCat.ToList());
         }
         public ActionResult CategoryWiseImage(int id)
         {
