@@ -4,25 +4,26 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1d0364cac99e48029e88a329dd0df8cf" Name="Diagram1">
+      <Diagram DiagramId="1e707dfe68db42ecb81799c4c039cd7b" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="InstaAlbumModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblAboutUs" Width="1.5" PointX="8.375" PointY="11.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblBanner" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblBill" Width="1.5" PointX="7.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblBooking" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblBranch" Width="1.5" PointX="0.75" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblCustomer" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblExposing" Width="1.5" PointX="5.25" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblGallery" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblOrder" Width="1.5" PointX="3" PointY="8.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblParentCategory" Width="1.5" PointX="1.5" PointY="13.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblPhotographer" Width="1.5" PointX="3" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblAboutUs" PointX="8.375" PointY="11.75" Width="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBanner" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBill" Width="1.5" PointX="5.25" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBooking" Width="1.5" PointX="3" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblBranch" Width="1.5" PointX="3.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblCustomer" Width="1.5" PointX="0.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblExposing" Width="1.5" PointX="8.25" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblGallery" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblOrder" Width="1.5" PointX="3" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblParentCategory" Width="1.5" PointX="1.5" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblPhotographer" Width="1.5" PointX="6" PointY="14.625" IsExpanded="true" />
         <EntityTypeShape EntityType="InstaAlbumModel.tblPortfolio" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblQuery" Width="1.5" PointX="9.75" PointY="3.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblService" Width="1.5" PointX="5.75" PointY="9.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblStudioAdmin" Width="1.5" PointX="9.75" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblSubCategory" Width="1.5" PointX="0.75" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="InstaAlbumModel.tblWebGallery" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblQuery" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblService" Width="1.5" PointX="5.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblStudioAdmin" Width="1.5" PointX="10.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblSubCategory" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="InstaAlbumModel.tblWebGallery" Width="1.5" PointX="7.75" PointY="3.75" IsExpanded="true" />
+        <AssociationConnector Association="InstaAlbumModel.FK_tblBill_tblBooking" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblBooking_tblCustomer" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblExposing_tblBooking" ManuallyRouted="false" />
         <AssociationConnector Association="InstaAlbumModel.FK_tblOrder_tblBranch" ManuallyRouted="false" />
