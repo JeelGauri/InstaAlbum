@@ -46,12 +46,12 @@
                 if (response.success === true) {
                     toastr.success(
                         response.message,
-                        'Record is inserted',
+                        'Your Query Send Successfully.',
                         {
                             timeOut: 1000,
                             fadeOut: 1000,
                             onHidden: function () {
-                                window.location.reload();
+                                window.location.reload(fnClearInputs);
                             }
                         }
                     );
@@ -61,10 +61,14 @@
                 toastr.error('Error occur', 'Error occur while inserting record.', { timeOut: 3000 });
                 return;
             }
-
         });
     }
-
+    function fnClearInputs() {
+        document.getElementById("txtName").value = "";
+        document.getElementById("txtEmail").value = "";
+        document.getElementById("txtSubject").value = "";
+        document.getElementById("txtMsg").value = "";
+    }
 </script>
 <section id="contact-section" class="split-box">
     <div class="container-fluid">
@@ -90,7 +94,8 @@
                 </div>
                 <div class="col-lg-6 col-lg-height col-lg-middle no-padding">
                     <div class="split-box-content">
-                        <form id="contact-form">
+                        
+                        <div id="contact-form">
                             <div class="contact-form-inner text-left">
                                 <div class="contact-form-info">
                                     <h1 class="contact-form-title font-alter-1">Get In Touch</h1>
@@ -132,7 +137,7 @@
                                     <button type="submit" id="btnContact" onclick="javascript:fnInsertRecord()" class="btn btn-primary btn-lg btn-block margin-top-40">Send Message</button>
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>

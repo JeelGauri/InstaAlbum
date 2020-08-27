@@ -1,0 +1,56 @@
+﻿@model IEnumerable<InstaAlbum.Models.tblService>
+@{
+    ViewBag.Title = "Service";
+    Layout = "~/Views/Shared/_userLayout.cshtml";
+}
+    <section id="blog-list-section" class="blog-list-grid">
+
+        <div class="container-fluid">
+
+            <div class="row">
+                    <div class="isotope-wrap">
+
+                       
+                        <div class="isotope col-3 gutter-2">
+
+                            <div class="isotope-items-wrap">
+
+                                <!-- Grid sizer (do not remove!!!) -->
+                                <div class="grid-sizer"></div>
+
+                                @foreach (var item in Model)
+                                {
+                                    <div class="isotope-item">
+                                        <article class="blog-list-item">
+
+                                            <div  class="bl-item-image"><img src="~/ServiceImages/@item.Image" alt="image"></div>
+
+                                            <div class="bl-item-info">
+                                                <a href="blog-single.html" class="bl-item-title"><h2>@item.ServiceName</h2></a>
+                                                <div class="bl-item-meta">
+                                                    @*<i class="fa fa-clock-o"></i>
+                                                    <span class="published">May 26, 2016</span>
+                                                    <span class="posted-by">- by <a href="#" title="View all posts by Martin Vegas">Martin Vegas</a></span>*@
+                                                </div>
+                                                <div class="bl-item-desc">
+                                                    @item.Description
+                                                </div>
+                                                
+                                            </div>
+                                            <!-- End blog list item info -->
+
+                                        </article>
+                                        <!-- End blog list item -->
+
+                                    </div>
+                                    <!-- End isotope item -->
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+
+</section>
+

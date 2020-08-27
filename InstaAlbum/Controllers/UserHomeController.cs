@@ -50,6 +50,10 @@ namespace InstaAlbum.Controllers
         {
                 return View(db.tblAboutUs.ToList());
         }
+        public ActionResult Service()
+        {
+            return View(db.tblServices.ToList());
+        }
         public ActionResult Gallery()
         {
                 return View(db.tblWebGalleries.ToList());

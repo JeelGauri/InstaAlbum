@@ -103,6 +103,9 @@
                         <li class="has-children">
                             <a href="@Url.Action("Contact","UserHome")">Contact</a>
                         </li>
+                        <li class="has-children">
+                            <a href="@Url.Action("Service","UserHome")">Our Services</a>
+                        </li>
                         @if (Session["CustomerID"] == null && Session["CustomerName"] == null && Session["CustomerPhoneNumber"] == null)
                         {
                             <li class="has-children">

@@ -3,7 +3,7 @@
     ViewBag.Title = "Protfolio";
     Layout = "~/Views/Shared/_userLayout.cshtml";
 }
-<section id="blog-list-section" class="blog-list-grid">
+@*<section id="blog-list-section" class="blog-list-grid">
     <div class="container-fluid">
         <div class="row">
             <div class="isotope-wrap">
@@ -14,7 +14,7 @@
                         {
                             <div class="isotope-item">
                                 <article class="blog-list-item">
-                                    <a href="#" class="bl-item-image"><img src="~/PortfolioImages/@item.Image" alt="image" style="height:500px;width:500px;"></a>
+                                    <img src="~/PortfolioImages/@item.Image" alt="image">
                                     <div class="bl-item-info">
                                         <a href="../UserHome/SingleProtfolio/@item.PortfolioID" class="bl-item-title"><h2>@item.PortfolioName</h2></a>
                                         <div class="bl-item-meta">
@@ -30,6 +30,42 @@
                             </div>
                         }
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>*@
+<section id="gallery-list-section">
+    <div class="container-fluid no-padding">
+        <div class="isotope-wrap">
+            <div class="isotope col-4 gutter-2">
+                <div class="isotope-items-wrap">
+                    <div class="grid-sizer"></div>
+                    @foreach (var item in Model)
+                    {
+                        <div class="isotope-item iso-height-1">
+                            <a href="../UserHome/SingleProtfolio/@item.PortfolioID" class="gallery-list-item">
+                                <div class="gl-item-image bg-image" style="background-image: url(../PortfolioImages/@item.Image); background-position: 50% 50%"></div>
+                                <div class="gl-item-info">
+                                    <div class="gl-item-caption">
+                                        <h2 class="gl-item-title">@item.PortfolioName</h2>
+
+                                        <span class="gl-item-category">
+                                            @item.SmallDescription
+                                        </span>
+
+                                    </div>
+                                    
+                                        <span class="gl-item-count">
+                                            <i class="fa fa-clock-o"></i>
+                                            @item.CreatedDate
+                                        </span>
+                                    
+                                </div>
+                            </a>
+                        </div>
+                    }
+
                 </div>
             </div>
         </div>

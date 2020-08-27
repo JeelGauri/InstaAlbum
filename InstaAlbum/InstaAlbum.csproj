@@ -816,6 +816,7 @@
     <Content Include="Views\Queries\Index.cshtml" />
     <Content Include="Views\Customer\BookingDetails.cshtml" />
     <Content Include="Views\Customer\ExposeDetails.cshtml" />
+    <Content Include="Views\UserHome\Service.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
