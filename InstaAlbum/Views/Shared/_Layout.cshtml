@@ -17,9 +17,9 @@
                 url: "/Studio/getLogoName",
                 data: "{}",
                 success: function (data) {
-                    $("#lnkLogo1").attr("href", "../StudioLogo/" + data[0].name);
-                    $("#lnkLogo2").attr("href", "../StudioLogo/" + data[0].name);
-                    $("#imgadminLogo").attr("src", "../StudioLogo/" + data[0].name);
+                    $("#lnkLogo1").attr("href", "../../StudioLogo/" + data[0].name);
+                    $("#lnkLogo2").attr("href", "../../StudioLogo/" + data[0].name);
+                    $("#imgadminLogo").attr("src", "../../StudioLogo/" + data[0].name);
                 }
             });
         });
