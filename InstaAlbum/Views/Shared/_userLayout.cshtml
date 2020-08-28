@@ -45,10 +45,10 @@
                 url: "/Studio/getLogoName",
                 data: "{}",
                 success: function (data) {
-                    $("#lnkLogo1").attr("href", "../StudioLogo/" + data[0].name);
-                    $("#imgLogo1").attr("src", "../StudioLogo/" + data[0].name);
-                    $("#imgLogo2").attr("src", "../StudioLogo/" + data[0].name);
-                    $("#imgLogo3").attr("src", "../StudioLogo/" + data[0].name);
+                    $("#lnkLogo1").attr("href", "../../StudioLogo/" + data[0].name);
+                    $("#imgLogo1").attr("src", "../../StudioLogo/" + data[0].name);
+                    $("#imgLogo2").attr("src", "../../StudioLogo/" + data[0].name);
+                    $("#imgLogo3").attr("src", "../../StudioLogo/" + data[0].name);
                 }
             });
         });
