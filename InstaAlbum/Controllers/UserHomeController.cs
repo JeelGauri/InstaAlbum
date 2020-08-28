@@ -16,7 +16,9 @@ namespace InstaAlbum.Controllers
         private InstaAlbumEntities db = new InstaAlbumEntities();
         public ActionResult Index()
         {
+           
              return View(db.tblBanners.ToList());
+            
             
         }
         public ActionResult Contact()
