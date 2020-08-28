@@ -24,6 +24,15 @@ namespace InstaAlbum.Controllers
             return View(db.tblStudioAdmins.ToList());
         }
 
+
+        public ActionResult getLogoName()
+        {
+            return Json(db.tblStudioAdmins.Select(s => new
+            {
+                name = s.StudioLogo
+            }).ToList(), JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult AddStudioDetails()
         {
             if (Session["StudioID"] == null && Session["StudioName"] == null && Session["StudioPhoneNo"] == null)

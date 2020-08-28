@@ -14,7 +14,7 @@
     <meta name="author" content="themetorium.net" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link rel="icon" type="image/x-icon" href="~/adminassets/img/logo3.png" />
+    <link rel="icon" type="image/x-icon" id="lnkLogo1" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
@@ -36,8 +36,25 @@
     <link rel="stylesheet" href="~/userassets/css/helper.css">
     <link rel="stylesheet" href="~/userassets/css/theme.css">
     <link rel="stylesheet" href="~/userassets/css/demo-dark-style.css">
-
     <script>
+
+        $(document).ready(function () {
+
+            $.ajax({
+                type: "GET",
+                url: "/Studio/getLogoName",
+                data: "{}",
+                success: function (data) {
+                    $("#lnkLogo1").attr("href", "../StudioLogo/" + data[0].name);
+                    $("#imgLogo1").attr("src", "../StudioLogo/" + data[0].name);
+                    $("#imgLogo2").attr("src", "../StudioLogo/" + data[0].name);
+                    $("#imgLogo3").attr("src", "../StudioLogo/" + data[0].name);
+                }
+            });
+        });
+    </script>
+    <script>
+
         function fnLogout() {
 
             $.ajax({
@@ -50,10 +67,10 @@
                 success: function (response) {
                     if (response.success === true) {
                         toastr.success(response.message, 'You are logging out!',
-                        {
-                            timeOut: 1000, fadeOut: 1000,
-                            onHidden: function () { window.location.href = "/UserHome/"; }
-                        });
+                            {
+                                timeOut: 1000, fadeOut: 1000,
+                                onHidden: function () { window.location.href = "/UserHome/"; }
+                            });
                     }
                 },
                 error: function () {
@@ -75,14 +92,14 @@
 
         <div class="header-close" title="Close">×</div>
         <div class="logo-small">
-            <a href="@Url.Action("Index","UserHome")"><img src="~/userassets/img/logo3.png" title="Home" alt="logo"></a>
+            <a href="@Url.Action("Index","UserHome")"><img id="imgLogo2" title="Home" alt="logo"></a>
         </div>
         <span class="header-menu-icon" title="Open Menu"><i class="fa fa-bars"></i></span>
         <a href="#" class="header-contact-icon" title="Contact Me"><i class="fa fa-envelope"></i></a>
         <div class="header-inner">
             <div class="header-top">
                 <div class="logo-big">
-                    <a href="@Url.Action("Index","UserHome")"><img src="~/userassets/img/logo3.png" title="Home" alt="logo"></a>
+                    <a href="@Url.Action("Index","UserHome")"><img id="imgLogo3" title="Home" alt="logo"></a>
                 </div>
             </div>
             <div class="header-middle">
@@ -143,7 +160,7 @@
 
     <div id="mobile-header">
         <div class="logo-mobile">
-            <a href="index.html"><img src="~/userassets/img/logo3.png" alt="logo"></a>
+            <a href="index.html"><img id="imgLogo1" alt="logo"></a>
         </div>
         <div class="mobile-menu-trigger"><span></span></div>
     </div>

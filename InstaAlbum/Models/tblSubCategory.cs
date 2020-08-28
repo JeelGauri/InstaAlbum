@@ -21,7 +21,7 @@ namespace InstaAlbum.Models
         }
     
         public int SubCategoryID { get; set; }
-        public Nullable<int> ParentCatgoryID { get; set; }
+        public int ParentCatgoryID { get; set; }
         public string SubCategoryName { get; set; }
         public string SubCategoryCoverPhoto { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }

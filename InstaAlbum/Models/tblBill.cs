@@ -15,9 +15,11 @@ namespace InstaAlbum.Models
     public partial class tblBill
     {
         public int BillID { get; set; }
-        public Nullable<int> BookingID { get; set; }
+        public int BookingID { get; set; }
         public Nullable<decimal> TotalAmount { get; set; }
         public Nullable<System.DateTime> CreatedDate { get; set; }
         public Nullable<System.DateTime> UpdatedDate { get; set; }
+    
+        public virtual tblBooking tblBooking { get; set; }
     }
 }

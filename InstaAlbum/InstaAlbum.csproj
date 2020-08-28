@@ -377,6 +377,7 @@
     <Content Include="obj\Debug\InstaAlbum.csproj.FileListAbsolute.txt" />
     <Content Include="obj\Debug\InstaAlbum.dll" />
     <Content Include="obj\Debug\InstaAlbum.pdb" />
+    <Content Include="StudioLogo\logo3.png" />
     <Content Include="userassets\analytics.js" />
     <Content Include="userassets\css\demo-dark-style.css" />
     <Content Include="userassets\css\helper.css" />
@@ -828,7 +829,6 @@
     <Folder Include="PhotographerProfilePics\" />
     <Folder Include="PortfolioImages\" />
     <Folder Include="ServiceImages\" />
-    <Folder Include="StudioLogo\" />
     <Folder Include="WebGalleryImages\" />
   </ItemGroup>
   <ItemGroup>
